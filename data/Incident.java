@@ -7,7 +7,7 @@ public class Incident implements Serializable {
 
 
 
-	private ArrayList<User> usersReportedIncident;
+	private User userReportedIncident;
 	private String incidentTitle;
 	private Category incidentCategory;
 	private int incidentDateOfMonth;
@@ -15,7 +15,7 @@ public class Incident implements Serializable {
 	private int incidentYear;
 	private String descriptionOfIncident;
 	private Priority priorityRating;
-	private String incidentKeyword;
+	private String[] incidentKeywords;
 	private String possibleCausesOfIncident;
 	private String possibleSolutionsOfIncident;
 
@@ -23,16 +23,41 @@ public class Incident implements Serializable {
 	public Incident() {
 		
 	}
-	
-	enum Category {
-	Regulatory_Law,
-	Cyber_Security,
-	Human_Issues,
-	Bank_Equipment,
-	Bank_Algorithms;
+
+	public enum Category {
+		Regulatory_Law {
+			public String toString() {
+				return "Regulatory Law";
+			}
+		},
+		Cyber_Security {
+			public String toString() {
+				return "Cyber Security";
+			}
+		},
+		Human_Issues {
+			public String toString() {
+				return "Human Issues";
+			}
+		},
+		Bank_Equipment {
+			public String toString() {
+				return "Bank Equipment";
+			}
+		},
+		Bank_Algorithms {
+			public String toString() {
+				return "Bank Algorithms";
+			}
+		},
+		Other {
+			public String toString() {
+				return "Other";
+			}
+		};
 	}
 	
-	enum Priority {
+	public enum Priority {
 		Low, Medium, High;
 	}
 	
@@ -44,12 +69,12 @@ public class Incident implements Serializable {
 		return incidentTitle;
 	}
 	
-	public ArrayList<User> getUsersReportedIncident() {
-		return usersReportedIncident;
+	public User getUserReportedIncident() {
+		return userReportedIncident;
 	}
 
-	public void setUsersReportedIncident(ArrayList<User> users) {
-		this.usersReportedIncident = users;
+	public void setUserReportedIncident(User u) {
+		this.userReportedIncident=u;
 	}
 	
 	public Priority getPriorityRating() {
@@ -59,17 +84,17 @@ public class Incident implements Serializable {
 		this.priorityRating = p;
 	}
 	
-	public String getIncidentKeyword() {
-		return incidentKeyword;
+	public String[] getIncidentKeywords() {
+		return incidentKeywords;
 	}
-	public void setIncidentKeyword(String keyword) {
-		this.incidentKeyword = keyword;
+	
+	public void setIncidentKeywords(String[] keywords) {
+		this.incidentKeywords = keywords;
 	}
 	
 	public Category getIncidentCategory() {
 		return incidentCategory;
 	}
-	
 	public void setIncidentCategory(Category aCategory) {
 		this.incidentCategory = aCategory;
 	}
