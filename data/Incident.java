@@ -133,7 +133,7 @@ public class Incident implements Serializable {
 		return possibleSolutionsOfIncident;
 	}
 	public void setPossibleSolutionsOfIncident(String possibleSolutions) {
-		this.possibleSolutionsOfIncident = possibleSolutions;
+		this.possibleSolutionsOfIncident = possibleSolutions; 
 	}
 
 }
