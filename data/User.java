@@ -7,7 +7,7 @@ public class User {
 	private String name;
 	private String address;
 	private String contactNumber;
-	private String position;
+	private Position userPosition;
 	
 	//very simple
 	//name etc
@@ -16,11 +16,19 @@ public class User {
 		
 	}
 	
-	public User(String n,String add, String number, String p) {
+	public User(String n,String add, String number, Position p) {
 		this.name=n;
 		this.address=add;
 		this.contactNumber=number;
-		this.position=p;
+		this.userPosition=p;
+	}
+	
+	enum Position {
+	Branch_Manager,
+	Data_Processing_Officer,
+	IT,
+	Financial_Analyst,
+	Internal_Auditor;
 	}
 	
 	public String getName() {
@@ -47,12 +55,12 @@ public class User {
 		this.contactNumber = number;
 	}
 
-	public String getPosition() {
-		return position;
+	public Position getPosition() {
+		return userPosition;
 	}
 
-	public void setPosition(String p) {
-		this.position = p;
+	public void setPosition(Position p) {
+		this.userPosition = p;
 	}
 	
 
