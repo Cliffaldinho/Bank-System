@@ -9,12 +9,12 @@ public class Incident implements Serializable {
 
 	private ArrayList<User> usersReportedIncident;
 	private String incidentTitle;
-	private String incidentCategory;
+	private Category incidentCategory;
 	private int incidentDateOfMonth;
 	private String incidentMonth;
 	private int incidentYear;
 	private String descriptionOfIncident;
-	private int priorityRating;
+	private Priority priorityRating;
 	private String incidentKeyword;
 	private String possibleCausesOfIncident;
 	private String possibleSolutionsOfIncident;
@@ -22,6 +22,18 @@ public class Incident implements Serializable {
 
 	public Incident() {
 		
+	}
+	
+	enum Category {
+	Regulatory_Law,
+	Cyber_Security,
+	Human_Issues,
+	Bank_Equipment,
+	Bank_Algorithms;
+	}
+	
+	enum Priority {
+		Low, Medium, High;
 	}
 	
 	public void setIncidentTitle(String title) {
@@ -40,24 +52,28 @@ public class Incident implements Serializable {
 		this.usersReportedIncident = users;
 	}
 	
-	public int getPriorityRating() {
+	public Priority getPriorityRating() {
 		return priorityRating;
 	}
-	public void setPriorityRating(int priority) {
-		this.priorityRating = priority;
+	public void setPriorityRating(Priority p) {
+		this.priorityRating = p;
 	}
+	
 	public String getIncidentKeyword() {
 		return incidentKeyword;
 	}
 	public void setIncidentKeyword(String keyword) {
 		this.incidentKeyword = keyword;
 	}
-	public String getIncidentCategory() {
+	
+	public Category getIncidentCategory() {
 		return incidentCategory;
 	}
-	public void setIncidentCategory(String category) {
-		this.incidentCategory = category;
+	
+	public void setIncidentCategory(Category aCategory) {
+		this.incidentCategory = aCategory;
 	}
+	
 	public String getIncidentMonth() {
 		return incidentMonth;
 	}
