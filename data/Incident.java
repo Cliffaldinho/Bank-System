@@ -1,13 +1,13 @@
 package data;
+import java.util.*;
+import java.io.Serializable;
 
-public class Incident {
+//is now a JavaBean
+public class Incident implements Serializable {
 
 
 
-	//Question: does Incident have only one user, or one to many users?
-	private User aUser;
-	//doesn't have a setter getter yet
-	
+	private ArrayList<User> usersReportedIncident;
 	private String incidentTitle;
 	private String incidentCategory;
 	private int incidentDateOfMonth;
@@ -24,25 +24,21 @@ public class Incident {
 		
 	}
 	
-	//constructor for necessary fields
-	public Incident(String title,String category, int date, String month, int year, String description) {
-		incidentTitle=title;
-		incidentCategory=category;
-		incidentDateOfMonth=date;
-		incidentMonth=month;
-		incidentYear=year;
-		descriptionOfIncident=description;
-	}
-	
-	
 	public void setIncidentTitle(String title) {
 		this.incidentTitle=title;
 	}
 	
-	public String returnIncidentTitle() {
+	public String getIncidentTitle() {
 		return incidentTitle;
 	}
 	
+	public ArrayList<User> getUsersReportedIncident() {
+		return usersReportedIncident;
+	}
+
+	public void setUsersReportedIncident(ArrayList<User> users) {
+		this.usersReportedIncident = users;
+	}
 	
 	public int getPriorityRating() {
 		return priorityRating;
