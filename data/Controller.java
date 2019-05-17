@@ -29,6 +29,13 @@ Close Incident Report (Geethma)
 Analyze Incident Post Completion (Cliff)
 Perform Root Cause Analysis (Cliff)
 Show Lessons Learnt (Cliff)
+
+Manage User (Zac)
+Create User (Zac)
+Delete User (Zac)
+Modify User (Zac)
+User login (Zac)
+User logout (Zac)
  */
 
 /**
