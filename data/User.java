@@ -7,6 +7,18 @@ public class User {
 	private String name;
 	private String address;
 	private String contactNumber;
+	
+	private String staffID;
+	//for staffID, 
+	//if it's bxxxx, then is Branch Manager
+	//if it's ixxxx, then is IT
+	//if it's dxxxx, then is DPO
+	//if it's fxxxx, then is Financial Analyst
+	//if it's axxxx, then is Internal Auditor
+	//if it's oxxxx, then is Other
+	
+
+
 	private Position userPosition;
 	
 	//very simple
@@ -16,19 +28,48 @@ public class User {
 		
 	}
 	
-	public User(String n,String add, String number, Position p) {
+	public User(String n,String add, String number, Position p, String id) {
 		this.name=n;
 		this.address=add;
 		this.contactNumber=number;
 		this.userPosition=p;
+		this.staffID=id;
 	}
 	
-	enum Position {
-	Branch_Manager,
-	Data_Processing_Officer,
-	IT,
-	Financial_Analyst,
-	Internal_Auditor;
+	public enum Position {
+		Branch_Manager {
+			public String toString() {
+				return "Branch Manager";
+			}
+		},
+		Data_Processing_Officer {
+			public String toString() {
+				return "Data Processing Officer";
+			}
+		},
+		IT {
+			public String toString() {
+				return "IT";
+			}
+		},
+		Financial_Analyst {
+			public String toString() {
+				return "Financial Analyst";
+			}
+		},
+		Internal_Auditor {
+			public String toString() {
+				return "Internal Auditor";
+			}
+		};
+	}
+	
+	public String getStaffID() {
+		return staffID;
+	}
+
+	public void setStaffID(String id) {
+		this.staffID = id;
 	}
 	
 	public String getName() {
@@ -58,6 +99,7 @@ public class User {
 	public Position getPosition() {
 		return userPosition;
 	}
+	
 
 	public void setPosition(Position p) {
 		this.userPosition = p;
