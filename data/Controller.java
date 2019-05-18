@@ -40,6 +40,10 @@ User login (Zac)
 User logout (Zac)
 User Login Authentication Bean thingy implementation that Tim mentioned (Zac)
 
+Implement Risk Management Strategy (Naneth)
+Define Roles for Staff (Naneth)
+Test Strategy (Naneth)
+
  */
 
 /**
