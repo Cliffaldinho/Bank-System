@@ -9,11 +9,11 @@ import java.io.PrintWriter;
 import java.io.IOException;
 
 /**
-Create Incident Report (Cliff)
-Assign Priority Rating (Cliff)
-Detect Duplicates (Cliff)
+Create Incident Report (Cliff) (done)
+Assign Priority Rating (Cliff) (done)
+Detect Duplicates (Cliff) (done)
 
-View List of Incident Reports (Cliff)
+View List of Incident Reports (Cliff) (done)
 Display Incident Report (Cliff)
 Select Incident (Cliff)
 
@@ -36,19 +36,18 @@ Delete User (Zac)
 Modify User (Zac)
 User login (Zac)
 User logout (Zac)
+User Authentication Bean thingy implementation that Tim mentioned (Zac)
  */
 
 /**
 (Naneth front end)
-JSP Page 1: User login, logout
-JSP Page 2: Create Incident Report, Assign Priority Rating, Detect Duplicates
-JSP Page 3: View List of Incident Reports, Display Incident Report, Select Incident, Query, Search, Sort, Count Incident Reports
-JSP Page 4: Handle Incident, Update Incident Report, Close Incident Report
-JSP Page 5: Analyze Incident Post Completion, Perform Root Cause Analysis, Show Lessons learnt
-JSP Page 6: Manage User, Create User, Delete User, Modify User
+
+CreateIncidentReport.jsp
+ListOfIncidents.jsp
+
+Please add other jsp files here that's finished back-end, and ready for front end work
  */
 
-//Question: Should Controller be multiple servlets because of many use cases?
 
 public class Controller extends HttpServlet {
 
