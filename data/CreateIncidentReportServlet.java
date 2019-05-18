@@ -15,32 +15,35 @@ import java.util.*;
 public class CreateIncidentReportServlet extends HttpServlet {
 
 	
-	Incident anIncident;
-	String title;
-	int anIncidentDate;
-	String anIncidentMonth;
-	int anIncidentYear;
-	String anIncidentDescription;
-	String nameOfStaff;
-	String positionOfStaff;
-	String aStaffID;
-	String[] someIncidentKeywords;
-	Incident.Priority priorityLevel;
-	String possibleCauses;
-	String possibleSolutions;
-	boolean duplicate;
 
-	
+
+	/**
 	@Override
 	public void init() throws ServletException {
 		
-		anIncident = new Incident();
-		//a = new Incident();
-		//b= new Incident();
-	}
+		//anIncident = new Incident();
+
+	}*/
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 
+		Incident anIncident;
+		anIncident= new Incident();
+		
+		String title;
+		int anIncidentDate;
+		String anIncidentMonth;
+		int anIncidentYear;
+		String anIncidentDescription;
+		String nameOfStaff;
+		String positionOfStaff;
+		String aStaffID;
+		String[] someIncidentKeywords;
+		Incident.Priority priorityLevel;
+		String possibleCauses;
+		String possibleSolutions;
+		boolean duplicate;
+		
 		
 		PrintWriter out = res.getWriter();
 		
