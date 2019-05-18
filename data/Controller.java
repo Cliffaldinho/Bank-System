@@ -25,6 +25,7 @@ Count Incident Reports (Geethma)
 Sort Incident Reports (Geethma)
 
 Handle Incident (Geethma)
+Assign Staff to Incident (Geethma)
 Update Incident Report (Geethma)
 Close Incident Report (Geethma)
 
