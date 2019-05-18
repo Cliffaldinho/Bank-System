@@ -16,8 +16,8 @@ Assign Priority Rating (Cliff) (done)
 Detect Duplicates (Cliff) (done)
 
 View List of Incident Reports (Cliff) (done)
-Display Incident Report (Cliff)
-Select Incident (Cliff)
+Display Incident Report (Cliff) (done)
+Select Incident (Cliff) (done)
 
 Query Incident Reports (Geethma)
 Search Incident Reports (Geethma)
@@ -52,6 +52,8 @@ Test Strategy (Naneth)
 
 CreateIncidentReport.jsp
 ListOfIncidents.jsp
+DetectDuplicates.jsp
+DisplayIncidentReport.jsp
 
 Please add other jsp files here that's finished back-end, and ready for front end work
  */
