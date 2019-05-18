@@ -62,6 +62,8 @@ List to have
 		thirdKeyword=IncidentDatabase.getIncidentsList().get(i).getIncidentKeywords()[2];
 		keywords=firstKeyword+", "+secondKeyword+", "+thirdKeyword;
 	}
+	
+	String incidentMarker="Show"+i
 %>
 <tr>
 <td><%out.println(number); %></td>
@@ -73,7 +75,7 @@ List to have
 <td><%out.println(IncidentDatabase.getIncidentsList().get(i).getUserReportedIncident().getName());%></td>
 <td><%out.println(IncidentDatabase.getIncidentsList().get(i).getUserReportedIncident().getPosition());%></td>
 <td><%out.println(keywords); %></td>
-<td><input type="submit" name="<% out.println("Show"+i);%>" value="View Details"></td>
+<td><input type="submit" name="<% out.println(incidentMarker);%>" value="View Details"></td>
 <td><input type="submit" name="<% out.println(i);%>" value="Handle Incident"></td>
 </tr>
 <%} %>
