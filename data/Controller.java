@@ -8,6 +8,8 @@ import javax.servlet.annotation.*;
 import java.io.PrintWriter;
 import java.io.IOException;
 
+//Please update to (done) when finished
+
 /**
 Create Incident Report (Cliff) (done)
 Assign Priority Rating (Cliff) (done)
@@ -36,7 +38,8 @@ Delete User (Zac)
 Modify User (Zac)
 User login (Zac)
 User logout (Zac)
-User Authentication Bean thingy implementation that Tim mentioned (Zac)
+User Login Authentication Bean thingy implementation that Tim mentioned (Zac)
+
  */
 
 /**
