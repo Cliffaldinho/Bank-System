@@ -13,7 +13,7 @@ public class DisplayIncidentReportServlet extends HttpServlet{
 	ArrayList<Incident> incidentReports = null;
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-		ArrayList<Incident> incidentReports = incidentDatabase.getIncidentsList();
+		ArrayList<Incident> incidentReports = IncidentDatabase.getIncidentsList();
 		ArrayList<Integer> searchReturn = new ArrayList<Integer>();
 		String searchTopic = req.getParameter("searchTopic");
 		String search = req.getParameter("search");
