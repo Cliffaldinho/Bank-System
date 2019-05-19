@@ -8,7 +8,7 @@ import java.io.PrintWriter;
 import java.io.IOException;
 import java.util.*;
 
-@WebServlet(urlPatterns={"/queryIncidentReport"})
+@WebServlet(urlPatterns={"/searchIncidentReport"})
 public class DisplayIncidentReportServlet extends HttpServlet{
 	ArrayList<Incident> incidentReports = null;
 
