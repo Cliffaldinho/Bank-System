@@ -76,7 +76,7 @@ public class DisplayIncidentReportServlet extends HttpServlet{
 		}
 
 		req.setAttribute("listOfSearchIndexes", searchReturn);
-		req.getRequestDispatcher("SearchIncidentReports.jsp").forward(req, res);
+		req.getRequestDispatcher("ViewListOfIncidents.jsp").forward(req, res);
 
 	}
 }
