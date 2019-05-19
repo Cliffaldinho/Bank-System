@@ -63,7 +63,7 @@ List to have
 		keywords=firstKeyword+", "+secondKeyword+", "+thirdKeyword;
 	}
 	
-	String incidentMarker="Show"+i
+	String incidentMarker="Show"+i; 
 %>
 <tr>
 <td><%out.println(number); %></td>
@@ -75,14 +75,19 @@ List to have
 <td><%out.println(IncidentDatabase.getIncidentsList().get(i).getUserReportedIncident().getName());%></td>
 <td><%out.println(IncidentDatabase.getIncidentsList().get(i).getUserReportedIncident().getPosition());%></td>
 <td><%out.println(keywords); %></td>
-<td><input type="submit" name="<% out.println(incidentMarker);%>" value="View Details"></td>
+<td><%out.println("<input type=\"submit\" name=\""+incidentMarker+"\" value=\"View Incident\">"); %></td>
 <td><input type="submit" name="<% out.println(i);%>" value="Handle Incident"></td>
+
+
 </tr>
 <%} %>
 
 </table>
 </form>
 
+<form action="CreateIncidentReport.jsp">
+<input type="submit" name="addIncident" value="Add">
+</form>
 
 <table>
 </table>

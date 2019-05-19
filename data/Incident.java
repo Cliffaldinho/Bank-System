@@ -18,10 +18,17 @@ public class Incident implements Serializable {
 	private String[] incidentKeywords;
 	private String possibleCausesOfIncident;
 	private String possibleSolutionsOfIncident;
+	
+	private int originalIndexForDuplicateChecking;
+	private boolean duplicateCheckInProcess;
+
+
+
+
 
 
 	public Incident() {
-		
+		duplicateCheckInProcess=false;
 	}
 
 	public enum Category {
@@ -59,6 +66,22 @@ public class Incident implements Serializable {
 	
 	public enum Priority {
 		Low, Medium, High;
+	}
+	
+	public boolean getDuplicateCheckInProcess() {
+		return duplicateCheckInProcess;
+	}
+
+	public void setDuplicateCheckInProcess(boolean duplicateCheck) {
+		this.duplicateCheckInProcess = duplicateCheck;
+	}
+
+	public int getOriginalIndexForDuplicateChecking() {
+		return originalIndexForDuplicateChecking;
+	}
+
+	public void setOriginalIndexForDuplicateChecking(int original) {
+		this.originalIndexForDuplicateChecking = original;
 	}
 	
 	public void setIncidentTitle(String title) {
@@ -133,7 +156,7 @@ public class Incident implements Serializable {
 		return possibleSolutionsOfIncident;
 	}
 	public void setPossibleSolutionsOfIncident(String possibleSolutions) {
-		this.possibleSolutionsOfIncident = possibleSolutions; 
+		this.possibleSolutionsOfIncident = possibleSolutions;
 	}
 
 }

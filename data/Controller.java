@@ -16,8 +16,8 @@ Assign Priority Rating (Cliff) (done)
 Detect Duplicates (Cliff) (done)
 
 View List of Incident Reports (Cliff) (done)
-Display Incident Report (Cliff)
-Select Incident (Cliff)
+Display Incident Report (Cliff) (done)
+Select Incident (Cliff) (done)
 
 Query Incident Reports (Geethma)
 Search Incident Reports (Geethma)
@@ -25,6 +25,7 @@ Count Incident Reports (Geethma)
 Sort Incident Reports (Geethma)
 
 Handle Incident (Geethma)
+Assign Staff to Incident (Geethma)
 Update Incident Report (Geethma)
 Close Incident Report (Geethma)
 
@@ -40,6 +41,10 @@ User login (Zac)
 User logout (Zac)
 User Login Authentication Bean thingy implementation that Tim mentioned (Zac)
 
+Implement Risk Management Strategy (Naneth)
+Define Roles for Staff (Naneth)
+Test Strategy (Naneth)
+
  */
 
 /**
@@ -47,6 +52,8 @@ User Login Authentication Bean thingy implementation that Tim mentioned (Zac)
 
 CreateIncidentReport.jsp
 ListOfIncidents.jsp
+DetectDuplicates.jsp
+DisplayIncidentReport.jsp
 
 Please add other jsp files here that's finished back-end, and ready for front end work
  */

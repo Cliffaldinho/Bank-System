@@ -1,5 +1,3 @@
-<!--This JSP Page is done. Naneth could you do the front end on this please? And also for the ListOfIncidents one too please?-->
-
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@ page import="data.Incident" %>
@@ -27,14 +25,13 @@ Other (please Elaborate in Incident description) <input type="radio" name="incid
 <br>
 
 <!-- Compulsory -->
-<!-- Might need to redecorate incident date -->
 Incident date
 <input type="text" name="incidentDay" value="01">
 <input type="text" name="incidentMonth" value="January">
 <input type="text" name="incidentYear" value="1000">
 <br>
 
-<!-- Compulsory --><!-- Maybe make this into a textbox? -->
+<!-- Compulsory -->
 Description of Incident
 <input type="text" name="incidentDescription">
 <br>
@@ -65,17 +62,17 @@ Incident Keywords (Please separate with commas)
 
 <!-- Optional -->
 Priority Rating (optional)
-Low<input type="radio" name="thePriority" value="Low"><!--Is an enum. Could be a dropdown menu?  -->
+Low<input type="radio" name="thePriority" value="Low">
 Medium<input type="radio" name="thePriority" value="Medium">
 High<input type="radio" name="thePriority" value="High">
 <br>
 
-<!-- Optional --><!-- And maybe into textbox too? -->
+<!-- Optional -->
 Possible Causes of Incident (optional)
 <input type="text" name="possibleCausesOfIncident">
 <br>
 
-<!-- Optional --><!-- And also this into textbox? lol -->
+<!-- Optional -->
 Possible Solutions of Incident (optional)
 <input type="text" name="possibleSolutionsOfIncident">
 <br>

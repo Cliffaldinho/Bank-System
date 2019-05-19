@@ -15,32 +15,35 @@ import java.util.*;
 public class CreateIncidentReportServlet extends HttpServlet {
 
 	
-	Incident anIncident;
-	String title;
-	int anIncidentDate;
-	String anIncidentMonth;
-	int anIncidentYear;
-	String anIncidentDescription;
-	String nameOfStaff;
-	String positionOfStaff;
-	String aStaffID;
-	String[] someIncidentKeywords;
-	Incident.Priority priorityLevel;
-	String possibleCauses;
-	String possibleSolutions;
-	boolean duplicate;
 
-	
+
+	/**
 	@Override
 	public void init() throws ServletException {
 		
-		anIncident = new Incident();
-		//a = new Incident();
-		//b= new Incident();
-	}
+		//anIncident = new Incident();
+
+	}*/
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 
+		Incident anIncident;
+		anIncident= new Incident();
+		
+		String title;
+		int anIncidentDate;
+		String anIncidentMonth;
+		int anIncidentYear;
+		String anIncidentDescription;
+		String nameOfStaff;
+		String positionOfStaff;
+		String aStaffID;
+		String[] someIncidentKeywords;
+		Incident.Priority priorityLevel;
+		String possibleCauses;
+		String possibleSolutions;
+		boolean duplicate;
+		
 		
 		PrintWriter out = res.getWriter();
 		
@@ -83,13 +86,16 @@ public class CreateIncidentReportServlet extends HttpServlet {
 		deleteNonNum=tempDay.replaceAll("[^0-9.]", "");
 		anIncidentDate = Integer.parseInt(deleteNonNum);
 		
-		String tempMonth;
+		String tempMonth,tempMonthTwo;
 		tempMonth = req.getParameter("incidentMonth");
-		anIncidentMonth=tempMonth.substring(0,1).toUpperCase()+tempMonth.substring(1);
+		tempMonthTwo=tempMonth.substring(0,1).toUpperCase()+tempMonth.substring(1);
+		anIncidentMonth = tempMonthTwo.replaceAll("\\s+", "");
 		
-		String tempYear;
+		
+		String tempYear,tempYearTwo;
 		tempYear=req.getParameter("incidentYear");
-		anIncidentYear=Integer.parseInt(tempYear);
+		tempYearTwo = tempYear.replaceAll("\\s+", "");
+		anIncidentYear=Integer.parseInt(tempYearTwo);
 		
 		anIncident.setIncidentDateOfMonth(anIncidentDate);
 		anIncident.setIncidentMonth(anIncidentMonth);
@@ -110,9 +116,15 @@ public class CreateIncidentReportServlet extends HttpServlet {
 		//in real tea user should be gotten straight from database
 		User tempUser = new User("Bob Smith","Elm Street","0403526395",User.Position.Financial_Analyst,"f111");
 		User tempUserTwo = new User("Alice Diaz","Avoca Lane","0423436405",User.Position.Internal_Auditor,"a111");
+		User tempUserThree = new User("Henry Stewart","Mahogany Lane","0435243964",User.Position.Data_Processing_Officer,"d111");
+		User tempUserFour = new User("Enzo Rogers","Wilsons Creek","0432364354",User.Position.Branch_Manager,"b111");
+		User tempUserFive = new User ("Chloe Morgan","Chicago Lane","0473423537",User.Position.IT,"i111");
 		UserDatabase.addUsers(tempUser);
 		UserDatabase.addUsers(tempUserTwo);
-		//above 4 lines of code don't count in this class
+		UserDatabase.addUsers(tempUserThree);
+		UserDatabase.addUsers(tempUserFour);
+		UserDatabase.addUsers(tempUserFive);
+		//above few lines of code don't count in this class
 		
 		aStaffID=req.getParameter("theStaffID");
 		
@@ -227,41 +239,40 @@ public class CreateIncidentReportServlet extends HttpServlet {
 		
 		//Detect Duplicates
 		boolean possibleDuplicate=false;
-		String first, second, third, fourth, fifth;
-		int matchOne, matchTwo, matchThree, matchFour, matchFive,totalMatch;
-		first="N/A";
-		second="N/A";
-		third="N/A";
-		fourth="N/A";
-		fifth="N/A";
-		matchOne=0;
-		matchTwo=0;
-		matchThree=0;
-		matchFour=0;
-		matchFive=0;
-		totalMatch=0;
+		int duplicatedIndex=-1;
+		String databaseKeyword;
+		String incidentKeyword;
 		
 		//if the incident being reported, compared to the ones in the database, has the
+		outerloop:
 		for(int i=0;i<IncidentDatabase.getIncidentsList().size();i++) {
 			
 			//same category
 			if(anIncident.getIncidentCategory()==IncidentDatabase.getIncidentsList().get(i).getIncidentCategory()) {
 				
 				//same month and year
-				if(	(anIncident.getIncidentMonth()==IncidentDatabase.getIncidentsList().get(i).getIncidentMonth())&&
-						(anIncident.getIncidentYear()==IncidentDatabase.getIncidentsList().get(i).getIncidentYear())	) {
+				if(	(anIncident.getIncidentMonth().equalsIgnoreCase(IncidentDatabase.getIncidentsList().get(i).getIncidentMonth()))&&
+						(anIncident.getIncidentYear()==IncidentDatabase.getIncidentsList().get(i).getIncidentYear())	)
+				{
+				
+				
+				int date=anIncident.getIncidentDateOfMonth();
+					int a=date+1;
+					int b=date+2;
+					int c=date+3;
+					int d=date+4;
+					int e=date+5;
+					int f=date+6;
+					int g=date+7;
+					int h=date-1;
+					int j=date-2;
+					int k=date-3;
+					int l=date-4;
+					int m=date-5;
+					int n=date-6;
+					int o=date-7;
 					
-
-					int date=anIncident.getIncidentDateOfMonth();
-					int a=date-1;
-					int b=date-2;
-					int c=date-3;
-					int d=date-4;
-					int e=date-5;
-					int f=date-6;
-					int g=date-7;
-					
-					//has happened in the past 7 days
+					//around the same date, give or take a week
 					if(IncidentDatabase.getIncidentsList().get(i).getIncidentDateOfMonth()==date||
 							IncidentDatabase.getIncidentsList().get(i).getIncidentDateOfMonth()==a||
 							IncidentDatabase.getIncidentsList().get(i).getIncidentDateOfMonth()==b||
@@ -269,8 +280,36 @@ public class CreateIncidentReportServlet extends HttpServlet {
 							IncidentDatabase.getIncidentsList().get(i).getIncidentDateOfMonth()==d||
 							IncidentDatabase.getIncidentsList().get(i).getIncidentDateOfMonth()==e||
 							IncidentDatabase.getIncidentsList().get(i).getIncidentDateOfMonth()==f||
-							IncidentDatabase.getIncidentsList().get(i).getIncidentDateOfMonth()==g) {
+							IncidentDatabase.getIncidentsList().get(i).getIncidentDateOfMonth()==g||
+							IncidentDatabase.getIncidentsList().get(i).getIncidentDateOfMonth()==g||
+							IncidentDatabase.getIncidentsList().get(i).getIncidentDateOfMonth()==h||
+							IncidentDatabase.getIncidentsList().get(i).getIncidentDateOfMonth()==j||
+							IncidentDatabase.getIncidentsList().get(i).getIncidentDateOfMonth()==k||
+							IncidentDatabase.getIncidentsList().get(i).getIncidentDateOfMonth()==l||
+							IncidentDatabase.getIncidentsList().get(i).getIncidentDateOfMonth()==m||
+							IncidentDatabase.getIncidentsList().get(i).getIncidentDateOfMonth()==n||
+							IncidentDatabase.getIncidentsList().get(i).getIncidentDateOfMonth()==o) {
+					
+						//and has at least 1 keyword matching
+						for(int x=0;x<IncidentDatabase.getIncidentsList().get(i).getIncidentKeywords().length;x++) {
+							databaseKeyword=IncidentDatabase.getIncidentsList().get(i).getIncidentKeywords()[x];
+							for(int y=0;y<anIncident.getIncidentKeywords().length;y++) {
+								incidentKeyword=anIncident.getIncidentKeywords()[y];
+								
+								//mark it as a possible duplicate
+								if(incidentKeyword.equalsIgnoreCase(databaseKeyword)) {
+									possibleDuplicate=true;
+									if(possibleDuplicate==true) {
+										duplicatedIndex=i;
+										
+										break outerloop;
+									}
+								}
+							}
+						}
 						
+						
+						/**
 						//has 3 out of 5 keyword matches
 						first=someIncidentKeywords[0];
 						
@@ -318,29 +357,45 @@ public class CreateIncidentReportServlet extends HttpServlet {
 						//then it's a duplicate
 						if(totalMatch>2) {
 							possibleDuplicate=true;
+							if(possibleDuplicate==true) {
+								duplicatedIndex=i;
+								break;
+							}
 						}
 						
 						
+					//possibleDuplicate=true;*/
 					}
 				}
 				
+			//possibleDuplicate=true;
 			}
 		}
 		
 		//-----------------------------------------------------------------------------------------------------------------------
 		
 		if(possibleDuplicate==true) {
+			req.setAttribute("theOriginalIndex", duplicatedIndex);
+			//out.println("duplicated");
 			IncidentDatabase.getDuplicatesList().add(anIncident);
-			//out.println("duplicate");
+			req.getRequestDispatcher("DetectDuplicates.jsp").forward(req,res);
+			
 		} else {
 			IncidentDatabase.getIncidentsList().add(anIncident);
+			req.getRequestDispatcher("ListOfIncidents.jsp").forward(req,res);
 			//out.println("original");
 		}
 		
-		req.getRequestDispatcher("ListOfIncidents.jsp").forward(req,res);
+		
 		
 		
 		out.println("finish");
+		
+		
+	}
+	
+	public void doPost(HttpServletRequest req,HttpServletResponse res) throws IOException, ServletException {
+		
 		
 		
 	}

@@ -1,0 +1,20 @@
+Some Test Cases. Please feel free to add more
+
+
+for List of Incidents
+1. Algorithmic Problem, 5, 10th February 2016, Algorithm went wrong, Bob, Financial Analyst, f111,"algorithm, rogue, inaccurate", low, inaccuracte calculations, redo calculations
+2. Fraud problem, 1, 15th May 2017, Fraud is detected, Alice, Internal Auditor, a111,"fraud"
+3. Data leak, 2, 18th August 2015, Bank data found elsewhere, Henry Stewart, Data Processing Officer, d111,"data, leaked, other, sources", high, unauthorized access
+4. Faulty Software, 4, 31st January 2018, Antivirus out of date, Enzo Rogers, Branch Manager, b111, "antivirus, firewall", medium, ,update antivirus
+5. Hack Attempt, 2, 1st March 2019, Detected trojan horse, Chloe Morgan, IT, i111, "trojan hacking", high
+
+
+for List of Users
+1. Bob Smith, Elm Street, 0403526395, Financial Analyst, f111						already added in CreateIncidentReportServlet.java code
+2. Alice Diaz, Avoca Lane, 0423436405, Internal Auditor, a111						already added in CreateIncidentReportServlet.java code
+3. Henry Stewart, Mahogany Lane, 0435243964, Data Processing Officer, d111				already added in CreateIncidentReportServlet.java code
+4. Enzo Rogers, Wilsons Creek, 0432364354, Branch Manager, b111						already added in CreateIncidentReportServlet.java code
+5. Chloe Morgan, Chicago Lane, 0473423537, IT, i111							already added in CreateIncidentReportServlet.java code
+
+
+for Units dispatched
