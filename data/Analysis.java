@@ -7,9 +7,13 @@ public class Analysis {
 	private Incident oneIncident;
 	private String lessonsLearntFromIncident;
 	private String rootCauseOfIncident;
+	private ArrayList<Simulation> listOfSimulations;
 	
+
+
 	public Analysis() {
 		users = new ArrayList<User>();
+		listOfSimulations= new ArrayList<Simulation>();
 	}
 	
 	public Analysis(ArrayList<User> u,Incident one, String lessonsLearnt, String rootCause) {
@@ -19,6 +23,13 @@ public class Analysis {
 		rootCauseOfIncident=rootCause;
 	}
 	
+	public ArrayList<Simulation> getListOfSimulations() {
+		return listOfSimulations;
+	}
+
+	public void setListOfSimulations(ArrayList<Simulation> simulations) {
+		this.listOfSimulations = simulations;
+	}
 	
 	public ArrayList<User> getUsers() {
 		return users;
@@ -32,6 +43,7 @@ public class Analysis {
 		return oneIncident;
 	}
 
+	
 	public void setOneIncident(Incident one) {
 		this.oneIncident = one;
 	}
