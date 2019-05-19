@@ -14,7 +14,7 @@ public class DisplayIncidentReportServlet extends HttpServlet{
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		ArrayList<Incident> incidentReports = incidentDatabase.getIncidentsList();
-		ArrayList<int> searchReturn = new ArrayList<int>();
+		ArrayList<Integer> searchReturn = new ArrayList<Integer>();
 		String searchTopic = req.getParameter("searchTopic");
 		String search = req.getParameter("search");
 		int index = 0;
