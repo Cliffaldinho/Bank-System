@@ -14,8 +14,14 @@ public class DisplayIncidentReportServlet extends HttpServlet{
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		ArrayList<Incident> incidentReports = IncidentDatabase.getIncidentsList();
+    int count = 0;
 
+    for(Incident i : incidentReports)
+    {
+      count++;
+    }
 
+    req.setAttribute("countReports", count);
     req.getRequestDispatcher("ViewListOfIncidents.jsp").forward(req, res);
 
 	}
