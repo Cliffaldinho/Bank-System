@@ -70,6 +70,14 @@ if(!IncidentDatabase.getDuplicatesList().isEmpty()) {
 	checkStateIsDuplicate=IncidentDatabase.getDuplicatesList().get(mostRecentDuplicateIndex).getDuplicateCheckInProcess();
 }
 
+String possibleCauses;
+possibleCauses=IncidentDatabase.getIncidentsList().get(theIndex).getPossibleCausesOfIncident();
+
+
+String possibleSolutions;
+possibleSolutions=IncidentDatabase.getIncidentsList().get(theIndex).getPossibleSolutionsOfIncident();
+
+
 %>
 <!-- 
 Incident title
@@ -110,6 +118,12 @@ Incident keywords:
 <br>
 Priority rating:
 <%out.println(priority); %>
+<br>
+Possible causes:
+<%out.println(possibleCauses); %>
+<br>
+Possible solutions:
+<%out.println(possibleSolutions); %>
 
 
 
@@ -128,6 +142,11 @@ if(checkStateIsDuplicate==true) {
 <input type="submit" value="No">
 </form>
 <%} else { %>
+<form action="performAnalysis" method="get">
+<input type="submit" value="Analysis">
+<%out.println("<input type=\"hidden\" name=\"indexForAnalysis\" value=\""+theIndex+"\">"); %>
+</form>
+<br>
 <form action="ListOfIncidents.jsp">
 <input type="submit" name="incidentsList" value="List">
 </form>
