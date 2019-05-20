@@ -97,7 +97,7 @@ List to have
 <br>
 
 Search Incidents
-<form action="searchIncidentReports">
+<form action="searchIncidentReport" method="get">
   <select id="searchTopic">
     <option value="Incident">Incident</option>
     <option value="RootCause">Root Cause</option>
@@ -105,6 +105,7 @@ Search Incidents
     <option value="Category">Category</option>
   </select>
   <input type="text" id="search" placeholder="Search..">
+  <input type="submit">
 </form>
 <br>
 
