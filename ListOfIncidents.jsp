@@ -4,7 +4,7 @@
     <%@ page import="data.IncidentDatabase" %>
     <%@ page import = "data.User" %>
     <%@ page import = "data.Incident" %>
-    
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +15,7 @@
 <%
 int incidentsListSize=IncidentDatabase.getIncidentsList().size();
 %>
-<!-- 
+<!--
 List to have
 1. Incident title
 2. Incident category
@@ -41,29 +41,29 @@ List to have
 </tr>
 <% for(int i=0;i<incidentsListSize;i++) {
 	int number=i+1;
-	
+
 	String firstKeyword,secondKeyword,thirdKeyword;
-	
+
 	firstKeyword="N/A";
 	secondKeyword="N/A";
 	thirdKeyword="N/A";
-	
+
 	String keywords="N/A";
-	
+
 	firstKeyword=IncidentDatabase.getIncidentsList().get(i).getIncidentKeywords()[0];
 	keywords=firstKeyword;
-	
+
 	if(IncidentDatabase.getIncidentsList().get(i).getIncidentKeywords().length>1) {
 		secondKeyword=IncidentDatabase.getIncidentsList().get(i).getIncidentKeywords()[1];
 		keywords=firstKeyword+", "+secondKeyword;
 	}
-	
+
 	if(IncidentDatabase.getIncidentsList().get(i).getIncidentKeywords().length>2) {
 		thirdKeyword=IncidentDatabase.getIncidentsList().get(i).getIncidentKeywords()[2];
 		keywords=firstKeyword+", "+secondKeyword+", "+thirdKeyword;
 	}
-	
-	String incidentMarker="Show"+i; 
+
+	String incidentMarker="Show"+i;
 %>
 <tr>
 <td><%out.println(number); %></td>
@@ -93,8 +93,14 @@ Add an Incident
 <br>
 
 Search Incidents
-<form>
-<input name="search">
+<form action="searchIncidentReports">
+  <select id="searchTopic">
+    <option value="Incident">Incident</option>
+    <option value="RootCause">Root Cause</option>
+    <option value="Keywords">Keywords</option>
+    <option value="Category">Category</option>
+  </select>
+  <input type="text" id="search" placeholder="Search..">
 </form>
 <br>
 
