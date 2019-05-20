@@ -59,8 +59,8 @@ public class SearchIncidentReportsServlet extends HttpServlet{
 			case "category":
 											for(Incident i : incidentReports)
 											{
-												Incident.Category categories = i.getIncidentCategory();
-												if(c.toString().equals(search))
+												Incident.Category category = i.getIncidentCategory();
+												if(category.toString().equals(search))
 												{
 													searchReturn.add(index);
 												}
