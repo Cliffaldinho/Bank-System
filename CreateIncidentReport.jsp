@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <%@ page import="data.Incident" %>
+    <%@ page import="data.*" %><!-- Naneth: was getting error when importing data.Incident -->
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="style.css" />
 <title>Create Incident Report</title>
 </head>
 <body>
@@ -21,7 +22,7 @@ Cyber security<input type="radio" name="incidentCategory" value="cyberSecurity">
 Human issues<input type="radio" name="incidentCategory" value="humanIssues">
 Bank equipment<input type="radio" name="incidentCategory" value="bankEquipment">
 Bank algorithms<input type="radio" name="incidentCategory" value="bankAlgorithms">
-Other (please Elaborate in Incident description) <input type="radio" name="incidentCategory" value="other">
+Other (please include tasks to complete in Incident description) <input type="radio" name="incidentCategory" value="other">
 <br>
 
 <!-- Compulsory -->

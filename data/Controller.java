@@ -10,6 +10,29 @@ import java.io.IOException;
 
 //Please update to (done) when finished
 
+
+/**
+To do for presentation 
+
+Cliff
+Define Roles for Staff functionality
+
+Geethma
+Search, Sort, Count functionality
+Assign Staff to Incident functionality
+
+Naneth
+All jsp files front end
+Development technologies and environment slides
+UI Design diagram
+
+Zac
+User Login, Logout, Authorization level functionality
+Database diagram, Architecture diagram
+*/
+
+
+
 /**
 Create Incident Report (Cliff) (done)
 Assign Priority Rating (Cliff) (done)
@@ -19,7 +42,7 @@ View List of Incident Reports (Cliff) (done)
 Display Incident Report (Cliff) (done)
 Select Incident (Cliff) (done)
 
-Query Incident Reports (Geethma)
+Query Incident Reports (Geethma) 
 Search Incident Reports (Geethma) (presentation)
 Count Incident Reports (Geethma) (presentation)
 Sort Incident Reports (Geethma) (presentation)
