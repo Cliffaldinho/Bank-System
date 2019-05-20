@@ -20,12 +20,12 @@ Display Incident Report (Cliff) (done)
 Select Incident (Cliff) (done)
 
 Query Incident Reports (Geethma)
-Search Incident Reports (Geethma)
-Count Incident Reports (Geethma)
-Sort Incident Reports (Geethma)
+Search Incident Reports (Geethma) (presentation)
+Count Incident Reports (Geethma) (presentation)
+Sort Incident Reports (Geethma) (presentation)
 
 Handle Incident (Geethma)
-Assign Staff to Incident (Geethma)
+Assign Staff to Incident (Geethma) (presentation)
 Update Incident Report (Geethma)
 Close Incident Report (Geethma)
 
@@ -37,12 +37,12 @@ Manage User (Zac)
 Create User (Zac)
 Delete User (Zac)
 Modify User (Zac)
-User login (Zac)
-User logout (Zac)
+User login (Zac) (presentation)
+User logout (Zac) (presentation)
 User Login Authentication Bean thingy implementation that Tim mentioned (Zac)
 
 Implement Risk Management Strategy (Naneth)
-Define Roles for Staff (Naneth)
+Define Roles for Staff (Naneth) (presentation)
 Test Strategy (Naneth)
 
  */
