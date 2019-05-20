@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.*;
 
 @WebServlet(urlPatterns={"/sortIncidentReport"})
-public class DisplayIncidentReportServlet extends HttpServlet{
+public class SortIncidentReportServlet extends HttpServlet{
 	ArrayList<Incident> incidentReports = null;
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
