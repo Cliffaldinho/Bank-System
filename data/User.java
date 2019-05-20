@@ -9,6 +9,7 @@ public class User {
 	private String contactNumber;
 	
 	private String staffID;
+	private String rolesToDo;
 	//for staffID, 
 	//if it's bxxxx, then is Branch Manager
 	//if it's ixxxx, then is IT
@@ -19,13 +20,31 @@ public class User {
 	
 
 
+	public String getRolesToDo() {
+		return rolesToDo;
+	}
+
+	public void setRolesToDo(String roles) {
+
+		this.rolesToDo = roles;
+	}
+
+	public Position getUserPosition() {
+		return userPosition;
+	}
+
+	public void setUserPosition(Position userPosition) {
+		this.userPosition = userPosition;
+	}
+
+
 	private Position userPosition;
 	
 	//very simple
 	//name etc
 	
 	public User() {
-		
+		//rolesToDo="None";
 	}
 	
 	public User(String n,String add, String number, Position p, String id) {
