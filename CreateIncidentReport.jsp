@@ -21,7 +21,7 @@ Cyber security<input type="radio" name="incidentCategory" value="cyberSecurity">
 Human issues<input type="radio" name="incidentCategory" value="humanIssues">
 Bank equipment<input type="radio" name="incidentCategory" value="bankEquipment">
 Bank algorithms<input type="radio" name="incidentCategory" value="bankAlgorithms">
-Other (please Elaborate in Incident description) <input type="radio" name="incidentCategory" value="other">
+Other (please include tasks to complete in Incident description) <input type="radio" name="incidentCategory" value="other">
 <br>
 
 <!-- Compulsory -->
