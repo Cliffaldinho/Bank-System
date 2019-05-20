@@ -88,7 +88,21 @@ List to have
 <form action="CreateIncidentReport.jsp">
 <input type="submit" name="addIncident" value="Add">
 </form>
+<br>
 
+<form>
+<input name="search">
+</form>
+<br>
+
+<form>
+<input name="sort">
+</form>
+<br>
+
+<form>
+<input name="count">
+</form>
 <table>
 </table>
 </body>
