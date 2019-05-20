@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <%@ page import="data.Incident" %>
+    <%@ page import="data.*" %><!-- Naneth: was getting error when importing data.Incident -->
 <!DOCTYPE html>
 <html>
 <head>
