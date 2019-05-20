@@ -1,14 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <%@ page import="data.UserDatabase" %>
-    <%@ page import="data.IncidentDatabase" %>
-    <%@ page import = "data.User" %>
-    <%@ page import = "data.Incident" %>
+    <%@ page import="data.*" %> <!-- fixed error: "Only a type can be imported. data.___ resolves to a package" -->
     
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="style.css" />
 <title>View List of Incidents</title>
 </head>
 <body>
@@ -86,26 +84,26 @@ List to have
 </form>
 <br>
 
-Add an Incident
 <form action="CreateIncidentReport.jsp">
+<label for="addIncident">Add an Incident</label>
 <input type="submit" name="addIncident" value="Add">
 </form>
 <br>
 
-Search Incidents
 <form>
+<label for="search">Search Incidents</label>
 <input name="search">
 </form>
 <br>
 
-Sort Incidents
 <form>
+<label for="sort">Sort Incidents</label>
 <input name="sort">
 </form>
 <br>
 
-Count Incidents
 <form>
+<label for="count">Count Incidents</label>
 <input name="count">
 </form>
 <table>
