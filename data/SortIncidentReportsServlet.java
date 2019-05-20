@@ -56,7 +56,7 @@ public class DisplayIncidentReportServlet extends HttpServlet{
                             indexes.remove(key); //so no duplicates added
                           }
                           req.setAttribute("sortReportsIndexes", sortedList);
-                          req.getRequestDispatcher("ViewListOfIncidents.jsp").forward(req, res);
+                          req.getRequestDispatcher("ListOfIncidents.jsp").forward(req, res);
                           break;
       case "Category":
                       for(Incident i: incidentReports) //record indexes of incidents in copy
@@ -85,7 +85,7 @@ public class DisplayIncidentReportServlet extends HttpServlet{
                         indexes.remove(key);
                       }
                       req.setAttribute("sortReportsIndexes", sortedList);
-                      req.getRequestDispatcher("ViewListOfIncidents.jsp").forward(req, res);
+                      req.getRequestDispatcher("ListOfIncidents.jsp").forward(req, res);
                       break;
       case "year":
                   for(Incident i: incidentReports) //record indexes of incidents in copy
@@ -114,12 +114,12 @@ public class DisplayIncidentReportServlet extends HttpServlet{
                     indexes.remove(key);
                   }
                   req.setAttribute("sortReportsIndexes", sortedList);
-                  req.getRequestDispatcher("ViewListOfIncidents.jsp").forward(req, res);
+                  req.getRequestDispatcher("ListOfIncidents.jsp").forward(req, res);
                   break;
       default:
               sortedList = incidentReports;
               req.setAttribute("sortReportsIndexes", sortedList); //send back original list
-              req.getRequestDispatcher("ViewListOfIncidents.jsp").forward(req, res);
+              req.getRequestDispatcher("ListOfIncidents.jsp").forward(req, res);
               break;
     }
     //end switch

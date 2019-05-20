@@ -22,7 +22,7 @@ public class DisplayIncidentReportServlet extends HttpServlet{
     }
 
     req.setAttribute("countReports", count);
-    req.getRequestDispatcher("ViewListOfIncidents.jsp").forward(req, res);
+    req.getRequestDispatcher("ListOfIncidents.jsp").forward(req, res);
 
 	}
 }
