@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <%@ page import="data.Incident" %>
+     <%@ page import="data.*" %><!-- Naneth: was getting error when importing data.Incident -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,11 +10,11 @@
 <body>
 <form action="userLogin" method="get">
 <!-- Compulsory -->
-Username
+<label for="userName">Username</label> <!-- Naneth: was getting error when "Username" was not in a tag -->
 <input type="text" name="username">
 <br>
 
-Password
+<label for="Password">username</label><!-- Naneth: was getting error when "Password" was not in a tag -->
 <input type="text" name="password">
 <br>
 
