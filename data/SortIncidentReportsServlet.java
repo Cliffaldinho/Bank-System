@@ -23,15 +23,17 @@ public class SortIncidentReportsServlet extends HttpServlet{
     {
       sortedIncidentReports.add(i);
     }
-    HashMap indexes = new HashMap();
     int key = 0;
+    int index = 0;
 
     switch(sortTopic)
     {
       case "IncidentTitle":
+                          Map<Integer, String> indexes = new HashMap();
                           for(Incident i: incidentReports) //record indexes of incidents in copy
                           {
                             indexes.put(index, i.getIncidentTitle()); //why not sort hashmap? can get messy
+                            index++;
                           }
                           //sort copy
                           if (sortedIncidentReports.size() > 0) {
@@ -59,9 +61,11 @@ public class SortIncidentReportsServlet extends HttpServlet{
                           req.getRequestDispatcher("ListOfIncidents.jsp").forward(req, res);
                           break;
       case "Category":
+                      Map<Integer, String> indexes = new HashMap();
                       for(Incident i: incidentReports) //record indexes of incidents in copy
                       {
                         indexes.put(index, i.getIncidentCategory());
+                        index++;
                       }
                       if (sortedIncidentReports.size() > 0) { //sort copy
                         Collections.sort(sortedIncidentReports, new Comparator<Incident>() {
@@ -88,9 +92,11 @@ public class SortIncidentReportsServlet extends HttpServlet{
                       req.getRequestDispatcher("ListOfIncidents.jsp").forward(req, res);
                       break;
       case "year":
+                  Map<Integer, Integer> indexes = new HashMap();
                   for(Incident i: incidentReports) //record indexes of incidents in copy
                   {
                     indexes.put(index, i.getIncidentYear());
+                    index++;
                   }
                   if (sortedIncidentReports.size() > 0) { //sort copy
                     Collections.sort(sortedIncidentReports, new Comparator<Incident>() {
