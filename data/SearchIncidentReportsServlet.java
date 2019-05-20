@@ -8,20 +8,21 @@ import java.io.PrintWriter;
 import java.io.IOException;
 import java.util.*;
 
-@WebServlet(urlPatterns={"/searchIncidentReport"})
+@WebServlet(urlPatterns={"/searchIncidentReports"})
 public class SearchIncidentReportsServlet extends HttpServlet{
 	ArrayList<Incident> incidentReports = null;
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		ArrayList<Incident> incidentReports = IncidentDatabase.getIncidentsList();
 		ArrayList<Integer> searchReturn = new ArrayList<Integer>();
-		String searchTopic = req.getParameter("searchTopic");
-		String search = req.getParameter("search");
+		String searchTopic = req.getAttribute("searchTopic");
+		String search = req.getAttribute("search");
 		int index = 0;
+		int count = 0;
 
 		switch(searchTopic)
 		{
-			case "incident":
+			case "Incident":
 											for(Incident i : incidentReports)
 											{
 												if(i.getIncidentTitle().equals(search))
@@ -30,8 +31,9 @@ public class SearchIncidentReportsServlet extends HttpServlet{
 												}
 												index++;
 											}
+											count = searchReturn.size();
 											break;
-			case "rootCause":
+			case "RootCause":
 												for(Incident i : incidentReports)
 												{
 													if(i.getPossibleCausesOfIncident().contains(search))
@@ -40,8 +42,9 @@ public class SearchIncidentReportsServlet extends HttpServlet{
 													}
 													index++;
 												}
+												count = searchReturn.size();
 												break;
-			case "keywords":
+			case "Keywords":
 											for(Incident i : incidentReports)
 											{
 												String[] keywords = i.getIncidentKeywords();
@@ -55,8 +58,9 @@ public class SearchIncidentReportsServlet extends HttpServlet{
 												}
 												index++;
 											}
+											count = searchReturn.size();
 											break;
-			case "category":
+			case "Category":
 											for(Incident i : incidentReports)
 											{
 												Incident.Category category = i.getIncidentCategory();
@@ -66,11 +70,19 @@ public class SearchIncidentReportsServlet extends HttpServlet{
 												}
 												index++;
 											}
+											count = searchReturn.size();
 											break;
 			default:
+							for(Incident i : incidentReports)
+							{
+								searchReturn.add(index);
+								index++;
+							}
+							count = searchReturn.size();
 							break;
 		}
 
+		req.setAttribute("SearchCount", count);
 		req.setAttribute("listOfSearchIndexes", searchReturn);
 		req.getRequestDispatcher("ListOfIncidents.jsp").forward(req, res);
 

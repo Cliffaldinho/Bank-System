@@ -8,7 +8,7 @@ import java.io.PrintWriter;
 import java.io.IOException;
 import java.util.*;
 
-@WebServlet(urlPatterns={"/sortIncidentReport"})
+@WebServlet(urlPatterns={"/sortIncidentReports"})
 public class SortIncidentReportsServlet extends HttpServlet{
 	ArrayList<Incident> incidentReports = null;
 
@@ -28,7 +28,7 @@ public class SortIncidentReportsServlet extends HttpServlet{
 
     switch(sortTopic)
     {
-      case "IncidentTitle":
+      case "Title":
                           Map<Integer, String> indexesT = new HashMap<Integer, String>();
                           for(Incident i: incidentReports) //record indexes of incidents in copy
                           {
@@ -91,7 +91,7 @@ public class SortIncidentReportsServlet extends HttpServlet{
                       req.setAttribute("sortReportsIndexes", sortedList);
                       req.getRequestDispatcher("ListOfIncidents.jsp").forward(req, res);
                       break;
-      case "year":
+      case "Year":
                   Map<Integer, Integer> indexesY = new HashMap<Integer, Integer>();
                   for(Incident i: incidentReports) //record indexes of incidents in copy
                   {
