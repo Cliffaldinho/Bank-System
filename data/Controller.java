@@ -12,13 +12,14 @@ import java.io.IOException;
 
 
 /**
-To do for presentation on 22/5
-Geethma
-Search, Sort, Count functionality
-Assign Staff to Incident functionality
+To do for presentation 
 
 Cliff
 Define Roles for Staff functionality
+
+Geethma
+Search, Sort, Count functionality
+Assign Staff to Incident functionality
 
 Naneth
 All jsp files front end
