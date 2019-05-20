@@ -49,7 +49,7 @@ public class SortIncidentReportsServlet extends HttpServlet{
                             for (Map.Entry<Integer, String> entry : indexes.entrySet()) {
                                 String value = entry.getValue();
                                 key = entry.getKey();
-                                if(value==i.getIncidentYear())
+                                if(value.equals(i.getIncidentTitle()))
                                 {
                                   sortedList.add(key);
                                   break;
@@ -80,7 +80,7 @@ public class SortIncidentReportsServlet extends HttpServlet{
                         for (Map.Entry<Integer, String> entry : indexes.entrySet()) {
                             String value = entry.getValue();
                             key = entry.getKey();
-                            if(value==i.getIncidentYear())
+                            if(value.equals(i.getIncidentCategory().toString()))
                             {
                               sortedList.add(key);
                               break;
