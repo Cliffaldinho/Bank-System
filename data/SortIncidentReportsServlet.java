@@ -29,10 +29,10 @@ public class SortIncidentReportsServlet extends HttpServlet{
     switch(sortTopic)
     {
       case "IncidentTitle":
-                          Map<Integer, String> indexesC = new HashMap<Integer, String>();
+                          Map<Integer, String> indexesT = new HashMap<Integer, String>();
                           for(Incident i: incidentReports) //record indexes of incidents in copy
                           {
-                            indexesC.put(index, i.getIncidentTitle()); //why not sort hashmap? can get messy
+                            indexesT.put(index, i.getIncidentTitle()); //why not sort hashmap? can get messy
                             index++;
                           }
                           //sort copy
@@ -46,8 +46,8 @@ public class SortIncidentReportsServlet extends HttpServlet{
                           }
                           for(Incident i: sortedIncidentReports) //fill sortedlist with indexes corresponding sorted copy
                           {
-                            for (Map.Entry<Integer, String> entry : indexesC.entrySet()) {
-                                int value = entry.getValue();
+                            for (Map.Entry<Integer, String> entry : indexesT.entrySet()) {
+                                String value = entry.getValue();
                                 key = entry.getKey();
                                 if(value.equals(i.getIncidentTitle()))
                                 {
@@ -55,7 +55,7 @@ public class SortIncidentReportsServlet extends HttpServlet{
                                   break;
                                 }
                             }
-                            indexesC.remove(key); //so no duplicates added
+                            indexesT.remove(key); //so no duplicates added
                           }
                           req.setAttribute("sortReportsIndexes", sortedList);
                           req.getRequestDispatcher("ListOfIncidents.jsp").forward(req, res);
