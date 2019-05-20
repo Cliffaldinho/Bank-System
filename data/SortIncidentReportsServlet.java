@@ -47,7 +47,7 @@ public class SortIncidentReportsServlet extends HttpServlet{
                           for(Incident i: sortedIncidentReports) //fill sortedlist with indexes corresponding sorted copy
                           {
                             for (Map.Entry<Integer, String> entry : indexesC.entrySet()) {
-                                String value = entry.getValue();
+                                int value = entry.getValue();
                                 key = entry.getKey();
                                 if(value.equals(i.getIncidentTitle()))
                                 {
@@ -102,14 +102,20 @@ public class SortIncidentReportsServlet extends HttpServlet{
                     Collections.sort(sortedIncidentReports, new Comparator<Incident>() {
                       @Override
                       public int compare(final Incident object1, final Incident object2) {
-                        return object1.getIncidentYear().compareTo(object2.getIncidentYear());
+                        if(object1.getIncidentYear() > object2.getIncidentYear()) {
+                          return 1;
+                        } else if (object1.getIncidentYear() < object2.getIncidentYear()) {
+                          return -1;
+                        } else {
+                          return 0;
+                        }
                       }
                     });
                   }
                   for(Incident i: sortedIncidentReports) //fill sortedlist with indexes corresponding sorted copy
                   {
                     for (Map.Entry<Integer, Integer> entry : indexesY.entrySet()) {
-                        String value = entry.getValue();
+                        int value = entry.getValue();
                         key = entry.getKey();
                         if(value==i.getIncidentYear())
                         {
