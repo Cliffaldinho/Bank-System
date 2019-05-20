@@ -29,9 +29,9 @@ Assign Staff to Incident (Geethma)
 Update Incident Report (Geethma)
 Close Incident Report (Geethma)
 
-Analyze Incident Post Completion (Cliff)
-Perform Root Cause Analysis (Cliff)
-Show Lessons Learnt (Cliff)
+Analyze Incident Post Completion (Cliff) (done)
+Perform Root Cause Analysis (Cliff) (done)
+Show Lessons Learnt (Cliff) (done)
 
 Manage User (Zac)
 Create User (Zac)
@@ -54,6 +54,7 @@ CreateIncidentReport.jsp
 ListOfIncidents.jsp
 DetectDuplicates.jsp
 DisplayIncidentReport.jsp
+PerformAnalysis.jsp
 
 Please add other jsp files here that's finished back-end, and ready for front end work
  */

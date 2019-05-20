@@ -21,6 +21,9 @@ public class Incident implements Serializable {
 	
 	private int originalIndexForDuplicateChecking;
 	private boolean duplicateCheckInProcess;
+	
+	private boolean hasAnalysis;
+	private int indexInAnalysisDatabase;
 
 
 
@@ -29,6 +32,7 @@ public class Incident implements Serializable {
 
 	public Incident() {
 		duplicateCheckInProcess=false;
+		hasAnalysis=false;
 	}
 
 	public enum Category {
@@ -67,6 +71,23 @@ public class Incident implements Serializable {
 	public enum Priority {
 		Low, Medium, High;
 	}
+	
+	public boolean getHasAnalysis() {
+		return hasAnalysis;
+	}
+
+	public void setHasAnalysis(boolean exist) {
+		this.hasAnalysis = exist;
+	}
+
+	public int getIndexInAnalysisDatabase() {
+		return indexInAnalysisDatabase;
+	}
+
+	public void setIndexInAnalysisDatabase(int index) {
+		this.indexInAnalysisDatabase = index;
+	}
+	
 	
 	public boolean getDuplicateCheckInProcess() {
 		return duplicateCheckInProcess;
