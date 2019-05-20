@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <%@ page import="data.*" %> <!-- fixed error: "Only a type can be imported. data.___ resolves to a package" -->
+<%@ page import="data.*" %>
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
@@ -10,8 +11,9 @@
 <body>
 <%
 int incidentsListSize=IncidentDatabase.getIncidentsList().size();
+int branchManagerAuthorization=1;
 %>
-<!--
+<!-- 
 List to have
 1. Incident title
 2. Incident category
@@ -33,33 +35,36 @@ List to have
 <th>Staff position</th>
 <th>Main three keywords</th>
 <th>View More Details</th>
-<th>Handle Incident Use Case</th>
+<%if(branchManagerAuthorization==1) { %>
+<th>Handle Incident</th>
+<%} %>
 </tr>
 <% for(int i=0;i<incidentsListSize;i++) {
 	int number=i+1;
-
+	
 	String firstKeyword,secondKeyword,thirdKeyword;
-
+	
 	firstKeyword="N/A";
 	secondKeyword="N/A";
 	thirdKeyword="N/A";
-
+	
 	String keywords="N/A";
-
+	
 	firstKeyword=IncidentDatabase.getIncidentsList().get(i).getIncidentKeywords()[0];
 	keywords=firstKeyword;
-
+	
 	if(IncidentDatabase.getIncidentsList().get(i).getIncidentKeywords().length>1) {
 		secondKeyword=IncidentDatabase.getIncidentsList().get(i).getIncidentKeywords()[1];
 		keywords=firstKeyword+", "+secondKeyword;
 	}
-
+	
 	if(IncidentDatabase.getIncidentsList().get(i).getIncidentKeywords().length>2) {
 		thirdKeyword=IncidentDatabase.getIncidentsList().get(i).getIncidentKeywords()[2];
 		keywords=firstKeyword+", "+secondKeyword+", "+thirdKeyword;
 	}
-
-	String incidentMarker="Show"+i;
+	
+	String incidentMarker="Show"+i; 
+	String handleIncident="Handle"+i;
 %>
 <tr>
 <td><%out.println(number); %></td>
@@ -72,7 +77,9 @@ List to have
 <td><%out.println(IncidentDatabase.getIncidentsList().get(i).getUserReportedIncident().getPosition());%></td>
 <td><%out.println(keywords); %></td>
 <td><%out.println("<input type=\"submit\" name=\""+incidentMarker+"\" value=\"View Incident\">"); %></td>
-<td><input type="submit" name="<% out.println(i);%>" value="Handle Incident"></td>
+<%if(branchManagerAuthorization==1) { %>
+<td><%out.println("<input type=\"submit\" name=\""+handleIncident+"\" value=\"Handle Incident\">"); %></td>
+<%} %>
 
 
 </tr>
@@ -81,6 +88,7 @@ List to have
 </table>
 </form>
 <br>
+
 
 <form action="CreateIncidentReport.jsp">
 <label for="addIncident">Add an Incident</label>
@@ -110,6 +118,16 @@ Search Incidents
 <label for="count">Count Incidents</label>
 <input name="count">
 </form>
+<br>
+<% 
+
+if(branchManagerAuthorization==1) {
+%>
+View Staff Roles
+<form action="RolesForStaff.jsp">
+<input type="submit" name="viewRoles" value="View Roles">
+</form>
+<%} %>
 <table>
 </table>
 </body>
