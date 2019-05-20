@@ -129,7 +129,11 @@ public class SortIncidentReportsServlet extends HttpServlet{
                   req.getRequestDispatcher("ListOfIncidents.jsp").forward(req, res);
                   break;
       default:
-              sortedList = incidentReports;
+              for(Incident i: incidentReports)
+              {
+                sortedList.add(index);
+                index++;
+              }
               req.setAttribute("sortReportsIndexes", sortedList); //send back original list
               req.getRequestDispatcher("ListOfIncidents.jsp").forward(req, res);
               break;
