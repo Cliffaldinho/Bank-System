@@ -64,7 +64,7 @@ public class SortIncidentReportsServlet extends HttpServlet{
                       Map<Integer, String> indexes = new HashMap<Integer, String>();
                       for(Incident i: incidentReports) //record indexes of incidents in copy
                       {
-                        indexes.put(index, i.getIncidentCategory());
+                        indexes.put(index, i.getIncidentCategory().toString());
                         index++;
                       }
                       if (sortedIncidentReports.size() > 0) { //sort copy
@@ -92,7 +92,7 @@ public class SortIncidentReportsServlet extends HttpServlet{
                       req.getRequestDispatcher("ListOfIncidents.jsp").forward(req, res);
                       break;
       case "year":
-                  Map<Integer, String> indexesY = new HashMap<Integer, String>();
+                  Map<Integer, Integer> indexesY = new HashMap<Integer, Integer>();
                   for(Incident i: incidentReports) //record indexes of incidents in copy
                   {
                     indexesY.put(index, i.getIncidentYear());
@@ -108,7 +108,7 @@ public class SortIncidentReportsServlet extends HttpServlet{
                   }
                   for(Incident i: sortedIncidentReports) //fill sortedlist with indexes corresponding sorted copy
                   {
-                    for (Map.Entry<Integer, String> entry : indexesY.entrySet()) {
+                    for (Map.Entry<Integer, Integer> entry : indexesY.entrySet()) {
                         String value = entry.getValue();
                         key = entry.getKey();
                         if(value==i.getIncidentYear())
