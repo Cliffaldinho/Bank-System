@@ -5,7 +5,7 @@
 
 <%HttpSession aSession = request.getSession();%>
 <jsp:useBean id="logAuth" class="data.StaffBean" scope="session" />
-
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,6 +14,27 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<div class="top-banner">
+	  <div class="row">
+	    <div class="col-75">
+	      <h1 id="attBuff">SaiYan Bank Incident Management</h1>
+	    </div>
+	    <div>
+	      <img src="images/logo.png" alt="logo" class="logo"/>
+	    </div>
+	  </div>
+	</div>
+	
+	<!-- if user is branch manager, show this  -->
+	<div class="horizonta_nav">
+	  <a href="ListOfIncidents.jsp">Incidents</a>
+	  <a href="CreateIncidentReport.jsp">Report</a>
+	  <a href="RolesForStaff.jsp">Roles</a>
+	  <a href="UserLogin.jsp">Logout</a>
+	</div>
+	<br>
+	<br>
+
 <%
 int theIndex=(int) request.getAttribute("indexOfIncident");
 //out.println(theIndex);
@@ -97,64 +118,88 @@ Priority rating
 Possible causes
 Possible solutions
  -->
-Incident title:
-<%out.println(theTitle); %>
-<br>
-Incident category:
-<%out.println(theCategory); %>
-<br>
-Incident date:
-<%out.println(theDate); %>
-<br>
-Description of incident:
-<%out.println(theIncidentDescription); %>
-<br>
-Name of staff who reported this incident:
-<%out.println(staffName); %>
-<br>
-Position of staff who reported this incident:
-<%out.println(positionName); %>
-<br>
-ID of staff who reported this incident:
-<%out.println(staffID); %>
-<br>
-Incident keywords:
-<%out.println(keywords); %>
-<br>
-Priority rating:
-<%out.println(priority); %>
-<br>
-Possible causes:
-<%out.println(possibleCauses); %>
-<br>
-Possible solutions:
-<%out.println(possibleSolutions); %>
+ 
+	<div class="container">
+		<h2>Incident Details</h2>
+		<table>
+			<tr>
+				<th>Incident title:</th>
+				<td><%out.println(theTitle); %></td>
+			</tr>
+		
+			<tr>
+				<th>Incident category:</th>
+				<td><%out.println(theCategory); %></td>
+			</tr>
+		
+			<tr>
+				<th>Incident date:</th>
+				<td><%out.println(theDate); %></td>
+			</tr>
+		
+			<tr>
+				<th>Description of incident:</th>
+				<td><%out.println(theIncidentDescription); %></td>
+			</tr>
+		
+			<tr>
+				<th>Name of staff who reported this incident:</th>
+				<td><%out.println(staffName); %></td>
+			</tr>
+		
+			<tr>
+				<th>Position of staff who reported this incident:</th>
+				<td><%out.println(positionName); %></td>
+			</tr>
+		
+			<tr>
+				<th>ID of staff who reported this incident:</th>
+				<td><%out.println(staffID); %></td>
+			</tr>
+		
+			<tr>
+				<th>Incident keywords:</th>
+				<td><%out.println(keywords); %></td>
+			</tr>
+		
+			<tr>
+				<th>Priority rating:</th>
+				<td><%out.println(priority); %></td>
+			</tr>
+		
+			<tr>
+				<th>Possible causes:</th>
+				<td><%out.println(possibleCauses); %></td>
+			</tr>
+		
+			<tr>
+				<th>Possible solutions:</th>
+				<td><%out.println(possibleSolutions); %></td>
+			</tr>
+		
+		</table>
 
-
-
-
-
-<%
-if(checkStateIsDuplicate==true) {
-%>
-<p>Mark the submitted incident report as duplicate of this?</p>
-<!-- Yes: Incident report remains as duplicate -->
-<form action="ListOfIncidents.jsp">
-<input type="submit" value="Yes">
-</form>
-<!-- No: Incident report is marked as original -->
-<form action="detectDuplicate" method="post">
-<input type="submit" value="No">
-</form>
-<%} else { %>
-<form action="performAnalysis" method="get">
-<input type="submit" value="Analysis">
-<%out.println("<input type=\"hidden\" name=\"indexForAnalysis\" value=\""+theIndex+"\">"); %>
-</form>
-<br>
-<form action="ListOfIncidents.jsp">
-<input type="submit" name="incidentsList" value="List">
-</form>
-<%} %>
+		<%
+		if(checkStateIsDuplicate==true) {
+		%>
+		<p>Mark the submitted incident report as duplicate of this?</p>
+		<!-- Yes: Incident report remains as duplicate -->
+		<form action="ListOfIncidents.jsp">
+		<input type="submit" value="Yes">
+		</form>
+		<!-- No: Incident report is marked as original -->
+		<form action="detectDuplicate" method="post">
+		<input type="submit" value="No">
+		</form>
+		<%} else { %>
+		<form action="performAnalysis" method="get">
+		<input type="submit" value="Analysis">
+		<%out.println("<input type=\"hidden\" name=\"indexForAnalysis\" value=\""+theIndex+"\">"); %>
+		</form>
+		<br>
+		<%} %>
+	</div>
+	
+	
 </body>
 </html>
