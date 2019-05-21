@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@ page import="data.UserDatabase" %>
-    <%@ page import="data.IncidentDatabase" %>
+    <%@ page import="data.IncidentDatabase" %>   
     
 <%HttpSession aSession = request.getSession();%>
 <jsp:useBean id="logAuth" class="data.StaffBean" scope="session" /> 
@@ -14,46 +14,32 @@
 <title>Insert title here</title>
 </head>
 <body>
-<div class="top-banner">
-  <div class="row">
-    <div class="col-75">
-      <h1 id="attBuff">SaiYan Bank Incident Management</h1>
-    </div>
-    <div>
-      <img src="images/logo.png" alt="logo" class="logo"/>
-    </div>
-  </div>
-</div>
-
-<!-- if user is branch manager, show this  -->
-<% if (logAuth.getAuthenticationLevel() == 1){ %>
-<div class="horizonta_nav">
-  <a href="ccBuff.xml" style="width: 12%">home</a>
-  <a href="ccBuff.xml" style="width: 12%">Incidents</a>
-  <a href="ccBuff.xml" style="width: 12%" class="active">Roles</a>
-  <a href="ccBuff.xml" style="width: 12%">Accounts</a>
-  <a href="ccBuff.xml" style="width: 12%">Staff</a>
-  <a href="http://www.blogtyrant.com/best-about-us-pages/">About Us</a>
-  <a href="DataCollection.html">Logout</a>
-</div>
-<% } else if (logAuth.getAuthenticationLevel() == 0){ %>
-<!-- else if user is not branch manager, show this  -->
-<div class="horizonta_nav">
-  <a href="index.html">home</a>
-  <a href="spdBuff.xml">View Incidents</a>
-  <a href="ccBuff.xml" class="active">Roles</a>
-  <a href="http://www.blogtyrant.com/best-about-us-pages/">About Us</a>
-  <a href="DataCollection.html">Logout</a>
-</div>
-<% } %>
-<br>
-<br>
+	<div class="top-banner">
+	  <div class="row">
+	    <div class="col-75">
+	      <h1 id="attBuff">SaiYan Bank Incident Management</h1>
+	    </div>
+	    <div>
+	      <img src="images/logo.png" alt="logo" class="logo"/>
+	    </div>
+	  </div>
+	</div>
+	
+	<!-- if user is branch manager, show this  -->
+	<div class="horizonta_nav">
+	  <a href="ListOfIncidents.jsp">Incidents</a>
+	  <a href="CreateIncidentReport.jsp">Report</a>
+	  <a href="RolesForStaff.jsp" class="active">Roles</a>
+	  <a href="UserLogin.jsp">Logout</a>
+	</div>
+	<br>
+	<br>
 
 	<div class="container">	
 		<h2>View Roles for Staff</h2>
 		
 		<!-- Staff name, Staff position, Staff id -->
-		<%//int branchManagerAuthorization=logAuth.getAuthenticationLevel();  %>
+		<%//int branchManagerAuthorization=1;  %>
 		<form action="defineRolesForStaff" method="get">
 			<table>
 				<tr>
@@ -79,7 +65,7 @@
 				<%
 				String staffName,staffPosition,staffID,currentRoles;
 				int number;
-						if(branchManagerAuthorization==1) {
+						//if(branchManagerAuthorization==1) {
 							
 						for(int i=0;i<UserDatabase.getUsersList().size();i++) { 
 					    	staffName=UserDatabase.getUsersList().get(i).getName();
@@ -111,7 +97,7 @@
 						<%out.println(currentRoles); %>
 					</td>
 					<td>
-						<%out.println("<input type=\"submit\" name=\""+staffMarker+"\" value=\"Set Roles\">");}} %>
+						<%out.println("<input type=\"submit\" name=\""+staffMarker+"\" value=\"Set Roles\">");} %>
 					</td>
 				</tr>
 			</table>
