@@ -169,6 +169,7 @@ nav a:hover
 
 div
 {
+	overflow: auto;
 }
 
 #container
@@ -298,6 +299,26 @@ input[type='radio']
 	zoom: 1.5;
 }
 
+button
+{
+	font-size: 0.9em;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	padding: 12px 20px;
+	margin: 8px 0;
+	box-sizing: border-box;
+	background-color: #a58f21;
+	color: white;
+  	border: none;
+	border-radius: 4px;
+  	cursor: pointer;
+  	white-space: normal;
+  	max-width: 100%;
+}
+
+button:hover
+{
+	text-decoration: underline;
+}
 
 input[type='submit'], [type='button']
 {
@@ -369,7 +390,7 @@ span
 
 table
 {
-	table-layout: fixed;
+	table-layout: auto;
 	width: 100%;
 	border-collapse: collapse;
 	border-style: solid; 
