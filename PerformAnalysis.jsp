@@ -4,14 +4,36 @@
 
 <%HttpSession aSession = request.getSession();%>
 <jsp:useBean id="logAuth" class="data.StaffBean" scope="session" />
-
+    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="style.css" />
 <title>Insert title here</title>
 </head>
 <body>
+	<div class="top-banner">
+	  <div class="row">
+	    <div class="col-75">
+	      <h1 id="attBuff">SaiYan Bank Incident Management</h1>
+	    </div>
+	    <div>
+	      <img src="images/logo.png" alt="logo" class="logo"/>
+	    </div>
+	  </div>
+	</div>
+	
+	<!-- if user is branch manager, show this  -->
+	<div class="horizonta_nav">
+	  <a href="ListOfIncidents.jsp">Incidents</a>
+	  <a href="CreateIncidentReport.jsp">Report</a>
+	  <a href="RolesForStaff.jsp">Roles</a>
+	  <a href="UserLogin.jsp">Logout</a>
+	</div>
+	<br>
+	<br>
+
 <%
 int incidentIndex;
 int analysisIndex;
@@ -34,74 +56,131 @@ possibleSolutions=IncidentDatabase.getIncidentsList().get(incidentIndex).getPoss
 Name of staff performing analysis
 Incident analyzing
  -->
-<h1>Analysis</h1>
-Incident title:
-<%out.println(incidentTitle); %>
-<br>
-
-Incident category: 
-<%out.println(incidentCategory); %>
-<br>
-
-Incident description:
-<%out.println(incidentDescription); %> 
-<br>
-
-Staff who reported this incident:
-<%out.println(incidentStaffName); %>
-<br>
  
-Reported possible causes:
-<%out.println(possibleCauses); %>
-<br>
- 
-Reported possible solutions:
-<%out.println(possibleSolutions); %>
-<br>
- 
-Root Cause Analysis
-<form action="postAnalysis" method="get">
-Staff name:
-<input type="text" name="staffNameWriting">
-<br>
-Staff id:
-<input type="text" name="staffIDWriting">
-<br>
-Root Cause found:
-<input type="text" name="causes">
-<br>
-<%out.println("<input type=\"hidden\" name=\"theAnalysisDatabaseIndex\" value=\""+analysisIndex+"\">"); %>
-<%out.println("<input type=\"hidden\" name=\"theIncidentDatabaseIndex\" value=\""+incidentIndex+"\">"); %>
-<input type="submit" name="finishAnalysis">
-</form>
-<br>
-<br>
+ <div class="container"> 
+	 
+	<h2>Analysis</h2>
+	
+	<table style="table-layout:fixed">
+	
+		<tr>
+			<td style="background: #dddddd">Incident title:</td>
+			<td><%out.println(incidentTitle); %></td>
+		</tr>
+		
+		<tr>
+			<td style="background: #dddddd">Incident category:</td>
+			<td><%out.println(incidentCategory); %></td>
+		</tr>
 
-Simulate incident with Root Cause changed
-<form action="lessonsLearnt" method="get">
-Date:
-<input type="text" name="date">
-<br>
-Root cause(s) targeted:
-<input type="text" name="targetCause">
-<br>
-Actions taken:
-<input type="text" name="actions">
-<br>
-Results found:
-<input type="text" name="results">
-<br>
-<%out.println("<input type=\"hidden\" name=\"anAnalysisDatabaseIndex\" value=\""+analysisIndex+"\">"); %>
-<%out.println("<input type=\"hidden\" name=\"anIncidentDatabaseIndex\" value=\""+incidentIndex+"\">"); %>
-<input type="submit" name="lessonsLearnt">
-</form>
-<br>
-<br>
+		<tr>
+			<td style="background: #dddddd">Incident description:</td>
+			<td><%out.println(incidentDescription); %> </td>
+		</tr>
+		
+		<tr>
+			<td style="background: #dddddd">Staff who reported this incident:</td>
+			<td><%out.println(incidentStaffName); %></td>
+		</tr>
 
-List of Incidents
-<form action="ListOfIncidents.jsp">
-<input type="submit" name="incidentList" value="List">
-</form>
+		<tr>
+			<td style="background: #dddddd">Reported possible causes:</td>
+			<td><%out.println(possibleCauses); %></td>
+		</tr>
+				 
+		<tr>
+			<td style="background: #dddddd">Reported possible solutions:</td>
+			<td><%out.println(possibleSolutions); %></td>
+		</tr>
+				
+	</table>
+	
+	<br/>
+	<br/>
+	
+	<div class="container">
+		<h3>Root Cause Analysis</h3>
+		<form action="postAnalysis" method="get">
+			<div class="row">
+			    <div class="col-25">
+			    	<label>Staff name:</label>
+			    </div>
+			    <div class="col-75">
+			    	<input type="text" name="staffNameWriting">
+			    </div>
+			</div>
+			<div class="row">
+			    <div class="col-25">
+			    	<label>Staff id:</label>
+			    </div>
+			    <div class="col-75">
+			    	<input type="text" name="staffIDWriting">
+			    </div>
+			</div>
+			<div class="row">
+			    <div class="col-25">
+			    	<label>Root Cause found:</label>
+			    </div>
+			    <div class="col-75">
+	    			<textarea name="causes" placeholder="Please write the root cause.." style="height:200px"></textarea>
+			    </div>
+			</div>
+		
+		<br>
+		<%out.println("<input type=\"hidden\" name=\"theAnalysisDatabaseIndex\" value=\""+analysisIndex+"\">"); %>
+		<%out.println("<input type=\"hidden\" name=\"theIncidentDatabaseIndex\" value=\""+incidentIndex+"\">"); %>
+		<input type="submit" name="finishAnalysis" value="Submit">
+		</form>
+	</div>
+	<br>
+	<br>
+	
+	<div class="container">
+	
+		<h3>Simulate incident with Root Cause changed</h3>		
+		
+		<form action="lessonsLearnt" method="get">
+			<div class="row">
+			    <div class="col-25">
+			    	<label>Date:</label>
+			    </div>
+			    <div class="col-75">
+			    	<input type="text" name="date">
+			    </div>
+			</div>
+		
+			<div class="row">
+			    <div class="col-25">
+			    	<label>Root cause(s) targeted:</label>
+			    </div>
+			    <div class="col-75">
+			    	<input type="text" name="targetCause">
+			    </div>
+			</div>
+		
+			<div class="row">
+			    <div class="col-25">
+			    	<label>Actions taken:</label>
+			    </div>
+			    <div class="col-75">
+			    	<input type="text" name="actions">
+			    </div>
+			</div>
+		
+			<div class="row">
+			    <div class="col-25">
+			    	<label>Results found:</label>
+			    </div>
+			    <div class="col-75">
+			    	<textarea name="results" placeholder="Please write results found.." style="height:200px"></textarea>
+			    </div>
+			</div>
 
+		<%out.println("<input type=\"hidden\" name=\"anAnalysisDatabaseIndex\" value=\""+analysisIndex+"\">"); %>
+		<%out.println("<input type=\"hidden\" name=\"anIncidentDatabaseIndex\" value=\""+incidentIndex+"\">"); %>
+		<input type="submit" name="lessonsLearnt" value="submit">
+		</form>
+	</div>
+</div>
 </body>
 </html>
