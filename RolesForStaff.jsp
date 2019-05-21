@@ -25,7 +25,6 @@
 	  </div>
 	</div>
 	
-	<!-- if user is branch manager, show this  -->
 	<div class="horizonta_nav">
 	  <a href="ListOfIncidents.jsp">Incidents</a>
 	  <a href="CreateIncidentReport.jsp">Report</a>
@@ -39,7 +38,7 @@
 		<h2>View Roles for Staff</h2>
 		
 		<!-- Staff name, Staff position, Staff id -->
-		<%//int branchManagerAuthorization=1;  %>
+		<%//int branchManagerAuthorization=logAuth.getAuthenticationLevel();  %>
 		<form action="defineRolesForStaff" method="get">
 			<table>
 				<tr>
@@ -65,7 +64,7 @@
 				<%
 				String staffName,staffPosition,staffID,currentRoles;
 				int number;
-						//if(branchManagerAuthorization==1) {
+						if(branchManagerAuthorization==1) {
 							
 						for(int i=0;i<UserDatabase.getUsersList().size();i++) { 
 					    	staffName=UserDatabase.getUsersList().get(i).getName();
@@ -97,7 +96,7 @@
 						<%out.println(currentRoles); %>
 					</td>
 					<td>
-						<%out.println("<input type=\"submit\" name=\""+staffMarker+"\" value=\"Set Roles\">");} %>
+						<%out.println("<input type=\"submit\" name=\""+staffMarker+"\" value=\"Set Roles\">");}} %>
 					</td>
 				</tr>
 			</table>
