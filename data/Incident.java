@@ -24,6 +24,10 @@ public class Incident implements Serializable {
 	
 	private boolean hasAnalysis;
 	private int indexInAnalysisDatabase;
+	
+	private String idOfStaffAssigned;
+
+
 
 
 
@@ -35,6 +39,14 @@ public class Incident implements Serializable {
 		hasAnalysis=false;
 	}
 
+	public String getIdOfStaffAssigned() {
+		return idOfStaffAssigned;
+	}
+
+	public void setIdOfStaffAssigned(String id) {
+		this.idOfStaffAssigned = id;
+	}
+	
 	public enum Category {
 		Regulatory_Law {
 			public String toString() {
