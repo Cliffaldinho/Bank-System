@@ -48,7 +48,7 @@ Search, Sort, Count functionality
 
 Naneth
 All jsp files front end
-Development technologies and environment slides
+Development technologies and environment slides (done)
 UI Design diagram
 
 Zac
@@ -89,20 +89,23 @@ User login (Zac) (presentation)
 User logout (Zac) (presentation)
 User Login Authentication Bean thingy implementation that Tim mentioned (Zac)
 
-Implement Risk Management Strategy (Naneth)
-Define Roles for Staff (Naneth) (presentation)
+Implement Risk Management Strategy (Naneth) (done)
+Define Roles for Staff (Naneth) (presentation) (done by Cliff)
 Test Strategy (Naneth)
 
  */
 
 /**
-(Naneth front end)
+(Naneth front end: will wait for jsp back end code to be done before it gets edited for front end)
 
 CreateIncidentReport.jsp
 ListOfIncidents.jsp
 DetectDuplicates.jsp
 DisplayIncidentReport.jsp
 PerformAnalysis.jsp
+RolesForStaff.jsp (done)
+SetStaffRoles.jsp (done)
+UserLogin.jsp
 
 Please add other jsp files here that's finished back-end, and ready for front end work
  */
