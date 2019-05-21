@@ -5,6 +5,10 @@
     <%@ page import="data.IncidentDatabase" %>
     <%@ page import = "data.User" %>
     <%@ page import = "data.Incident" %>
+
+<%HttpSession aSession = request.getSession();%>
+<jsp:useBean id="logAuth" class="data.StaffBean" scope="session" />
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +19,7 @@
 <body>
 <%
 int incidentsListSize=IncidentDatabase.getIncidentsList().size();
-int branchManagerAuthorization=1;
+int branchManagerAuthorization= logAuth.getAuthenticationLevel;
 %>
 <!--
 List to have
