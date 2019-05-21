@@ -20,7 +20,7 @@ public class LogoutServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		
 		HttpSession aSession = req.getSession(true);
-		StaffBean logAuth = (StaffBean)session.getAttribute("logAuth");
+		StaffBean logAuth = (StaffBean) aSession.getAttribute("logAuth");
 		logAuth.setUsername(null);
 		req.setAttribute("loginError",null);
 		req.getRequestDispatcher("UserLogin.jsp").forward(req,res);
