@@ -12,14 +12,39 @@ import java.io.IOException;
 
 
 /**
+
+Presentation
+Key Features: Zac
+
+System Analysis and Design: 
+Use Case Diagram (Geethma)
+Class Diagram (Cliff) 
+Database Diagram, Component Diagram, Deployment Diagram (Zac)
+UI Diagram (Naneth)
+
+Technologies and Frameworks
+Naneth
+Geethma 
+
+Prototype
+Zac
+Cliff
+Geethma
+*/
+
+//Geethma Contribution
+//https://help.github.com/en/articles/why-are-my-contributions-not-showing-up-on-my-profile
+
+
+/**
 To do for presentation 
 
 Cliff
-Define Roles for Staff functionality
+Define Roles for Staff functionality (done)
+Assign Staff to Incident functionality (done)
 
 Geethma
 Search, Sort, Count functionality
-Assign Staff to Incident functionality
 
 Naneth
 All jsp files front end
