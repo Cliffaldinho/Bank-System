@@ -41,7 +41,7 @@ To do for presentation
 
 Cliff
 Define Roles for Staff functionality (done)
-Assign Staff to Incident functionality (done)
+Assign Staff to Incident functionality 
 
 Geethma
 Search, Sort, Count functionality
