@@ -40,7 +40,7 @@
 
 <%
 int incidentsListSize=IncidentDatabase.getIncidentsList().size();
-int branchManagerAuthorization= logAuth.getAuthenticationLevel;
+int branchManagerAuthorization= logAuth.getAuthenticationLevel();
 %>
 <!--
 List to have
