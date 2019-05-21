@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@ page import="data.*" %><!-- Naneth: was getting error when importing data.Incident -->
+
+<%HttpSession aSession = request.getSession();%>
+<jsp:useBean id="logAuth" class="data.StaffBean" scope="session" />
+
 <!DOCTYPE html>
 <html>
 <head>
