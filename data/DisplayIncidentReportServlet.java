@@ -12,6 +12,8 @@ import java.util.*;
 public class DisplayIncidentReportServlet extends HttpServlet{
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException,ServletException {
+		
+		
 		PrintWriter out = res.getWriter();
 		
 		String tempIncidentChosen;
@@ -32,13 +34,39 @@ public class DisplayIncidentReportServlet extends HttpServlet{
 			}
 			
 			
+		}
+		
+		//out.println(index);
+		
+		if(index!=-1) {
+			req.setAttribute("indexOfIncident", index);
+			req.getRequestDispatcher("DisplayIncidentReport.jsp").forward(req, res);
+		} else {
+			
+			//PrintWriter out =res.getWriter();
+			String theIncidentChosen;
+			
+			int theIndexOfIncident=-1;
+			
+			for(int i=0;i<IncidentDatabase.getIncidentsList().size();i++) {
+				
+				theIncidentChosen=req.getParameter("Handle"+i);
+			
+				if(theIncidentChosen!=null) {
+					theIndexOfIncident=i;
+					break;
+				}
+						
+			}
 
+			out.println(theIndexOfIncident);
+			
+			req.setAttribute("indexForAssignStaff", theIndexOfIncident);
+			
+			req.getRequestDispatcher("AssignStaffToIncident.jsp").forward(req, res);
 			
 		}
 		
-		out.println(index);
-		
-		req.setAttribute("indexOfIncident", index);
-		req.getRequestDispatcher("DisplayIncidentReport.jsp").forward(req, res);
+
 	}
 }
