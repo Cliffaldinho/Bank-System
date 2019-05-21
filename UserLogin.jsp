@@ -17,10 +17,19 @@ User ID
 
 <!-- Compulsory -->
 Password
-<input type="password" name="password">
+<input type="text" name="password">
 <br>
 
 <input type="submit">
 </form>
+<p>
+<c:if test="${not empty loginError}">
+    <script>
+    window.addEventListener("load",function(){
+         alert("${loginError}");
+    }
+    </script>
+</c:if>
+</p>
 </body>
 </html>
