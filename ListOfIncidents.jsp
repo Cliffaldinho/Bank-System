@@ -104,6 +104,7 @@ List to have
 		</div>
 		
 		
+		<br/>
 		<form action="displayIncidentReport" method="get">
 		<%ArrayList<Integer> searchList = (ArrayList<Integer>)request.getAttribute("listOfSearchIndexes");
 		ArrayList<Integer> sortList = (ArrayList<Integer>)request.getAttribute("sortReportsIndexes");
@@ -113,7 +114,7 @@ List to have
 			searchSize = searchList.size();
 		if(sortList!=null)
 			sortSize = sortList.size();
-		
+
 		//COUNT
 		if(searchList==null) {
 			if(IncidentDatabase.getIncidentsList().size()==1)
@@ -128,7 +129,6 @@ List to have
 			else
 				out.println(searchList.size() + " search results");
 		}%>
-		
 		<div>
 		
 			<table>
