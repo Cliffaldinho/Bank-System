@@ -24,8 +24,17 @@ public class UserLoginServlet extends HttpServlet {
 		String userid = req.getParameter("userid");
 		String password = req.getParameter("password");
 		boolean found = false;
-		User userTest = new User("Bob", "11 Test St", "00000000", User.Position.IT, "id1234", "password");
-		UserDatabase.addUsers(userTest);
+		if(UserDatabase.getUsersList().isEmpty()) {
+		User tempUser = new User("Bob Smith","Elm Street","0403526395",User.Position.Financial_Analyst,"f111", "password");
+		User tempUserTwo = new User("Alice Diaz","Avoca Lane","0423436405",User.Position.Internal_Auditor,"a111", "password");
+		User tempUserThree = new User("Henry Stewart","Mahogany Lane","0435243964",User.Position.Data_Processing_Officer,"d111", "password");
+		User tempUserFour = new User("Enzo Rogers","Wilsons Creek","0432364354",User.Position.Branch_Manager,"b111", "password");
+		User tempUserFive = new User ("Chloe Morgan","Chicago Lane","0473423537",User.Position.IT,"i111", "password");
+		UserDatabase.addUsers(tempUser);
+		UserDatabase.addUsers(tempUserTwo);
+		UserDatabase.addUsers(tempUserThree);
+		UserDatabase.addUsers(tempUserFour);
+		UserDatabase.addUsers(tempUserFive);}
 		
 		for (int i = 0; i < UserDatabase.getUsersList().size(); i++){
 			String id = UserDatabase.getUsersList().get(i).getStaffID();
