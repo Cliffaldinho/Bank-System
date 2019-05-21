@@ -2,6 +2,10 @@
     pageEncoding="ISO-8859-1"%>
     <%@ page import="data.UserDatabase" %>
     <%@ page import="data.IncidentDatabase" %>
+
+<%HttpSession aSession = request.getSession();%>
+<jsp:useBean id="logAuth" class="data.StaffBean" scope="session" />
+
 <!DOCTYPE html>
 <html>
 <head>
