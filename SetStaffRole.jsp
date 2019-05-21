@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@ page import="data.UserDatabase" %>
+
+<%HttpSession aSession = request.getSession();%>
+<jsp:useBean id="logAuth" class="data.StaffBean" scope="session" />
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,6 +25,7 @@
 </div>
 
 <!-- if user is branch manager, show this  -->
+<% if (logAuth.getAuthenticationLevel() == 1){ %>
 <div class="horizonta_nav">
   <a href="ccBuff.xml" style="width: 12%">home</a>
   <a href="ccBuff.xml" style="width: 12%">Incidents</a>
@@ -30,6 +35,7 @@
   <a href="http://www.blogtyrant.com/best-about-us-pages/">About Us</a>
   <a href="DataCollection.html">Logout</a>
 </div>
+<% } %>
 <br>
 <br>
 
