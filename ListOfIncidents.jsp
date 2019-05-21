@@ -270,5 +270,8 @@ List to have
 		<table>
 		</table>
 	</div>
+	<form action="userLogout" method="get">
+		<input type="submit" value="Log Out">
+	</form>
 </body>
 </html>
