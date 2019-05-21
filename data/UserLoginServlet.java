@@ -19,6 +19,8 @@ public class UserLoginServlet extends HttpServlet {
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		
+		HttpSession aSession = req.getSession(true);
+		StaffBean logAuth = (StaffBean)session.getAttribute("logAuth");
 		String userid = req.getParameter("userid");
 		String password = req.getParameter("password");
 		boolean found = false;
@@ -31,6 +33,8 @@ public class UserLoginServlet extends HttpServlet {
 			if (userid.equals(id)){
 				if (password.equals(pw)){
 					found = true;
+					logAuth.setUsername(userid);
+					session.setAttribute("logAuth",logAuth);
 					req.getRequestDispatcher("ListOfIncidents.jsp").forward(req,res);
 				}
 			}
