@@ -8,6 +8,9 @@ import java.io.PrintWriter;
 import java.io.IOException;
 import java.util.*;
 
+import javax.swing.JOptionPane;
+import javax.swing.JOptionPane.*;
+
 //receives from UserLogin.jsp
 
 
@@ -20,10 +23,12 @@ public class UserLoginServlet extends HttpServlet {
 		String password = req.getParameter("password");
 		User loginUser = new User();
 		boolean found = false;
+		User userTest = new User("Bob", "11 Test St", "00000000", User.Position.IT, "id1234", "password");
+		UserDatabase.addUsers(userTest);
 		
-		for (int i = 0; i < UserDatabase.getUserList().size(); i++){
-			id = UserDatabase.getUserList().get(i).getStaffID();
-			pw = UserDatabase.getUserList().get(i).getPassword();
+		for (int i = 0; i < UserDatabase.getUsersList().size(); i++){
+			String id = UserDatabase.getUsersList().get(i).getStaffID();
+			String pw = UserDatabase.getUsersList().get(i).getPassword();
 			if (userid.equals(id)){
 				if (password.equals(pw)){
 					found = true;
@@ -32,7 +37,7 @@ public class UserLoginServlet extends HttpServlet {
 			}
 		}	
 		if (!found){
-			alert("Incorrect username or password. Please try again.");
+			JOptionPane.showMessageDialog(null, "Login Fail", "Incorrect username or password. Please try again.", JOptionPane.ERROR_MESSAGE);
 			req.getRequestDispatcher("UserLogin.jsp").forward(req,res);
 		}
 	}
@@ -45,4 +50,4 @@ public class UserLoginServlet extends HttpServlet {
 	
 	
 	
-}
+} 

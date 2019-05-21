@@ -7,6 +7,7 @@ public class User {
 	private String name;
 	private String address;
 	private String contactNumber;
+	private String password;
 	
 	private String staffID;
 	private String rolesToDo;
@@ -47,12 +48,13 @@ public class User {
 		//rolesToDo="None";
 	}
 	
-	public User(String n,String add, String number, Position p, String id) {
+	public User(String n,String add, String number, Position p, String id, String pw) {
 		this.name=n;
 		this.address=add;
 		this.contactNumber=number;
 		this.userPosition=p;
 		this.staffID=id;
+		this.password = pw;
 	}
 	
 	public enum Position {
@@ -124,6 +126,12 @@ public class User {
 		this.userPosition = p;
 	}
 	
-
+	public String getPassword() {
+		return password;
+	}
+	
+	public void setPassword(String p) {
+		password = p;
+	}
 	
 }
