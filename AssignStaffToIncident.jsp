@@ -100,6 +100,9 @@ for(int i=0;i<UserDatabase.getUsersList().size();i++) {
 </table>
 <%out.println("<input type= \"hidden\" name=\"IncidentIndex\" value=\""+theIncidentIndex+"\">"); %>
 </form>
-
+<br>
+<form action="ListOfIncidents.jsp">
+<input type="submit" name="incidentsList" value="List">
+</form>
 </body>
 </html>
