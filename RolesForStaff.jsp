@@ -18,8 +18,7 @@
     <div class="col-75">
       <h1 id="attBuff">SaiYan Bank Incident Management</h1>
     </div>
-    <div 
->
+    <div>
       <img src="images/logo.png" alt="logo" class="logo"/>
     </div>
   </div>
