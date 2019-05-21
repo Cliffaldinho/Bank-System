@@ -15,7 +15,7 @@ import javax.swing.JOptionPane.*;
 
 
 @WebServlet(urlPatterns={"/userLogout"})
-public class UserLoginServlet extends HttpServlet {
+public class LogoutServlet extends HttpServlet {
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		
