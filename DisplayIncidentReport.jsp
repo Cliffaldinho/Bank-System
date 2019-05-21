@@ -121,59 +121,59 @@ Possible solutions
  
 	<div class="container">
 		<h2>Incident Details</h2>
-		<table>
+		<table style="table-layout:fixed">
 			<tr>
-				<th>Incident title:</th>
+				<td style="background: #dddddd">Incident title:</td>
 				<td><%out.println(theTitle); %></td>
 			</tr>
 		
 			<tr>
-				<th>Incident category:</th>
+				<td style="background: #dddddd">Incident category:</td>
 				<td><%out.println(theCategory); %></td>
 			</tr>
 		
 			<tr>
-				<th>Incident date:</th>
+				<td style="background: #dddddd">Incident date:</td>
 				<td><%out.println(theDate); %></td>
 			</tr>
 		
 			<tr>
-				<th>Description of incident:</th>
+				<td style="background: #dddddd">Description of incident:</td>
 				<td><%out.println(theIncidentDescription); %></td>
 			</tr>
 		
 			<tr>
-				<th>Name of staff who reported this incident:</th>
+				<td style="background: #dddddd">Name of staff who reported this incident:</td>
 				<td><%out.println(staffName); %></td>
 			</tr>
 		
 			<tr>
-				<th>Position of staff who reported this incident:</th>
+				<td style="background: #dddddd">Position of staff who reported this incident:</td>
 				<td><%out.println(positionName); %></td>
 			</tr>
 		
 			<tr>
-				<th>ID of staff who reported this incident:</th>
+				<td style="background: #dddddd">ID of staff who reported this incident:</td>
 				<td><%out.println(staffID); %></td>
 			</tr>
 		
 			<tr>
-				<th>Incident keywords:</th>
+				<td style="background: #dddddd">Incident keywords:</td>
 				<td><%out.println(keywords); %></td>
 			</tr>
 		
 			<tr>
-				<th>Priority rating:</th>
+				<td style="background: #dddddd">Priority rating:</td>
 				<td><%out.println(priority); %></td>
 			</tr>
 		
 			<tr>
-				<th>Possible causes:</th>
+				<td style="background: #dddddd">Possible causes:</td>
 				<td><%out.println(possibleCauses); %></td>
 			</tr>
 		
 			<tr>
-				<th>Possible solutions:</th>
+				<td style="background: #dddddd">Possible solutions:</td>
 				<td><%out.println(possibleSolutions); %></td>
 			</tr>
 		
