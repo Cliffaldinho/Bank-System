@@ -89,7 +89,7 @@ User login (Zac) (presentation)
 User logout (Zac) (presentation)
 User Login Authentication Bean thingy implementation that Tim mentioned (Zac)
 
-Implement Risk Management Strategy (Naneth) (done)
+Implement Risk Management Strategy (Naneth) 
 Define Roles for Staff (Naneth) (presentation) (done by Cliff)
 Test Strategy (Naneth)
 
