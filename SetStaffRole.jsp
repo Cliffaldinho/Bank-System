@@ -4,7 +4,7 @@
 
 <%HttpSession aSession = request.getSession();%>
 <jsp:useBean id="logAuth" class="data.StaffBean" scope="session" />
-
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,32 +13,26 @@
 <title>Insert title here</title>
 </head>
 <body>
-<div class="top-banner">
-  <div class="row">
-    <div class="col-75">
-      <h1 id="attBuff">SaiYan Bank Incident Management</h1>
-    </div>
-    <div>
-      <img src="images/logo.png" alt="logo" class="logo"/>
-    </div>
-  </div>
-</div>
-
-<!-- if user is branch manager, show this  -->
-<% if (logAuth.getAuthenticationLevel() == 1){ %>
-<div class="horizonta_nav">
-  <a href="ccBuff.xml" style="width: 12%">home</a>
-  <a href="ccBuff.xml" style="width: 12%">Incidents</a>
-  <a href="ccBuff.xml" style="width: 12%">Roles</a>
-  <a href="ccBuff.xml" style="width: 12%">Accounts</a>
-  <a href="ccBuff.xml" style="width: 12%" class="active">Staff</a>
-  <a href="http://www.blogtyrant.com/best-about-us-pages/">About Us</a>
-  <a href="DataCollection.html">Logout</a>
-</div>
-<% } %>
-<br>
-<br>
-
+	<div class="top-banner">
+	  <div class="row">
+	    <div class="col-75">
+	      <h1 id="attBuff">SaiYan Bank Incident Management</h1>
+	    </div>
+	    <div>
+	      <img src="images/logo.png" alt="logo" class="logo"/>
+	    </div>
+	  </div>
+	</div>
+	
+	<!-- if user is branch manager, show this  -->
+	<div class="horizonta_nav">
+	  <a href="ListOfIncidents.jsp">Incidents</a>
+	  <a href="CreateIncidentReport.jsp">Report</a>
+	  <a href="RolesForStaff.jsp">Roles</a>
+	  <a href="UserLogin.jsp">Logout</a>
+	</div>
+	<br>
+	<br>
 
 	<div class="container">	
 		<h2>Set Staff Role</h2>
