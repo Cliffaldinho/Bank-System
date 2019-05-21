@@ -6,7 +6,6 @@ import java.io.Serializable;
 public class StaffBean implements Serializable {
 
 	private String username;
-	private int authenticationLevel;
 	
 	public StaffBean() {
 		
@@ -19,13 +18,19 @@ public class StaffBean implements Serializable {
 	public String getUsername() {
 		return username;
 	}
-
-
-	public void setAuthenticationLevel(int level) {
-		this.authenticationLevel = level;
-	}
 	
 	public int getAuthenticationLevel() {
+		int authenticationLevel = -1;
+		for (int i = 0; i < UserDatabase.getUsersList().size(); i++){
+			if (UserDatabase.getUsersList().get(i).getStaffID().equals(username)){
+				string clearance = UserDatabase.getUsersList().get(i).getPosition().toString();
+				if (clearance.equals("Branch Manager")){
+					authenticationLevel = 1;
+				} else {
+					authenticationLevel = 0;
+				}
+			}
+		}
 		return authenticationLevel;
 	}
 
