@@ -1,10 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@ page import="data.Incident" %>
+    <%@ taglib
+    prefix="c"
+    uri="http://java.sun.com/jsp/jstl/core" 
+%>
 
 <%HttpSession aSession = request.getSession();%>
 <jsp:useBean id="logAuth" class="data.StaffBean" scope="session" />
-
+     
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,27 +17,48 @@
 <title>User Login</title>
 </head>
 <body>
-<form action="userLogin" method="get">
-<!-- Compulsory -->
-User ID
-<input type="text" name="userid">
-<br>
+	<div class="top-banner">
+	  <div class="row">
+	    <div class="col-75">
+	      <h1 id="attBuff">SaiYan Bank Incident Management</h1>
+	    </div>
+	    <div>
+	      <img src="images/logo.png" alt="logo" class="logo"/>
+	    </div>
+	  </div>
+	</div>
+	
+	<br>
+	<br>
 
-<!-- Compulsory -->
-Password
-<input type="text" name="password">
-<br>
+<div class="container">		
+	<h2>User Login</h2>
+	<form action="userLogin" method="get">
+		<!-- Compulsory -->
+		<label for="userid">User ID</label> <!-- Naneth: was getting error when "Username" was not in a tag -->
+		<input type="text" name="userid">
+		<br>
+		<br>
+		
+		<label for="Password">Password </label><!-- Naneth: was getting error when "Password" was not in a tag -->
+		<input type="text" name="password">
+		<br>
+		<br>
+		
+		<input type="submit" name= "login" value="Login" />  
+		
+	</form>
+	<p>
+	<c:if test="${not empty loginError}">
+	    <script>
+	    window.addEventListener("load",function(){
+	         alert("${loginError}");
+	    }
+	    </script>
+	</c:if>
+	</p>
+</div>
 
-<input type="submit">
-</form>
-<p>
-<c:if test="${not empty loginError}">
-    <script>
-    window.addEventListener("load",function(){
-         alert("${loginError}");
-    }
-    </script>
-</c:if>
-</p>
+
 </body>
 </html>
