@@ -3,7 +3,8 @@
     <%@ page import="data.UserDatabase" %>
     <%@ page import="data.IncidentDatabase" %>
     
-    
+<%HttpSession aSession = request.getSession();%>
+<jsp:useBean id="logAuth" class="data.StaffBean" scope="session" /> 
 
 <!DOCTYPE html>
 <html>
@@ -25,6 +26,7 @@
 </div>
 
 <!-- if user is branch manager, show this  -->
+<% if (logAuth.getAuthenticationLevel() == 1){ %>
 <div class="horizonta_nav">
   <a href="ccBuff.xml" style="width: 12%">home</a>
   <a href="ccBuff.xml" style="width: 12%">Incidents</a>
@@ -34,6 +36,7 @@
   <a href="http://www.blogtyrant.com/best-about-us-pages/">About Us</a>
   <a href="DataCollection.html">Logout</a>
 </div>
+<% } else if (logAuth.getAuthenticationLevel() == 0){ %>
 <!-- else if user is not branch manager, show this  -->
 <div class="horizonta_nav">
   <a href="index.html">home</a>
@@ -42,6 +45,7 @@
   <a href="http://www.blogtyrant.com/best-about-us-pages/">About Us</a>
   <a href="DataCollection.html">Logout</a>
 </div>
+<% } %>
 <br>
 <br>
 
@@ -49,7 +53,7 @@
 		<h2>View Roles for Staff</h2>
 		
 		<!-- Staff name, Staff position, Staff id -->
-		<%//int branchManagerAuthorization=1;  %>
+		<%//int branchManagerAuthorization=logAuth.getAuthenticationLevel();  %>
 		<form action="defineRolesForStaff" method="get">
 			<table>
 				<tr>
@@ -75,7 +79,7 @@
 				<%
 				String staffName,staffPosition,staffID,currentRoles;
 				int number;
-						//if(branchManagerAuthorization==1) {
+						if(branchManagerAuthorization==1) {
 							
 						for(int i=0;i<UserDatabase.getUsersList().size();i++) { 
 					    	staffName=UserDatabase.getUsersList().get(i).getName();
@@ -107,7 +111,7 @@
 						<%out.println(currentRoles); %>
 					</td>
 					<td>
-						<%out.println("<input type=\"submit\" name=\""+staffMarker+"\" value=\"Set Roles\">");} %>
+						<%out.println("<input type=\"submit\" name=\""+staffMarker+"\" value=\"Set Roles\">");}} %>
 					</td>
 				</tr>
 			</table>
