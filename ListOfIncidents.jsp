@@ -17,7 +17,7 @@
 int incidentsListSize=IncidentDatabase.getIncidentsList().size();
 int branchManagerAuthorization=1;
 %>
-<!-- 
+<!--
 List to have
 1. Incident title
 2. Incident category
@@ -64,33 +64,34 @@ if(searchList==null) {
 <th>View More Details</th>
 <%if(branchManagerAuthorization==1) { %>
 <th>Handle Incident</th>
+<th>Staff assigned</th>
 <%} %>
 </tr>
 <% for(int i=0;i<incidentsListSize;i++) {
 	int number=i+1;
-	
+
 	String firstKeyword,secondKeyword,thirdKeyword;
-	
+
 	firstKeyword="N/A";
 	secondKeyword="N/A";
 	thirdKeyword="N/A";
-	
+
 	String keywords="N/A";
-	
+
 	firstKeyword=IncidentDatabase.getIncidentsList().get(i).getIncidentKeywords()[0];
 	keywords=firstKeyword;
-	
+
 	if(IncidentDatabase.getIncidentsList().get(i).getIncidentKeywords().length>1) {
 		secondKeyword=IncidentDatabase.getIncidentsList().get(i).getIncidentKeywords()[1];
 		keywords=firstKeyword+", "+secondKeyword;
 	}
-	
+
 	if(IncidentDatabase.getIncidentsList().get(i).getIncidentKeywords().length>2) {
 		thirdKeyword=IncidentDatabase.getIncidentsList().get(i).getIncidentKeywords()[2];
 		keywords=firstKeyword+", "+secondKeyword+", "+thirdKeyword;
 	}
-	
-	String incidentMarker="Show"+i; 
+
+	String incidentMarker="Show"+i;
 %>
 	<%
 	if(searchList==null && sortList==null) {%>
@@ -106,6 +107,7 @@ if(searchList==null) {
 		<td><%out.println(keywords); %></td>
 		<td><%out.println("<input type=\"submit\" name=\""+incidentMarker+"\" value=\"View Incident\">"); %></td>
 		<td><input type="submit" name="<% out.println(i);%>" value="Handle Incident"></td>
+    <td><%out.println("Assigned staff"); %></td>
 		</tr>
 	<%} else if(searchSize==0 || sortSize==0) {%>
 			<tr>
@@ -123,7 +125,7 @@ if(searchList==null) {
 			</tr>
 			<%break;
 	} else if(sortList.size()!=0) {
-		
+
 		if(sortList!=null) {
 			out.println("Yofirst elem: " + sortList.get(0));
 			out.println("Yosize: " + sortList.size());
@@ -144,11 +146,12 @@ if(searchList==null) {
 			<td><%out.println(keywords); %></td>
 			<td><%out.println("<input type=\"submit\" name=\""+incidentMarker+"\" value=\"View Incident\">"); %></td>
 			<td><input type="submit" name="<% out.println(i);%>" value="Handle Incident"></td>
+      <td><%out.println("Assigned staff"); %></td>
 			</tr>
 		<%	number++;
 		}
 		break;
-	} else { 
+	} else {
 		if(searchList.contains(number-1)) {%>
 			<tr>
 			<td><%out.println(number); %></td>
@@ -162,6 +165,7 @@ if(searchList==null) {
 			<td><%out.println(keywords); %></td>
 			<td><%out.println("<input type=\"submit\" name=\""+incidentMarker+"\" value=\"View Incident\">"); %></td>
 			<td><input type="submit" name="<% out.println(i);%>" value="Handle Incident"></td>
+      <td><%out.println("Assigned staff"); %></td>
 			</tr>
 		<%}
 	}%>
