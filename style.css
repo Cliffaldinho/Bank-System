@@ -7,10 +7,10 @@
 body		
 {			
 	background-attachment: fixed;
-	background-image: url('images/bg2.jpg'); /*image usage permission: image created by Naneth Sayao*/
-	margin-left: 1cm; 
-	margin-right: 1cm;
-	margin-bottom: 3cm; 
+	background-color: #ededed;
+	margin-left: 0cm; 
+	margin-right: 0cm;
+	margin-bottom: 0cm; 
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
 			
@@ -27,19 +27,21 @@ aside
 
 h1 			
 {
-	color: #ff6032; 
+	color: white; 
 	text-transform: uppercase;
-	font-size: 1.4em;
+	font-size: 2em;
 	text-align: center;
+	height: 100px;
+	line-height: 100px;
 }
 
 h2 			
 {
-	color: #ff6032; 
-	text-decoration: underline; 
+	color: #3d3d3d; 
+	text-decoration: none; 
 	text-transform: uppercase;
-	text-align: center;
-	font-size: 1.2em;
+	text-align: left;
+	font-size: 1.6em;
 }
 
 h3 			
@@ -48,6 +50,16 @@ h3
 	clear:left;
 }
 
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.logo{
+	height: 85px;
+	padding-left: 10mm;
+	padding-top: 5mm;
+}
 
 .likeH4 			
 {
@@ -65,35 +77,61 @@ footer
 a:link 		
 {
 	color: #ff492d;
-	padding: 1mm;
+	padding: 0mm;
+	text-decoration: none; 
 }
+
+.top-banner
+{
+	width: 100%;
+	background-color: #3d3d3d;
+	overflow: auto;
+	width: expression(this.width > 400 ? "400px" : true);
+	height: expression(this.height > 400 ? "400px" : true)
+}
+
+.horizonta_nav {
+  width: 100%;
+  background-color: #555;
+  overflow: auto;
+}
+
+.horizonta_nav a {
+  float: left;
+  text-transform: uppercase;
+  padding: 0px;
+  color: white;
+  text-decoration: none;
+  font-size: 17px;
+  width: 20%;
+  text-align: center;
+}
+
+.horizonta_nav a:hover {
+  background-color: #000;
+}
+
+.horizonta_nav a.active {
+  background-color: #a58f21;
+}
+
 
 nav			
 {
 	background-color: #ffb19b;
-	border-style: solid; 
-	border-width: thick; 
-	padding: 5mm;
+	border-style: none; 
+	border-width: none; 
+	padding: 0mm;
+  	width: 100%;
+  	overflow: hidden;
 	border-color: #fcc9ba;
 }
 
 nav a:link 		
 {
-	color: white;
+	color: black;
 	text-transform: uppercase;
-	border-style: solid; 
-	padding: 2mm; 
-	margin: 4mm;
-}
-
-a:visited 	
-{
-	color: #963012;
-}
-
-nav a:visited 	
-{
-	color: #963012;
+	border-style: none; 
 }
 
 a:active 	
@@ -105,13 +143,13 @@ a:active
 
 a:hover
 {
-	font-size: 120%;
+	text-decoration: underline; 
 }
 
 nav a:hover 	
 {
-	font-size: 120%;
 	color: white;
+	text-decoration: underline; 
 }
 
 .floatL 	
@@ -133,19 +171,85 @@ nav a:hover
 
 div
 {
-	border-style: solid; 
-	border-width: thin; 
-	margin: auto;
-	border-color: #fcc9ba
 }
 
 #container
 {
+	border-radius: 5px;
+	background-color: #f2f2f2;
 	display: table;
 	border-style: solid; 
 	border-width: thin; 
 	margin: auto;
-	border-color: #fcc9ba
+	border-color: #fcc9ba;
+  	border-radius: 5px;
+	padding: 20px;
+}
+
+.container
+{
+	border-radius: 5px;
+	background-color: #f2f2f2;
+	padding: 20px;
+	border-style: solid; 
+	border-width: thin; 
+	margin: 20px;
+	border-color: #fcc9ba;
+	width: expression(this.width > 400 ? "400px" : true);
+	height: expression(this.height > 400 ? "400px" : true)
+}
+
+
+label {
+	padding: 12px 12px 12px 0;
+	display: inline-block;
+}
+
+
+.col-25 {
+	float: left;
+	width: 25%;
+	margin-top: 6px;
+}
+
+.col-75 {
+	float: left;
+	width: 75%;
+	margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.row2{
+	border-radius: 5px;
+	background-color: #f2f2f2;
+	padding-left: 20px;
+	border-style: solid; 
+	border-width: thin; 
+	margin: 2px;
+	border-color: #fcc9ba;
+	width: expression(this.width > 400 ? "400px" : true);
+	height: expression(this.height > 400 ? "400px" : true)
+}
+
+/* Clear floats after the columns */
+.row2:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .col-25, .col-75, input[type=submit] {
+    width: 100%;
+    margin-top: 0;
+  }
 }
 
 .innerDivinationPadding
@@ -165,11 +269,17 @@ select
 	padding-left: 2mm;
 }
 
-input[type='text'], input[type='password']
-{
-	font-size: .9em;
+input[type='text'], input[type='password'], select, textarea {
+  	font-size: .9em;
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 	padding-left: 2mm;
+	margin: 8px 0;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 12px;
+	border: 2px solid #d15714;
+	border-radius: 4px;
+	resize: vertical;
 }
 
 input[type='number']
@@ -190,18 +300,23 @@ input[type='radio']
 	zoom: 1.5;
 }
 
-input[type='button']
+
+input[type='submit'], [type='button']
 {
-	font-size: 1.5em;
+	font-size: 1.2em;
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-	padding: 0px;
+	padding: 12px 20px;
+	margin: 8px 0;
+	box-sizing: border-box;
+	background-color: #a58f21;
+	color: white;
+  	border: none;
+	border-radius: 4px;
+  	cursor: pointer;
 }
 
-input[type='submit']
-{
-	font-size: 1.5em;
-	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-	padding: 0px;
+input[type=submit]:hover {
+  background-color: #b24010;
 }
 
 input[type='reset']
@@ -257,21 +372,40 @@ table
 	table-layout: fixed;
 	width: 100%;
 	border-collapse: collapse;
-	border: 3px solid purple;
+	border-style: solid; 
+	margin: 3px;
+	border-color: #3d3d3d;
+	width: expression(this.width > 400 ? "400px" : true);
+	height: expression(this.height > 400 ? "400px" : true)
+	
 }
 
 th
 {
 	padding: 0px;
-	border: 3px solid purple;
-	background-color: #e3eff2;
+	border-radius: 5px;
+	background-color: #3d3d3d;
+	color: white;
+	padding: 20px;
+	border-style: solid; 
+	border-width: thin; 
+	margin: 20px;
+	border-color: #555;
+	width: expression(this.width > 400 ? "400px" : true);
+	height: expression(this.height > 400 ? "400px" : true)
 }
 
 td
 {
-	border: 3px solid purple;
+	border-style: solid; 
+	border-width: thin; 
+	margin: 20px;
+	border-color: #555;
+	border-radius: 5px;
 	text-align: center;
 	padding: 0px;
+	width: expression(this.width > 400 ? "400px" : true);
+	height: expression(this.height > 400 ? "400px" : true)
 }
 
 .available
