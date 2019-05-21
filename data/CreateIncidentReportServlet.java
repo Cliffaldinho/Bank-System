@@ -114,6 +114,7 @@ public class CreateIncidentReportServlet extends HttpServlet {
 		
 		//temporarily creating a user here for practice
 		//in real tea user should be gotten straight from database
+		if(UserDatabase.getUsersList().isEmpty()) {
 		User tempUser = new User("Bob Smith","Elm Street","0403526395",User.Position.Financial_Analyst,"f111");
 		User tempUserTwo = new User("Alice Diaz","Avoca Lane","0423436405",User.Position.Internal_Auditor,"a111");
 		User tempUserThree = new User("Henry Stewart","Mahogany Lane","0435243964",User.Position.Data_Processing_Officer,"d111");
@@ -123,7 +124,7 @@ public class CreateIncidentReportServlet extends HttpServlet {
 		UserDatabase.addUsers(tempUserTwo);
 		UserDatabase.addUsers(tempUserThree);
 		UserDatabase.addUsers(tempUserFour);
-		UserDatabase.addUsers(tempUserFive);
+		UserDatabase.addUsers(tempUserFive);}
 		//above few lines of code don't count in this class
 		
 		aStaffID=req.getParameter("theStaffID");
