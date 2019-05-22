@@ -37,11 +37,12 @@
 int incidentsListSize=IncidentDatabase.getIncidentsList().size();
 int branchManagerAuthorization= logAuth.getAuthenticationLevel();
 %>
-	<!-- if user is branch manager, show this  -->
+	
 	<div class="horizonta_nav">
 	  <a href="ListOfIncidents.jsp" class="active">Incidents</a>
 	  <a href="CreateIncidentReport.jsp">Report</a>
-	  
+		
+	  <!-- if user is branch manager, show this  -->
 	  <!-- Change 2: set these 2 lines code for RolesForStaff.jsp -->
 	  <!-- for all pages -->
 	 <%if(branchManagerAuthorization==1) {%>
