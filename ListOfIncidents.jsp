@@ -144,8 +144,8 @@ List to have
 			<th>Keywords</th>
 			<th>Details</th>
 			<%if(branchManagerAuthorization==1) { %>
+			<th>Staff Assigned</th>
 			<th>Handle Incident</th>
-			<th>Staff assigned</th>
 			<%} %>
 			</tr>
 			<% for(int i=0;i<incidentsListSize;i++) {
@@ -173,6 +173,20 @@ List to have
 				}
 			
 				String incidentMarker="Show"+i;
+				
+				
+				String handleIncident="Handle"+i;
+				
+				String theStaffAssigned,setNoStaff;
+				String tempStaffAssigned;
+				setNoStaff="No staff assigned";
+				tempStaffAssigned=IncidentDatabase.getIncidentsList().get(i).getIdOfStaffAssigned();
+				if(tempStaffAssigned==null) {
+					theStaffAssigned=setNoStaff;
+				} else {
+					
+					theStaffAssigned=UserDatabase.findUserObjectByStaffID(tempStaffAssigned).getName();
+				}
 			%>
 				<%
 				if(searchList==null && sortList==null) {%>
@@ -187,8 +201,10 @@ List to have
 					<td><%out.println(IncidentDatabase.getIncidentsList().get(i).getUserReportedIncident().getPosition());%></td>
 					<td><%out.println(keywords); %></td>
 					<td><%out.println("<input type=\"submit\" name=\""+incidentMarker+"\" value=\"View Incident\">"); %></td>
-					<td><input type="submit" name="<% out.println(i);%>" value="Handle Incident"></td>
-			    <td><%out.println("Assigned staff"); %></td>
+					<%if(branchManagerAuthorization==1) { %>
+						<td><%out.println(theStaffAssigned); %></td>
+						<td><%out.println("<input type=\"submit\" name=\""+handleIncident+"\" value=\"Handle Incident\">"); %></td>
+					<%} %>
 					</tr>
 				<%} else if(searchSize==0 || sortSize==0) {%>
 						<tr>
@@ -201,8 +217,10 @@ List to have
 						<td></td>
 						<td></td>
 						<td></td>
-						<td></td>
-						<td></td>
+						<%if(branchManagerAuthorization==1) { %>
+							<td></td>
+							<td></td>
+						<%} %>
 						</tr>
 						<%break;
 				} else if(sortList.size()!=0) {
@@ -226,8 +244,10 @@ List to have
 						<td><%out.println(IncidentDatabase.getIncidentsList().get(index).getUserReportedIncident().getPosition());%></td>
 						<td><%out.println(keywords); %></td>
 						<td><%out.println("<input type=\"submit\" name=\""+incidentMarker+"\" value=\"View Incident\">"); %></td>
-						<td><input type="submit" name="<% out.println(i);%>" value="Handle Incident"></td>
-			      <td><%out.println("Assigned staff"); %></td>
+						<%if(branchManagerAuthorization==1) { %>
+							<td><%out.println(theStaffAssigned); %></td>
+							<td><%out.println("<input type=\"submit\" name=\""+handleIncident+"\" value=\"Handle Incident\">"); %></td>
+						<%} %>
 						</tr>
 					<%	number++;
 					}
@@ -245,8 +265,10 @@ List to have
 						<td><%out.println(IncidentDatabase.getIncidentsList().get(i).getUserReportedIncident().getPosition());%></td>
 						<td><%out.println(keywords); %></td>
 						<td><%out.println("<input type=\"submit\" name=\""+incidentMarker+"\" value=\"View Incident\">"); %></td>
-						<td><input type="submit" name="<% out.println(i);%>" value="Handle Incident"></td>
-			      <td><%out.println("Assigned staff"); %></td>
+						<%if(branchManagerAuthorization==1) { %>
+							<td><%out.println(theStaffAssigned); %></td>
+							<td><%out.println("<input type=\"submit\" name=\""+handleIncident+"\" value=\"Handle Incident\">"); %></td>
+						<%} %>
 						</tr>
 					<%}
 				}%>
