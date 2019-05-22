@@ -160,11 +160,12 @@
 						</td>
 					</tr>
 			</table>		
-			
+			<%out.println("<input type= \"hidden\" name=\"StaffIndex\" value=\""+staff+"\">"); %>
 			<input type="submit" name="setTheRole" value="Set Role"><br>
+				
 		</form>	
 		
-		<%out.println("<input type= \"hidden\" name=\"StaffIndex\" value=\""+staff+"\">"); %>
+	
 	</div>
 </body>
 </html>
