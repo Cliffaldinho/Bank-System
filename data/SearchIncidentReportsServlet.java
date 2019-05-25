@@ -18,7 +18,7 @@ public class SearchIncidentReportsServlet extends HttpServlet{
 		String searchTopic = req.getParameter("searchTopic");
 		String search = req.getParameter("search");
 		int index = 0;
-		
+
 		switch(searchTopic)
 		{
 			case "Incident":
