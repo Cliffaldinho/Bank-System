@@ -28,20 +28,34 @@
 	  </div>
 	</div>
 	
-	<!-- if user is branch manager, show this  -->
+	
+	<!-- To Naneth: PLease change the RolesForStaff.jsp to something only Branch Manager can access -->
+	<!-- Through the below code change -->
+	
+	<!-- Change 1: shift two lines of code up here -->
+	<%
+int incidentsListSize=IncidentDatabase.getIncidentsList().size();
+int branchManagerAuthorization= logAuth.getAuthenticationLevel();
+%>
+	
 	<div class="horizonta_nav">
 	  <a href="ListOfIncidents.jsp" class="active">Incidents</a>
 	  <a href="CreateIncidentReport.jsp">Report</a>
+		
+	  <!-- if user is branch manager, show this  -->
+	  <!-- Change 2: set these 2 lines code for RolesForStaff.jsp -->
+	  <!-- for all pages -->
+	 <%if(branchManagerAuthorization==1) {%>
 	  <a href="RolesForStaff.jsp">Roles</a>
+	  <%} %>
 	  <a href="UserLogin.jsp">Logout</a>
+	  
+	  
 	</div>
 	<br>
 	<br>
 
-<%
-int incidentsListSize=IncidentDatabase.getIncidentsList().size();
-int branchManagerAuthorization= logAuth.getAuthenticationLevel();
-%>
+
 <!--
 List to have
 1. Incident title
