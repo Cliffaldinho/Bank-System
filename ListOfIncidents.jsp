@@ -238,11 +238,6 @@ List to have
 						</tr>
 						<%break;
 				} else if(sortList.size()!=0) {
-			
-					if(sortList!=null) {
-						out.println("Yofirst elem: " + sortList.get(0));
-						out.println("Yosize: " + sortList.size());
-					}
 					int index;
 					for(int j=0; j<sortList.size();j++)
 					{%>
