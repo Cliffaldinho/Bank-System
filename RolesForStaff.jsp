@@ -102,6 +102,11 @@
 			</table>
 		</form>
 		
+		<!--Save users to external file  -->
+		<form action="TemporarySaveUserDatabaseServlet" method="get">
+		<input type="submit" value="Save User Database">
+		</form>
+		
 		<form action="ListOfIncidents.jsp">
 			<input type="submit" name="theIncidentsList" value="List">
 		</form>
