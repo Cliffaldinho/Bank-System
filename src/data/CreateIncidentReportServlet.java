@@ -49,11 +49,8 @@ public class CreateIncidentReportServlet extends HttpServlet {
 		//Set Incident Title
 		title=req.getParameter("incidentTitle");
 		anIncident.setIncidentTitle(title);
-		if (anIncident.equals("")) {
-			req.setAttribute("errorType", "title");
-			req.getRequestDispatcher("CreateIncidentReport.jsp").forward(req,res);
-			return;
-		}
+		
+
 
 		//--------------------------------------------------------------------------------------------
 		
@@ -61,59 +58,40 @@ public class CreateIncidentReportServlet extends HttpServlet {
 		String tempCategory;
 		tempCategory=req.getParameter("incidentCategory");
 		if(tempCategory!=null) {
-			if (tempCategory.equalsIgnoreCase("regulatoryLaw")) {
+	
+			
+			switch(tempCategory) {
+			
+			case "regulatoryLaw":
 				anIncident.setIncidentCategory(Incident.Category.Regulatory_Law);
-			} 
-			else if (tempCategory.equalsIgnoreCase("cyberSecurity")) {
+				break;
+			case "cyberSecurity":
 				anIncident.setIncidentCategory(Incident.Category.Cyber_Security);
-			}
-			else if (tempCategory.equalsIgnoreCase("humanIssues")) {
+				break;
+			case "humanIssues":
 				anIncident.setIncidentCategory(Incident.Category.Human_Issues);
-			}
-			else if (tempCategory.equalsIgnoreCase("bankEquipment")) {
+				break;
+			case "bankEquipment":
 				anIncident.setIncidentCategory(Incident.Category.Bank_Equipment);
-			}
-			else if (tempCategory.equalsIgnoreCase("bankAlgorithms")) {
+				break;
+			case "bankAlgorithms":
 				anIncident.setIncidentCategory(Incident.Category.Bank_Algorithms);
-			} 
-			else if (tempCategory.equalsIgnoreCase("other")) {
+				break;
+			case "other":
 				anIncident.setIncidentCategory(Incident.Category.Other);
+				break;
+			default:
+				break;
+			
 			}
 		}
 		
-		//----------------------------------------------------------------------------------------------
-		
-		//Set Incident Date
-		String tempDay;
-		String deleteNonNum;
-		tempDay = req.getParameter("incidentDay");
-		deleteNonNum=tempDay.replaceAll("[^0-9.]", "");
-		anIncidentDate = Integer.parseInt(deleteNonNum);
-		
-		String tempMonth,tempMonthTwo;
-		tempMonth = req.getParameter("incidentMonth");
-		tempMonthTwo=tempMonth.substring(0,1).toUpperCase()+tempMonth.substring(1);
-		anIncidentMonth = tempMonthTwo.replaceAll("\\s+", "");
-		
-		
-		String tempYear,tempYearTwo;
-		tempYear=req.getParameter("incidentYear");
-		tempYearTwo = tempYear.replaceAll("\\s+", "");
-		anIncidentYear=Integer.parseInt(tempYearTwo);
-		
-		anIncident.setIncidentDateOfMonth(anIncidentDate);
-		anIncident.setIncidentMonth(anIncidentMonth);
-		anIncident.setIncidentYear(anIncidentYear);
-		
-		//----------------------------------------------------------------------------------------------------
 		
 		//Set Incident Description
 		anIncidentDescription=req.getParameter("incidentDescription");
-		if (anIncidentDescription.equals("")) {
-			req.setAttribute("errorType", "description");
-			req.getRequestDispatcher("CreateIncidentReport.jsp").forward(req,res);
-			return;
-		}
+		
+
+		
 		anIncident.setDescriptionOfIncident(anIncidentDescription);
 		
 		//------------------------------------------------------------------------------------------------------
@@ -121,95 +99,31 @@ public class CreateIncidentReportServlet extends HttpServlet {
 
 		//Set User which reported the Incident
 		
-		
-		aStaffID=req.getParameter("theStaffID");
-		if (aStaffID.equals("")) {
-			req.setAttribute("errorType", "id");
-			req.getRequestDispatcher("CreateIncidentReport.jsp").forward(req,res);
-			return;
-		}
-		
-		nameOfStaff = req.getParameter("staffName");
-		if (nameOfStaff.equals("")) {
-			req.setAttribute("errorType", "name");
-			req.getRequestDispatcher("CreateIncidentReport.jsp").forward(req,res);
-			return;
-		}
-		String splitName[]=nameOfStaff.split(" ");
-		String firstName=splitName[0];
-		String secondName="none";
-		if(splitName.length>1) {
-			secondName=splitName[1];
-		}
-		
-		String tempPosition;
-		String position="none";
-		tempPosition=req.getParameter("staffPosition");
-		if(tempPosition!=null) {
-			if(tempPosition.equalsIgnoreCase("branchManager")) {
-				position=User.Position.Branch_Manager.toString();
-				
-			} else if (tempPosition.equalsIgnoreCase("DPO")) {
-				position=User.Position.Data_Processing_Officer.toString();
-				
-			} else if (tempPosition.equalsIgnoreCase("IT")) {
-				position=User.Position.IT.toString();
-				
-			} else if (tempPosition.equalsIgnoreCase("finance")) {
-				position=User.Position.Financial_Analyst.toString();
-				
-			} else if (tempPosition.equalsIgnoreCase("audit")) {
-				position=User.Position.Internal_Auditor.toString();
-			} 
-			
-		}
-		
-		
+		HttpSession aSession=req.getSession();
+		StaffBean staff =(StaffBean) aSession.getAttribute("logAuth");
 
-		if(aStaffID!=null&&nameOfStaff!=null&&!position.equalsIgnoreCase("none")) {
-			
-		int tempIndex=UserDatabase.findUserIndexByStaffID(aStaffID);
-		boolean verify=false;
+		//String theUserName=staff.getUsername();
+		//out.println("The user id is"+theUserName);
 		
-		if(	UserDatabase.getUserByIndex(tempIndex).getPosition().toString().equalsIgnoreCase(position)&&
-				(	(UserDatabase.getUserByIndex(tempIndex).getName().toLowerCase().contains(firstName.toLowerCase()))||
-				(UserDatabase.getUserByIndex(tempIndex).getName().toLowerCase().contains(secondName.toLowerCase()))	)	) {
-			verify=true;
-		}
-		
-		if(verify==true) {
-		anIncident.setUserReportedIncident(UserDatabase.getUserByIndex(tempIndex));
-		//out.println("yes");
-		} else {
-			req.setAttribute("errorType", "verified");
-			req.getRequestDispatcher("CreateIncidentReport.jsp").forward(req,res);
-			return;
-		}
-		
-		}
+		User user;
+		user=staff.getUserByUsername();
+		anIncident.setUserReportedIncident(user);
 		
 		//-----------------------------------------------------------------------------------------------------------
 		
 		//Set Incident Keywords
-		
-		String tempKeywordsOne,tempKeywordsTwo,tempKeywordsThree,tempKeywordsFour,tempKeywordsFive;
-		tempKeywordsOne=req.getParameter("incidentKeywords");
-		if (tempKeywordsOne.equals("")) {
-			req.setAttribute("errorType", "keywords");
-			req.getRequestDispatcher("CreateIncidentReport.jsp").forward(req,res);
-			return;
-		}
-		tempKeywordsTwo=tempKeywordsOne.replaceAll("\\,", " ");
-		out.println("Two is"+tempKeywordsTwo);
-		tempKeywordsThree=tempKeywordsTwo.replaceAll("\\.", " ");
-		out.println("Three is "+tempKeywordsThree);
-		tempKeywordsFour=tempKeywordsThree.replaceAll("\\s+"," ");
-		out.println("Four is "+tempKeywordsFour);
-		tempKeywordsFive=tempKeywordsFour.toLowerCase();
-		out.println("Five is "+tempKeywordsFive);
-		someIncidentKeywords=tempKeywordsFive.split(" ");
-		anIncident.setIncidentKeywords(someIncidentKeywords);
 
+		String receiveKeywords,removeCommas,removeDots,removeMultipleSpaces,allLowerCases;
+		receiveKeywords = req.getParameter("incidentKeywords");
+		removeCommas=receiveKeywords.replaceAll("\\,", " ");
+		removeDots=removeCommas.replaceAll("\\.", " ");
+		removeMultipleSpaces=removeDots.replaceAll("\\s+"," ");
+		allLowerCases=removeMultipleSpaces.toLowerCase();
+		someIncidentKeywords=allLowerCases.split(" ");
+		anIncident.setIncidentKeywords(someIncidentKeywords);
+		
+		
+		
 		//--------------------------------------------------------------------------------------------------------------
 		
 		//Set Possible Causes for Incident
@@ -324,62 +238,6 @@ public class CreateIncidentReportServlet extends HttpServlet {
 						}
 						
 						
-						/**
-						//has 3 out of 5 keyword matches
-						first=someIncidentKeywords[0];
-						
-						if(someIncidentKeywords.length>1) {
-							second = someIncidentKeywords[1];
-						}
-						
-						if(someIncidentKeywords.length>2) {
-							
-							third=someIncidentKeywords[2];
-						}
-						
-						if(someIncidentKeywords.length>3) {
-							fourth=someIncidentKeywords[3];
-						}
-						
-						if(someIncidentKeywords.length>4) {
-							fifth=someIncidentKeywords[4];
-						}
-						
-						for(int j=0;j<IncidentDatabase.getIncidentsList().get(i).getIncidentKeywords().length;j++) {
-							if(IncidentDatabase.getIncidentsList().get(i).getIncidentKeywords()[j].equalsIgnoreCase("first")) {
-								matchOne=1;
-							}
-							
-							if(IncidentDatabase.getIncidentsList().get(i).getIncidentKeywords()[j].equalsIgnoreCase("second")) {
-								matchTwo=1;
-							}
-							
-							if(IncidentDatabase.getIncidentsList().get(i).getIncidentKeywords()[j].equalsIgnoreCase("third")) {
-								matchThree=1;
-							}
-							
-							if(IncidentDatabase.getIncidentsList().get(i).getIncidentKeywords()[j].equalsIgnoreCase("fourth")) {
-								matchFour=1;
-							}
-							
-							if(IncidentDatabase.getIncidentsList().get(i).getIncidentKeywords()[j].equalsIgnoreCase("fifth")) {
-								matchFive=1;
-							}
-						}
-					
-						totalMatch=matchOne+matchTwo+matchThree+matchFour+matchFive;
-						
-						//then it's a duplicate
-						if(totalMatch>2) {
-							possibleDuplicate=true;
-							if(possibleDuplicate==true) {
-								duplicatedIndex=i;
-								break;
-							}
-						}
-						
-						
-					//possibleDuplicate=true;*/
 					}
 				}
 				
@@ -398,55 +256,13 @@ public class CreateIncidentReportServlet extends HttpServlet {
 		} else {
 			IncidentDatabase.getIncidentsList().add(anIncident);
 			
-			try(FileWriter fw = new FileWriter(getServletContext().getRealPath("./saves/incidents.dat"), true);
-				BufferedWriter bw = new BufferedWriter(fw);
-				PrintWriter cout = new PrintWriter(bw))
-			{
-				cout.println("Title: " + anIncident.getIncidentTitle());
-				cout.println("Category: " + anIncident.getIncidentCategory());
-				cout.print("Keywords: ");
-				for(String s: anIncident.getIncidentKeywords())
-				{
-					cout.print(s + ", ");
-				}
-				cout.println();
-				cout.println("Year: " + anIncident.getIncidentYear());
-				cout.println("Month: " + anIncident.getIncidentMonth());
-				cout.println("Day: " + anIncident.getIncidentDateOfMonth());
-				cout.println("Reported by: " + aStaffID);
-				cout.println();
-			} catch (IOException e) {
-				out.println("Exception when writing file.");
-			}
+
 			req.getRequestDispatcher("ListOfIncidents.jsp").forward(req,res);
 			//out.println("original");
 		}
+	
 		
-		
-		
-		
-		out.println("finish");
-		
-		try{
-			FileOutputStream fout = new FileOutputStream(getServletContext().getRealPath("./saves/incidents.dat"));
-			ObjectOutputStream oout = new ObjectOutputStream(fout);
-			oout.writeObject(IncidentDatabase.getIncidentsList());
-			oout.close();
-			fout.close();
-		}
-		catch(Exception ex){
-			System.out.println("An exception has occurred.");
-		}
-		try{
-			FileOutputStream fout = new FileOutputStream(getServletContext().getRealPath("./saves/duplicates.dat"));
-			ObjectOutputStream oout = new ObjectOutputStream(fout);
-			oout.writeObject(IncidentDatabase.getDuplicatesList());
-			oout.close();
-			fout.close();
-		}
-		catch(Exception e){
-			System.out.println("An exception has occurred.");
-		}
+
 		
 	}
 	

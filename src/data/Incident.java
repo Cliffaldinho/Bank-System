@@ -1,6 +1,9 @@
 package data;
 import java.util.*;
 import java.io.Serializable;
+import java.text.*;
+import java.time.format.DateTimeFormatter;
+import java.sql.Timestamp;
 
 //is now a JavaBean
 public class Incident implements Serializable {
@@ -26,6 +29,8 @@ public class Incident implements Serializable {
 	private int indexInAnalysisDatabase;
 	
 	private String idOfStaffAssigned;
+	
+	private Timestamp ts;
 
 
 
@@ -37,8 +42,23 @@ public class Incident implements Serializable {
 	public Incident() {
 		duplicateCheckInProcess=false;
 		hasAnalysis=false;
+		setTimeStamp();
+		setIncidentDateOfMonth();
+		setIncidentMonth();
+		setIncidentYear();
 	}
 
+
+	public void setTimeStamp() {
+		Date date = new Date();
+		ts = new Timestamp(date.getTime()); 
+	}
+	
+	public Date getDateFromTimeStamp() {
+		Date date = new Date(ts.getTime());
+		return date;
+	}
+	
 	public String getIdOfStaffAssigned() {
 		return idOfStaffAssigned;
 	}
@@ -158,20 +178,28 @@ public class Incident implements Serializable {
 	public String getIncidentMonth() {
 		return incidentMonth;
 	}
-	public void setIncidentMonth(String month) {
-		this.incidentMonth = month;
+	public void setIncidentMonth() {
+		
+		incidentMonth=new SimpleDateFormat("MMM").format(ts.getTime());
+		
 	}
+	
+	
 	public int getIncidentYear() {
 		return incidentYear;
 	}
-	public void setIncidentYear(int year) {
-		this.incidentYear = year;
+	public void setIncidentYear() {
+		String tempIncidentYear;
+		tempIncidentYear = new SimpleDateFormat("yyyy").format(ts.getTime());
+		incidentYear=Integer.parseInt(tempIncidentYear);
 	}
 	public int getIncidentDateOfMonth() {
 		return incidentDateOfMonth;
 	}
-	public void setIncidentDateOfMonth(int dateOfMonth) {
-		this.incidentDateOfMonth = dateOfMonth;
+	public void setIncidentDateOfMonth() {
+		String tempIncidentDateOfMonth;
+		tempIncidentDateOfMonth = new SimpleDateFormat("dd").format(ts.getTime());
+		incidentDateOfMonth=Integer.parseInt(tempIncidentDateOfMonth);
 	}
 	public String getDescriptionOfIncident() {
 		return descriptionOfIncident;

@@ -6,13 +6,16 @@ import java.io.Serializable;
 public class StaffBean implements Serializable {
 
 	private String username;
-	
+
 	public StaffBean() {
 		
 	}
 	
 	public void setUsername(String user) {
 		this.username = user;
+		//User userObject = UserDatabase.findUserObjectByStaffID(username);
+		//staffName=userObject.getName();
+		//staffPosition=userObject.getPosition();
 	}
 	
 	public String getUsername() {
@@ -33,7 +36,13 @@ public class StaffBean implements Serializable {
 		}
 		return authenticationLevel;
 	}
-
+	
+	public User getUserByUsername() {
+		User user=UserDatabase.findUserObjectByStaffID(username);
+		return user;
+	}
+	
+	
 
 
 

@@ -102,7 +102,9 @@ public class UserLoginServlet extends HttpServlet {
 				if (password.equals(pw)){
 					found = true;
 					logAuth.setUsername(userid);
+			
 					aSession.setAttribute("logAuth",logAuth);
+					
 					req.getRequestDispatcher("ListOfIncidents.jsp").forward(req,res);
 				}
 			}
