@@ -2,8 +2,10 @@ package data;
 import java.util.*;
 import java.io.Serializable;
 import java.text.*;
-import java.time.format.DateTimeFormatter;
+//import java.time.format.DateTimeFormatter;
 import java.sql.Timestamp;
+import java.time.*;
+import java.time.temporal.ChronoUnit;
 
 //is now a JavaBean
 public class Incident implements Serializable {
@@ -49,15 +51,88 @@ public class Incident implements Serializable {
 	}
 
 
-	public void setTimeStamp() {
-		Date date = new Date();
-		ts = new Timestamp(date.getTime()); 
+	public int detectDuplicate() {
+		//boolean possibleDuplicate=false;
+		int duplicateIndex=-1;
+		
+		//traverse through Incident Database
+		for(int i=0;i<IncidentDatabase.getIncidentsList().size();i++) {
+			
+			//get Incident Category of database incident
+			Category databaseIncidentCategory=IncidentDatabase.getIncidentsList().get(i).getIncidentCategory();
+			
+			//get incident date of database incident
+			Timestamp databaseIncidentTimestamp=IncidentDatabase.getIncidentsList().get(i).getTimeStamp();
+			LocalDateTime databaseIncidentDateTime=databaseIncidentTimestamp.toLocalDateTime();
+			LocalDate databaseIncidentDate=databaseIncidentDateTime.toLocalDate();
+			
+			//get incident date of current incident
+			LocalDateTime incidentDateTime=ts.toLocalDateTime();
+			LocalDate incidentDate=incidentDateTime.toLocalDate();
+			
+			//compare amount of days between current incident and database incident, to check if it's within a week.
+			long days,absoluteDays;
+			days=ChronoUnit.DAYS.between(incidentDate, databaseIncidentDate);
+			absoluteDays=Math.abs(days);
+			boolean isInAWeekRange;
+			if(absoluteDays<7) {
+				isInAWeekRange=true;
+			} else {
+				isInAWeekRange=false;
+			}
+
+			String[] databaseIncidentKeywords=IncidentDatabase.getIncidentsList().get(i).getIncidentKeywords();
+			
+			//if incident category matches database incident, and days between both incidents are within a week
+			if(incidentCategory==databaseIncidentCategory&&isInAWeekRange==true) {
+				
+				//check if there is at least one keyword matching
+				outerloop:
+				for(int a=0;a<incidentKeywords.length;a++) {
+					
+					for(int b=0;b<databaseIncidentKeywords.length;b++) {
+						
+						//if there is at least one keyword matching
+						if(incidentKeywords[a].equalsIgnoreCase(databaseIncidentKeywords[b])) {
+							
+							//take note of index of orginal incident in database
+							duplicateIndex=i;
+							
+							//break whole loop
+							break outerloop;
+						}
+						
+					}
+					
+				}
+				
+			
+			} 
+			
+		}
+		
+		//returns index of duplicate;
+		//no duplicate if -1
+		//has duplicate if anything else
+		return duplicateIndex;
+		
+		
 	}
 	
+	public void setTimeStamp() {
+		
+		ts = new Timestamp(System.currentTimeMillis());
+		
+	}
+	
+	public Timestamp getTimeStamp() {
+		return ts;
+	}
 	public Date getDateFromTimeStamp() {
 		Date date = new Date(ts.getTime());
 		return date;
 	}
+	
 	
 	public String getIdOfStaffAssigned() {
 		return idOfStaffAssigned;
@@ -180,7 +255,9 @@ public class Incident implements Serializable {
 	}
 	public void setIncidentMonth() {
 		
-		incidentMonth=new SimpleDateFormat("MMM").format(ts.getTime());
+		LocalDateTime datetime =ts.toLocalDateTime();
+		LocalDate date = datetime.toLocalDate();
+		incidentMonth=date.getMonth().toString();
 		
 	}
 	
@@ -189,17 +266,21 @@ public class Incident implements Serializable {
 		return incidentYear;
 	}
 	public void setIncidentYear() {
-		String tempIncidentYear;
-		tempIncidentYear = new SimpleDateFormat("yyyy").format(ts.getTime());
-		incidentYear=Integer.parseInt(tempIncidentYear);
+		
+		LocalDateTime datetime =ts.toLocalDateTime();
+		LocalDate date = datetime.toLocalDate();
+		incidentYear=date.getYear();
+		
 	}
 	public int getIncidentDateOfMonth() {
 		return incidentDateOfMonth;
 	}
+	
 	public void setIncidentDateOfMonth() {
-		String tempIncidentDateOfMonth;
-		tempIncidentDateOfMonth = new SimpleDateFormat("dd").format(ts.getTime());
-		incidentDateOfMonth=Integer.parseInt(tempIncidentDateOfMonth);
+		
+		LocalDateTime datetime =ts.toLocalDateTime();
+		LocalDate date = datetime.toLocalDate();
+		incidentDateOfMonth=date.getDayOfMonth();
 	}
 	public String getDescriptionOfIncident() {
 		return descriptionOfIncident;
