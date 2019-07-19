@@ -56,42 +56,42 @@
 		<table style="table-layout:fixed">
 			<tr>
 				<td style="background: #dddddd">Incident title:</td>
-				<td><%//out.println(theTitle); %>${incidentTitle}</td>
+				<td>${incidentTitle}</td>
 			</tr>
 		
 			<tr>
 				<td style="background: #dddddd">Incident category:</td>
-				<td><%//out.println(theCategory); %>${incidentCategory}</td>
+				<td>${incidentCategory}</td>
 			</tr>
 		
 			<tr>
 				<td style="background: #dddddd">Incident date:</td>
-				<td><%//out.println(theDate); %>${incidentDate}</td>
+				<td>${incidentDate}</td>
 			</tr>
 		
 			<tr>
 				<td style="background: #dddddd">Description of incident:</td>
-				<td><%//out.println(theIncidentDescription); %>${incidentDescription }</td>
+				<td>${incidentDescription }</td>
 			</tr>
 		
 			<tr>
 				<td style="background: #dddddd">Name of staff who reported this incident:</td>
-				<td><%//out.println(staffName); %>${staffName}</td>
+				<td>${staffName}</td>
 			</tr>
 		
 			<tr>
 				<td style="background: #dddddd">Position of staff who reported this incident:</td>
-				<td><%//out.println(positionName); %>${staffPosition}</td>
+				<td>${staffPosition}</td>
 			</tr>
 		
 			<tr>
 				<td style="background: #dddddd">ID of staff who reported this incident:</td>
-				<td><%//out.println(staffID); %>${staffID}</td>
+				<td>${staffID}</td>
 			</tr>
 		
 			<tr>
 				<td style="background: #dddddd">Incident keywords:</td>
-				<td><%//out.println(keywords); %>
+				<td>
 				<c:forEach var="temp" items="${incidentKeywords}">
 				${temp}
 				<br>
@@ -101,17 +101,17 @@
 		
 			<tr>
 				<td style="background: #dddddd">Priority rating:</td>
-				<td><%//out.println(priority); %>${incidentPriority}</td>
+				<td>${incidentPriority}</td>
 			</tr>
 		
 			<tr>
 				<td style="background: #dddddd">Possible causes:</td>
-				<td><%//out.println(possibleCauses); %>${incidentPossibleCauses}</td>
+				<td>${incidentPossibleCauses}</td>
 			</tr>
 		
 			<tr>
 				<td style="background: #dddddd">Possible solutions:</td>
-				<td><%//out.println(possibleSolutions); %>${incidentPossibleSolutions}</td>
+				<td>${incidentPossibleSolutions}</td>
 			</tr>
 		
 		</table>
