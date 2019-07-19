@@ -26,8 +26,8 @@ public class CreateIncidentReportServlet extends HttpServlet {
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 
-		Incident anIncident;
-		anIncident= new Incident();
+		IncidentBean anIncident;
+		anIncident= new IncidentBean();
 		
 		String title;
 		String anIncidentDescription;
@@ -55,22 +55,22 @@ public class CreateIncidentReportServlet extends HttpServlet {
 			switch(tempCategory) {
 			
 			case "regulatoryLaw":
-				anIncident.setIncidentCategory(Incident.Category.Regulatory_Law);
+				anIncident.setIncidentCategory(IncidentBean.Category.Regulatory_Law);
 				break;
 			case "cyberSecurity":
-				anIncident.setIncidentCategory(Incident.Category.Cyber_Security);
+				anIncident.setIncidentCategory(IncidentBean.Category.Cyber_Security);
 				break;
 			case "humanIssues":
-				anIncident.setIncidentCategory(Incident.Category.Human_Issues);
+				anIncident.setIncidentCategory(IncidentBean.Category.Human_Issues);
 				break;
 			case "bankEquipment":
-				anIncident.setIncidentCategory(Incident.Category.Bank_Equipment);
+				anIncident.setIncidentCategory(IncidentBean.Category.Bank_Equipment);
 				break;
 			case "bankAlgorithms":
-				anIncident.setIncidentCategory(Incident.Category.Bank_Algorithms);
+				anIncident.setIncidentCategory(IncidentBean.Category.Bank_Algorithms);
 				break;
 			case "other":
-				anIncident.setIncidentCategory(Incident.Category.Other);
+				anIncident.setIncidentCategory(IncidentBean.Category.Other);
 				break;
 			default:
 				break;
@@ -141,13 +141,13 @@ public class CreateIncidentReportServlet extends HttpServlet {
 		if(tempPriority!=null) {
 			
 			if(tempPriority.equalsIgnoreCase("Low")) {
-				anIncident.setPriorityRating(Incident.Priority.Low);
+				anIncident.setPriorityRating(IncidentBean.Priority.Low);
 			}
 			else if (tempPriority.equalsIgnoreCase("Medium")) {
-				anIncident.setPriorityRating(Incident.Priority.Medium);
+				anIncident.setPriorityRating(IncidentBean.Priority.Medium);
 			}
 			else if (tempPriority.equalsIgnoreCase("High")) {
-				anIncident.setPriorityRating(Incident.Priority.High);
+				anIncident.setPriorityRating(IncidentBean.Priority.High);
 			}
 			
 		}
@@ -170,17 +170,50 @@ public class CreateIncidentReportServlet extends HttpServlet {
 		//-----------------------------------------------------------------------------------------------------------------------
 		
 		if(possibleDuplicate==true) {
-			req.setAttribute("theOriginalIndex", duplicateIndex);
-			//out.println("duplicated");
-			IncidentDatabase.getDuplicatesList().add(anIncident);
-			req.getRequestDispatcher("DetectDuplicates.jsp").forward(req,res);
+	
+			
+			
+			//new code
+			IncidentBean originalIncident= IncidentDAO.getIncidentsList().get(duplicateIndex);
+			boolean checkDuplicate=true;
+			
+			//for use in DetectDuplicateServlet
+			aSession.setAttribute("originalIndex",duplicateIndex);
+			aSession.setAttribute("originalIncident", originalIncident);
+			aSession.setAttribute("currentIncident", anIncident);
+			//end use in DetectDuplicateServlet
+			
+			//for use in DisplayIncidentReport.jsp
+			req.setAttribute("checkDuplicate", checkDuplicate);
+			
+			req.setAttribute("incidentTitle", originalIncident.getIncidentTitle());
+			req.setAttribute("incidentCategory", originalIncident.getIncidentCategory().toString());
+			req.setAttribute("incidentDate", originalIncident.getDateTimeFromTimeStamp());
+			req.setAttribute("incidentDescription", originalIncident.getDescriptionOfIncident());
+			
+			req.setAttribute("incidentKeywords", originalIncident.getIncidentKeywords());
+			req.setAttribute("incidentPriority", originalIncident.getPriorityRating().toString());
+			req.setAttribute("incidentPossibleCauses", originalIncident.getPossibleCausesOfIncident());
+			req.setAttribute("incidentPossibleSolutions", originalIncident.getPossibleSolutionsOfIncident());
+			
+			User staffReported = originalIncident.getUserReportedIncident();
+			req.setAttribute("staffName", staffReported.getName());
+			req.setAttribute("staffPosition", staffReported.getPosition());
+			req.setAttribute("staffID", staffReported.getStaffID());
+			//end use in DisplayIncidentReport.jsp
+			
+			//finish new
+		
+			
+			req.getRequestDispatcher("DisplayIncidentReport.jsp").forward(req,res);
 			
 		} else {
-			IncidentDatabase.getIncidentsList().add(anIncident);
+			IncidentDAO.getIncidentsList().add(anIncident);
 			
-
+			//original functional line
 			req.getRequestDispatcher("ListOfIncidents.jsp").forward(req,res);
-			//out.println("original");
+			
+			
 		}
 	
 		

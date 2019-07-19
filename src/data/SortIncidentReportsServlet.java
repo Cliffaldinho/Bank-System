@@ -10,16 +10,16 @@ import java.util.*;
 
 @WebServlet(urlPatterns={"/sortIncidentReports"})
 public class SortIncidentReportsServlet extends HttpServlet{
-	ArrayList<Incident> incidentReports = null;
+	ArrayList<IncidentBean> incidentReports = null;
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-		ArrayList<Incident> incidentReports = IncidentDatabase.getIncidentsList();
+		ArrayList<IncidentBean> incidentReports = IncidentDAO.getIncidentsList();
     ArrayList<Integer> sortedList = new ArrayList<Integer>();
     String sortTopic = req.getParameter("sortBy");
 
     //create copy of incident reports
-    ArrayList<Incident> sortedIncidentReports = new ArrayList<>();
-    for(Incident i : incidentReports)
+    ArrayList<IncidentBean> sortedIncidentReports = new ArrayList<>();
+    for(IncidentBean i : incidentReports)
     {
       sortedIncidentReports.add(i);
     }
@@ -30,21 +30,21 @@ public class SortIncidentReportsServlet extends HttpServlet{
     {
       case "Title":
                           Map<Integer, String> indexesT = new HashMap<Integer, String>();
-                          for(Incident i: incidentReports) //record indexes of incidents in copy
+                          for(IncidentBean i: incidentReports) //record indexes of incidents in copy
                           {
                             indexesT.put(index, i.getIncidentTitle()); //why not sort hashmap? can get messy
                             index++;
                           }
                           //sort copy
                           if (sortedIncidentReports.size() > 0) {
-                            Collections.sort(sortedIncidentReports, new Comparator<Incident>() {
+                            Collections.sort(sortedIncidentReports, new Comparator<IncidentBean>() {
                               @Override
-                              public int compare(final Incident object1, final Incident object2) {
+                              public int compare(final IncidentBean object1, final IncidentBean object2) {
                                 return object1.getIncidentTitle().compareTo(object2.getIncidentTitle());
                               }
                             });
                           }
-                          for(Incident i: sortedIncidentReports) //fill sortedlist with indexes corresponding sorted copy
+                          for(IncidentBean i: sortedIncidentReports) //fill sortedlist with indexes corresponding sorted copy
                           {
                             for (Map.Entry<Integer, String> entry : indexesT.entrySet()) {
                                 String value = entry.getValue();
@@ -62,20 +62,20 @@ public class SortIncidentReportsServlet extends HttpServlet{
                           break;
       case "Category":
                       Map<Integer, String> indexes = new HashMap<Integer, String>();
-                      for(Incident i: incidentReports) //record indexes of incidents in copy
+                      for(IncidentBean i: incidentReports) //record indexes of incidents in copy
                       {
                         indexes.put(index, i.getIncidentCategory().toString());
                         index++;
                       }
                       if (sortedIncidentReports.size() > 0) { //sort copy
-                        Collections.sort(sortedIncidentReports, new Comparator<Incident>() {
+                        Collections.sort(sortedIncidentReports, new Comparator<IncidentBean>() {
                           @Override
-                          public int compare(final Incident object1, final Incident object2) {
+                          public int compare(final IncidentBean object1, final IncidentBean object2) {
                             return object1.getIncidentCategory().toString().compareTo(object2.getIncidentCategory().toString());
                           }
                         });
                       }
-                      for(Incident i: sortedIncidentReports) //fill sortedlist with indexes corresponding sorted copy
+                      for(IncidentBean i: sortedIncidentReports) //fill sortedlist with indexes corresponding sorted copy
                       {
                         for (Map.Entry<Integer, String> entry : indexes.entrySet()) {
                             String value = entry.getValue();
@@ -93,15 +93,15 @@ public class SortIncidentReportsServlet extends HttpServlet{
                       break;
       case "Year":
                   Map<Integer, Integer> indexesY = new HashMap<Integer, Integer>();
-                  for(Incident i: incidentReports) //record indexes of incidents in copy
+                  for(IncidentBean i: incidentReports) //record indexes of incidents in copy
                   {
                     indexesY.put(index, i.getIncidentYear());
                     index++;
                   }
                   if (sortedIncidentReports.size() > 0) { //sort copy
-                    Collections.sort(sortedIncidentReports, new Comparator<Incident>() {
+                    Collections.sort(sortedIncidentReports, new Comparator<IncidentBean>() {
                       @Override
-                      public int compare(final Incident object1, final Incident object2) {
+                      public int compare(final IncidentBean object1, final IncidentBean object2) {
                         if(object1.getIncidentYear() > object2.getIncidentYear()) {
                           return 1;
                         } else if (object1.getIncidentYear() < object2.getIncidentYear()) {
@@ -112,7 +112,7 @@ public class SortIncidentReportsServlet extends HttpServlet{
                       }
                     });
                   }
-                  for(Incident i: sortedIncidentReports) //fill sortedlist with indexes corresponding sorted copy
+                  for(IncidentBean i: sortedIncidentReports) //fill sortedlist with indexes corresponding sorted copy
                   {
                     for (Map.Entry<Integer, Integer> entry : indexesY.entrySet()) {
                         int value = entry.getValue();
@@ -129,7 +129,7 @@ public class SortIncidentReportsServlet extends HttpServlet{
                   req.getRequestDispatcher("ListOfIncidents.jsp").forward(req, res);
                   break;
       default:
-              for(Incident i: incidentReports)
+              for(IncidentBean i: incidentReports)
               {
                 sortedList.add(index);
                 index++;

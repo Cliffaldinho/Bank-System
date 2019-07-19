@@ -19,15 +19,12 @@ public class DisplayIncidentReportServlet extends HttpServlet{
 		PrintWriter out = res.getWriter();
 		
 		String tempIncidentChosen;
-		//String tempIncidentChosen = req.getParameter("incidentMarker");
-		//String searchIncident;
-		//String incidentChosen=tempIncidentChosen.substring(4);
-		//int indexIncidentChosen=Integer.parseInt(incidentChosen);
+
 		int index=-1;
 		
-		for(int i=0;i<IncidentDatabase.getIncidentsList().size();i++) {
-			//searchIncident="Show"+i;
-			//out.println("searchIncident is "+searchIncident);
+		//display Incident
+		for(int i=0;i<IncidentDAO.getIncidentsList().size();i++) {
+
 			
 			tempIncidentChosen=req.getParameter("Show"+i);
 			if(tempIncidentChosen!=null) {
@@ -38,19 +35,50 @@ public class DisplayIncidentReportServlet extends HttpServlet{
 			
 		}
 		
-		//out.println(index);
-		
 		if(index!=-1) {
-			req.setAttribute("indexOfIncident", index);
+			//req.setAttribute("indexOfIncident", index);
+			
+			//new code
+			HttpSession aSession = req.getSession();
+			
+			//set index for future retrieval in analysis etc
+			aSession.setAttribute("indexOfIncident", index);
+			
+			IncidentBean displayIncident = IncidentDAO.getIncidentsList().get(index);
+			
+			//for use in DisplayIncidentReport.jsp
+			req.setAttribute("incidentTitle", displayIncident.getIncidentTitle());
+			req.setAttribute("incidentCategory", displayIncident.getIncidentCategory().toString());
+			req.setAttribute("incidentDate", displayIncident.getDateTimeFromTimeStamp());
+			req.setAttribute("incidentDescription", displayIncident.getDescriptionOfIncident());
+			
+			req.setAttribute("incidentKeywords", displayIncident.getIncidentKeywords());
+			req.setAttribute("incidentPriority", displayIncident.getPriorityRating().toString());
+			req.setAttribute("incidentPossibleCauses", displayIncident.getPossibleCausesOfIncident());
+			req.setAttribute("incidentPossibleSolutions", displayIncident.getPossibleSolutionsOfIncident());
+			
+			User staffReported = displayIncident.getUserReportedIncident();
+			req.setAttribute("staffName", staffReported.getName());
+			req.setAttribute("staffPosition", staffReported.getPosition());
+			req.setAttribute("staffID", staffReported.getStaffID());
+			
+			boolean checkDuplicate=false;
+			req.setAttribute("checkDuplicate", checkDuplicate);
+			//end use in displayIncidentReport.jsp
+			
+			//finish new code
+			
+			
 			req.getRequestDispatcher("DisplayIncidentReport.jsp").forward(req, res);
+			
+			//Handle Incident
 		} else {
 			
-			//PrintWriter out =res.getWriter();
 			String theIncidentChosen;
 			
 			int theIndexOfIncident=-1;
 			
-			for(int i=0;i<IncidentDatabase.getIncidentsList().size();i++) {
+			for(int i=0;i<IncidentDAO.getIncidentsList().size();i++) {
 				String theIncident = "Handle";
 				theIncident = theIncident.concat(Integer.toString(i));
 				theIncidentChosen=req.getParameter(theIncident);
@@ -60,16 +88,18 @@ public class DisplayIncidentReportServlet extends HttpServlet{
 					break;
 				}
 				
+				
+				//Delete Incident
 				theIncident = "close".concat(theIncident);
 				String incidentDeleted = req.getParameter(theIncident);
 				
 				if (incidentDeleted!=null) {
 					index=i;
-					IncidentDatabase.getIncidentsList().remove(i);
+					IncidentDAO.getIncidentsList().remove(i);
 					String path = getServletContext().getRealPath("./saves/incidents.dat");
 					FileOutputStream fout = new FileOutputStream(getServletContext().getRealPath("./saves/incidents.dat"));
 					ObjectOutputStream oout = new ObjectOutputStream(fout);
-					oout.writeObject(IncidentDatabase.getIncidentsList());
+					oout.writeObject(IncidentDAO.getIncidentsList());
 					oout.close();
 					fout.close();
 					req.getRequestDispatcher("ListOfIncidents.jsp").forward(req, res);

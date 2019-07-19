@@ -4,7 +4,7 @@ import java.util.*;
 public class CaseStudy {
 
 	private ArrayList<User> users;
-	private ArrayList<Incident> manyIncidents;
+	private ArrayList<IncidentBean> manyIncidents;
 	private String lessonsLearntFromIncident;
 	private String rootCauseOfIncident;
 	
@@ -12,7 +12,7 @@ public class CaseStudy {
 		
 	}
 
-	public CaseStudy(ArrayList<User> u,ArrayList<Incident> many,String lessonsLearnt, String rootCause) {
+	public CaseStudy(ArrayList<User> u,ArrayList<IncidentBean> many,String lessonsLearnt, String rootCause) {
 		this.users=u;
 		this.manyIncidents=many;
 		this.lessonsLearntFromIncident=lessonsLearnt;
@@ -28,11 +28,11 @@ public class CaseStudy {
 	}
 
 	
-	public ArrayList<Incident> getManyIncidents() {
+	public ArrayList<IncidentBean> getManyIncidents() {
 		return manyIncidents;
 	}
 
-	public void setManyIncidents(ArrayList<Incident> many) {
+	public void setManyIncidents(ArrayList<IncidentBean> many) {
 		this.manyIncidents = many;
 	}
 	

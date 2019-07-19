@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@ page import="data.UserDatabase" %>
-    <%@ page import="data.IncidentDatabase" %>   
+    <%@ page import="data.IncidentDAO" %>   
     
 <%HttpSession aSession = request.getSession();%>
 <jsp:useBean id="logAuth" class="data.StaffBean" scope="session" /> 

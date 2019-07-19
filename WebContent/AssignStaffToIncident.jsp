@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
         <%@ page import="data.UserDatabase" %>
-    <%@ page import="data.IncidentDatabase" %>
+    <%@ page import="data.IncidentDAO" %>
 
-<%HttpSession aSession = request.getSession();%>
+<%
+	HttpSession aSession = request.getSession();
+%>
 <jsp:useBean id="logAuth" class="data.StaffBean" scope="session" />
 
 <!DOCTYPE html>
@@ -51,22 +53,22 @@ Staff position
 Staff roles
  -->
 <%
-int theIncidentIndex=(int) request.getAttribute("indexForAssignStaff");
+	int theIncidentIndex=(int) request.getAttribute("indexForAssignStaff");
 //out.println(theIncidentIndex);
 
 String incidentTitle,incidentCategory,incidentDate,incidentMonth,dayOfIncident,yearOfIncident,staffWhoReportedIt,incidentDescription;
 int incidentDay,incidentYear;
 
-incidentTitle=IncidentDatabase.getIncidentsList().get(theIncidentIndex).getIncidentTitle();
-incidentCategory=IncidentDatabase.getIncidentsList().get(theIncidentIndex).getIncidentCategory().toString();
-incidentDay=IncidentDatabase.getIncidentsList().get(theIncidentIndex).getIncidentDateOfMonth();
-incidentMonth=IncidentDatabase.getIncidentsList().get(theIncidentIndex).getIncidentMonth();
-incidentYear = IncidentDatabase.getIncidentsList().get(theIncidentIndex).getIncidentYear();
+incidentTitle=IncidentDAO.getIncidentsList().get(theIncidentIndex).getIncidentTitle();
+incidentCategory=IncidentDAO.getIncidentsList().get(theIncidentIndex).getIncidentCategory().toString();
+incidentDay=IncidentDAO.getIncidentsList().get(theIncidentIndex).getIncidentDateOfMonth();
+incidentMonth=IncidentDAO.getIncidentsList().get(theIncidentIndex).getIncidentMonth();
+incidentYear = IncidentDAO.getIncidentsList().get(theIncidentIndex).getIncidentYear();
 dayOfIncident=Integer.toString(incidentDay);
 yearOfIncident=Integer.toString(incidentYear);
 incidentDate=dayOfIncident+" "+incidentMonth+" "+incidentYear;
-staffWhoReportedIt=IncidentDatabase.getIncidentsList().get(theIncidentIndex).getUserReportedIncident().getName();
-incidentDescription=IncidentDatabase.getIncidentsList().get(theIncidentIndex).getDescriptionOfIncident();
+staffWhoReportedIt=IncidentDAO.getIncidentsList().get(theIncidentIndex).getUserReportedIncident().getName();
+incidentDescription=IncidentDAO.getIncidentsList().get(theIncidentIndex).getDescriptionOfIncident();
 
 String staffName,staffID,staffPosition,staffRoles;
 int number;

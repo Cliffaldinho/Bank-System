@@ -75,37 +75,37 @@ public class FinishSetStaffRoleServlet extends HttpServlet {
 		String law,security,human,equipment,algorithms,other;
 		
 		if(tempLaw!=null) {
-			law=Incident.Category.Regulatory_Law.toString()+". ";
+			law=IncidentBean.Category.Regulatory_Law.toString()+". ";
 		} else {
 			law="";
 		}
 		
 		if(tempSecurity!=null) {
-			security=Incident.Category.Cyber_Security.toString()+". ";
+			security=IncidentBean.Category.Cyber_Security.toString()+". ";
 		} else {
 			security="";
 		}
 		
 		if(tempHuman!=null) {
-			human=Incident.Category.Human_Issues.toString()+". ";
+			human=IncidentBean.Category.Human_Issues.toString()+". ";
 		} else {
 			human="";
 		}
 		
 		if(tempEquipment!=null) {
-			equipment=Incident.Category.Bank_Equipment.toString()+". ";
+			equipment=IncidentBean.Category.Bank_Equipment.toString()+". ";
 		} else {
 			equipment="";
 		}
 		
 		if(tempAlgorithms!=null) {
-			algorithms=Incident.Category.Bank_Algorithms.toString()+". ";
+			algorithms=IncidentBean.Category.Bank_Algorithms.toString()+". ";
 		} else {
 			algorithms="";
 		}
 		
 		if(tempOther!=null) {
-			other=Incident.Category.Other.toString()+". ";
+			other=IncidentBean.Category.Other.toString()+". ";
 		} else {
 			other="";
 		}

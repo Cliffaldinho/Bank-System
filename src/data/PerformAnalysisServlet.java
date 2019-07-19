@@ -26,16 +26,16 @@ public class PerformAnalysisServlet extends HttpServlet {
 		Analysis anAnalysis = new Analysis();
 		
 		//Added an Incident to the Analysis Object
-		anAnalysis.setOneIncident(IncidentDatabase.getIncidentsList().get(storeIndex));
+		anAnalysis.setOneIncident(IncidentDAO.getIncidentsList().get(storeIndex));
 		
 		//Stored the Analysis in the Analysis database
 		AnalysisDatabase.addAnalysis(anAnalysis);
 		
-		IncidentDatabase.getIncidentsList().get(storeIndex).setHasAnalysis(true);
+		IncidentDAO.getIncidentsList().get(storeIndex).setHasAnalysis(true);
 		
 		int sizeOfList=AnalysisDatabase.getAnalysisList().size();
 		int mostRecentIndex=sizeOfList-1;
-		IncidentDatabase.getIncidentsList().get(storeIndex).setIndexInAnalysisDatabase(mostRecentIndex);
+		IncidentDAO.getIncidentsList().get(storeIndex).setIndexInAnalysisDatabase(mostRecentIndex);
 		
 		req.setAttribute("incidentDatabaseIndex",storeIndex);
 		req.setAttribute("analysisDatabaseIndex", mostRecentIndex);

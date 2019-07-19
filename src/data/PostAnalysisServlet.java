@@ -62,7 +62,7 @@ public class PostAnalysisServlet extends HttpServlet {
 		
 		
 		
-		String cause= IncidentDatabase.getIncidentsList().get(incidentDatabaseIndex).getPossibleCausesOfIncident();
+		String cause= IncidentDAO.getIncidentsList().get(incidentDatabaseIndex).getPossibleCausesOfIncident();
 		boolean checkIfHasAlphabets;
 		checkIfHasAlphabets=cause.matches(".*[a-zA-Z]+.*");
 		String updateRootCause;
@@ -75,7 +75,7 @@ public class PostAnalysisServlet extends HttpServlet {
 		AnalysisDatabase.getAnalysisList().get(analysisDatabaseIndex).setRootCauseOfIncident(updateRootCause);
 		//out.println(AnalysisDatabase.getAnalysisList().get(0).getRootCauseOfIncident());
 		
-		IncidentDatabase.getIncidentsList().get(incidentDatabaseIndex).setPossibleCausesOfIncident(updateRootCause);
+		IncidentDAO.getIncidentsList().get(incidentDatabaseIndex).setPossibleCausesOfIncident(updateRootCause);
 		
 		
 		req.getRequestDispatcher("ListOfIncidents.jsp").forward(req, res);

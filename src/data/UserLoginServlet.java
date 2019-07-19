@@ -71,9 +71,9 @@ public class UserLoginServlet extends HttpServlet {
 			String path = getServletContext().getRealPath("./saves/incidents.dat");
 			FileInputStream fstream = new FileInputStream(path);
 			ObjectInputStream ostream = new ObjectInputStream(fstream);
-			ArrayList<Incident> incidents = new ArrayList<Incident>();
-			incidents = (ArrayList<Incident>)ostream.readObject();
-			IncidentDatabase.setIncidents(incidents);
+			ArrayList<IncidentBean> incidents = new ArrayList<IncidentBean>();
+			incidents = (ArrayList<IncidentBean>)ostream.readObject();
+			IncidentDAO.setIncidents(incidents);
 			ostream.close();
 			fstream.close();
 		}
@@ -85,9 +85,9 @@ public class UserLoginServlet extends HttpServlet {
 			String path = getServletContext().getRealPath("./saves/duplicates.dat");
 			FileInputStream fstream = new FileInputStream(path);
 			ObjectInputStream ostream = new ObjectInputStream(fstream);
-			ArrayList<Incident> duplicates = new ArrayList<Incident>();
-			duplicates = (ArrayList<Incident>)ostream.readObject();
-			IncidentDatabase.setDuplicates(duplicates);
+			ArrayList<IncidentBean> duplicates = new ArrayList<IncidentBean>();
+			duplicates = (ArrayList<IncidentBean>)ostream.readObject();
+			IncidentDAO.setDuplicates(duplicates);
 			ostream.close();
 			fstream.close();
 		}

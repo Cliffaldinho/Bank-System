@@ -113,7 +113,7 @@ Please add other jsp files here that's finished back-end, and ready for front en
 
 public class Controller extends HttpServlet {
 
-	private static ArrayList<Incident> listOfIncidents;
+	private static ArrayList<IncidentBean> listOfIncidents;
 	
 	public void doPost(HttpServletRequest req,HttpServletResponse res) throws IOException,ServletException  {
 		

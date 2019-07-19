@@ -10,10 +10,10 @@ import java.util.*;
 
 @WebServlet(urlPatterns={"/searchIncidentReports"})
 public class SearchIncidentReportsServlet extends HttpServlet{
-	ArrayList<Incident> incidentReports = null;
+	ArrayList<IncidentBean> incidentReports = null;
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-		ArrayList<Incident> incidentReports = IncidentDatabase.getIncidentsList();
+		ArrayList<IncidentBean> incidentReports = IncidentDAO.getIncidentsList();
 		ArrayList<Integer> searchReturn = new ArrayList<Integer>();
 		String searchTopic = req.getParameter("searchTopic");
 		String search = req.getParameter("search");
@@ -22,7 +22,7 @@ public class SearchIncidentReportsServlet extends HttpServlet{
 		switch(searchTopic)
 		{
 			case "Incident":
-											for(Incident i : incidentReports)
+											for(IncidentBean i : incidentReports)
 											{
 												if(i.getIncidentTitle().equals(search))
 												{
@@ -32,7 +32,7 @@ public class SearchIncidentReportsServlet extends HttpServlet{
 											}
 											break;
 			case "RootCause":
-												for(Incident i : incidentReports)
+												for(IncidentBean i : incidentReports)
 												{
 													if(i.getPossibleCausesOfIncident().contains(search))
 													{
@@ -42,7 +42,7 @@ public class SearchIncidentReportsServlet extends HttpServlet{
 												}
 												break;
 			case "Keywords":
-											for(Incident i : incidentReports)
+											for(IncidentBean i : incidentReports)
 											{
 												String[] keywords = i.getIncidentKeywords();
 												for(String k : keywords)
@@ -57,9 +57,9 @@ public class SearchIncidentReportsServlet extends HttpServlet{
 											}
 											break;
 			case "Category":
-											for(Incident i : incidentReports)
+											for(IncidentBean i : incidentReports)
 											{
-												Incident.Category category = i.getIncidentCategory();
+												IncidentBean.Category category = i.getIncidentCategory();
 												if(category.toString().equals(search))
 												{
 													searchReturn.add(index);
@@ -68,7 +68,7 @@ public class SearchIncidentReportsServlet extends HttpServlet{
 											}
 											break;
 			default:
-							for(Incident i : incidentReports)
+							for(IncidentBean i : incidentReports)
 							{
 								searchReturn.add(index);
 								index++;

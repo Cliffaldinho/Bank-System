@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <%@ page import="data.IncidentDatabase" %>
+    <%@ page import="data.IncidentDAO" %>
 
-<%HttpSession aSession = request.getSession();%>
+<%
+	HttpSession aSession = request.getSession();
+%>
 <jsp:useBean id="logAuth" class="data.StaffBean" scope="session" />
     
 <!DOCTYPE html>
@@ -35,22 +37,20 @@
 	<br>
 
 <%
-int incidentIndex;
+	int incidentIndex;
 int analysisIndex;
 incidentIndex=(int) request.getAttribute("incidentDatabaseIndex");
 analysisIndex=(int) request.getAttribute("analysisDatabaseIndex");
 
 String incidentTitle,incidentDescription,incidentCategory,incidentStaffName;
-incidentTitle=IncidentDatabase.getIncidentsList().get(incidentIndex).getIncidentTitle();
-incidentCategory=IncidentDatabase.getIncidentsList().get(incidentIndex).getIncidentCategory().toString();
-incidentDescription=IncidentDatabase.getIncidentsList().get(incidentIndex).getDescriptionOfIncident();
-incidentStaffName=IncidentDatabase.getIncidentsList().get(incidentIndex).getUserReportedIncident().getName();
+incidentTitle=IncidentDAO.getIncidentsList().get(incidentIndex).getIncidentTitle();
+incidentCategory=IncidentDAO.getIncidentsList().get(incidentIndex).getIncidentCategory().toString();
+incidentDescription=IncidentDAO.getIncidentsList().get(incidentIndex).getDescriptionOfIncident();
+incidentStaffName=IncidentDAO.getIncidentsList().get(incidentIndex).getUserReportedIncident().getName();
 
 String possibleCauses,possibleSolutions;
-possibleCauses=IncidentDatabase.getIncidentsList().get(incidentIndex).getPossibleCausesOfIncident();
-possibleSolutions=IncidentDatabase.getIncidentsList().get(incidentIndex).getPossibleSolutionsOfIncident();
-
-
+possibleCauses=IncidentDAO.getIncidentsList().get(incidentIndex).getPossibleCausesOfIncident();
+possibleSolutions=IncidentDAO.getIncidentsList().get(incidentIndex).getPossibleSolutionsOfIncident();
 %>
 <!-- 
 Name of staff performing analysis

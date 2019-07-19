@@ -37,7 +37,7 @@ public class ShowLessonsLearntServlet extends HttpServlet{
 		
 		
 		
-		String solution=IncidentDatabase.getIncidentsList().get(theIncidentListIndex).getPossibleSolutionsOfIncident();
+		String solution=IncidentDAO.getIncidentsList().get(theIncidentListIndex).getPossibleSolutionsOfIncident();
 		boolean checkIfHasAlphabets;
 		checkIfHasAlphabets=solution.matches(".*[a-zA-Z]+.*");
 		String updateSolution;
@@ -57,7 +57,7 @@ public class ShowLessonsLearntServlet extends HttpServlet{
 		
 		AnalysisDatabase.getAnalysisList().get(theAnalysisListIndex).getListOfSimulations().add(aSimulation);
 		
-		IncidentDatabase.getIncidentsList().get(theIncidentListIndex).setPossibleSolutionsOfIncident(updateSolution);
+		IncidentDAO.getIncidentsList().get(theIncidentListIndex).setPossibleSolutionsOfIncident(updateSolution);
 		
 		req.setAttribute("incidentDatabaseIndex", theIncidentListIndex);
 		req.setAttribute("analysisDatabaseIndex",theAnalysisListIndex);

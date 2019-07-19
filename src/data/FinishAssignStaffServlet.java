@@ -37,7 +37,7 @@ public class FinishAssignStaffServlet extends HttpServlet {
 		int incidentIndex;
 		incidentIndex=Integer.parseInt(tempIncident);
 		
-		IncidentDatabase.getIncidentsList().get(incidentIndex).setIdOfStaffAssigned(UserDatabase.getUsersList().get(staffIndex).getStaffID());
+		IncidentDAO.getIncidentsList().get(incidentIndex).setIdOfStaffAssigned(UserDatabase.getUsersList().get(staffIndex).getStaffID());
 		
 		
 		

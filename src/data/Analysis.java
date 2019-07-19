@@ -4,7 +4,7 @@ import java.util.*;
 public class Analysis {
 
 	private ArrayList<User> users;
-	private Incident oneIncident;
+	private IncidentBean oneIncident;
 	private String lessonsLearntFromIncident;
 	private String rootCauseOfIncident;
 	private ArrayList<Simulation> listOfSimulations;
@@ -16,7 +16,7 @@ public class Analysis {
 		listOfSimulations= new ArrayList<Simulation>();
 	}
 	
-	public Analysis(ArrayList<User> u,Incident one, String lessonsLearnt, String rootCause) {
+	public Analysis(ArrayList<User> u,IncidentBean one, String lessonsLearnt, String rootCause) {
 		users = u;
 		oneIncident=one;
 		lessonsLearntFromIncident=lessonsLearnt;
@@ -39,12 +39,12 @@ public class Analysis {
 		this.users = u;
 	}
 	
-	public Incident getOneIncident() {
+	public IncidentBean getOneIncident() {
 		return oneIncident;
 	}
 
 	
-	public void setOneIncident(Incident one) {
+	public void setOneIncident(IncidentBean one) {
 		this.oneIncident = one;
 	}
 	

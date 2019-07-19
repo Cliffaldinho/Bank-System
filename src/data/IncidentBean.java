@@ -6,9 +6,10 @@ import java.text.*;
 import java.sql.Timestamp;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
+import java.time.format.DateTimeFormatter;
 
 //is now a JavaBean
-public class Incident implements Serializable {
+public class IncidentBean implements Serializable {
 
 
 
@@ -24,9 +25,6 @@ public class Incident implements Serializable {
 	private String possibleCausesOfIncident;
 	private String possibleSolutionsOfIncident;
 	
-	private int originalIndexForDuplicateChecking;
-	private boolean duplicateCheckInProcess;
-	
 	private boolean hasAnalysis;
 	private int indexInAnalysisDatabase;
 	
@@ -41,8 +39,7 @@ public class Incident implements Serializable {
 
 
 
-	public Incident() {
-		duplicateCheckInProcess=false;
+	public IncidentBean() {
 		hasAnalysis=false;
 		setTimeStamp();
 		setIncidentDateOfMonth();
@@ -56,13 +53,13 @@ public class Incident implements Serializable {
 		int duplicateIndex=-1;
 		
 		//traverse through Incident Database
-		for(int i=0;i<IncidentDatabase.getIncidentsList().size();i++) {
+		for(int i=0;i<IncidentDAO.getIncidentsList().size();i++) {
 			
 			//get Incident Category of database incident
-			Category databaseIncidentCategory=IncidentDatabase.getIncidentsList().get(i).getIncidentCategory();
+			Category databaseIncidentCategory=IncidentDAO.getIncidentsList().get(i).getIncidentCategory();
 			
 			//get incident date of database incident
-			Timestamp databaseIncidentTimestamp=IncidentDatabase.getIncidentsList().get(i).getTimeStamp();
+			Timestamp databaseIncidentTimestamp=IncidentDAO.getIncidentsList().get(i).getTimeStamp();
 			LocalDateTime databaseIncidentDateTime=databaseIncidentTimestamp.toLocalDateTime();
 			LocalDate databaseIncidentDate=databaseIncidentDateTime.toLocalDate();
 			
@@ -81,7 +78,7 @@ public class Incident implements Serializable {
 				isInAWeekRange=false;
 			}
 
-			String[] databaseIncidentKeywords=IncidentDatabase.getIncidentsList().get(i).getIncidentKeywords();
+			String[] databaseIncidentKeywords=IncidentDAO.getIncidentsList().get(i).getIncidentKeywords();
 			
 			//if incident category matches database incident, and days between both incidents are within a week
 			if(incidentCategory==databaseIncidentCategory&&isInAWeekRange==true) {
@@ -128,9 +125,16 @@ public class Incident implements Serializable {
 	public Timestamp getTimeStamp() {
 		return ts;
 	}
-	public Date getDateFromTimeStamp() {
-		Date date = new Date(ts.getTime());
-		return date;
+	
+	public String getDateTimeFromTimeStamp() {
+		//Date date = new Date(ts.getTime());
+		//DateTime dateTime = n
+		LocalDateTime dateTime=	ts.toLocalDateTime();
+		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		String printDateTime=dateTime.format(formatter);
+		
+		return printDateTime;
 	}
 	
 	
@@ -196,21 +200,7 @@ public class Incident implements Serializable {
 	}
 	
 	
-	public boolean getDuplicateCheckInProcess() {
-		return duplicateCheckInProcess;
-	}
 
-	public void setDuplicateCheckInProcess(boolean duplicateCheck) {
-		this.duplicateCheckInProcess = duplicateCheck;
-	}
-
-	public int getOriginalIndexForDuplicateChecking() {
-		return originalIndexForDuplicateChecking;
-	}
-
-	public void setOriginalIndexForDuplicateChecking(int original) {
-		this.originalIndexForDuplicateChecking = original;
-	}
 	
 	public void setIncidentTitle(String title) {
 		this.incidentTitle=title;
