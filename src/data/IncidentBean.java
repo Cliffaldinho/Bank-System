@@ -46,7 +46,7 @@ public class IncidentBean implements Serializable {
 
 	public int detectDuplicate() {
 		//boolean possibleDuplicate=false;
-		int duplicateIndex=-1;
+		int duplicateID=-1;
 		
 		//traverse through Incident Database
 		for(int i=0;i<IncidentDAO.getIncidentsList().size();i++) {
@@ -89,7 +89,7 @@ public class IncidentBean implements Serializable {
 						if(incidentKeywords[a].equalsIgnoreCase(databaseIncidentKeywords[b])) {
 							
 							//take note of index of orginal incident in database
-							duplicateIndex=i;
+							duplicateID=IncidentDAO.getIncidentsList().get(i).getIncidentID();
 							
 							//break whole loop
 							break outerloop;
@@ -107,13 +107,14 @@ public class IncidentBean implements Serializable {
 		//returns index of duplicate;
 		//no duplicate if -1
 		//has duplicate if anything else
-		return duplicateIndex;
+		return duplicateID;
 		
 		
 	}
 	
 	public void setIncidentID(int id) {
 		incidentID=id;
+		IncidentDAO.setIncidentCounter(IncidentDAO.getIncidentCounter()+1);
 	}
 	
 	public int getIncidentID() {

@@ -36,6 +36,7 @@ public class PrepareListServlet extends HttpServlet {
 		}
 		
 		aSession.setAttribute("isSearch", false);
+		aSession.removeAttribute("listOfSearchIndexes");
 		
 		} else if (isSort==true) {
 		
@@ -49,6 +50,7 @@ public class PrepareListServlet extends HttpServlet {
 		}
 		
 		aSession.setAttribute("isSort", false);
+		aSession.removeAttribute("sortReportsIndexes");
 		
 		//out.println(printList.get(0).getIncidentKeywordsInString());
 		} else {

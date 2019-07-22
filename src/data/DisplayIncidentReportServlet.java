@@ -19,121 +19,80 @@ public class DisplayIncidentReportServlet extends HttpServlet{
 		PrintWriter out = res.getWriter();
 		
 		String tempIncidentChosen;
-
-		int index=-1;
-		
-		//new code
+	
 		int incidentID=-1;
+		boolean viewIncident,handleIncident,closeIncident;//,checkDuplicate;
+		viewIncident=false;
+		handleIncident=false;
+		closeIncident=false;
+		HttpSession aSession = req.getSession();
+		IncidentBean printIncident = new IncidentBean();
+
 		
+		//Loops through all incidents in database
 		for(int i=0;i<IncidentDAO.getIncidentsList().size();i++) {
+			
+			//uses the incident IDs in database as parameter
 			String storeParameter = Integer.toString(IncidentDAO.getIncidentsList().get(i).getIncidentID());
-			out.println("storeParameter is "+storeParameter);
+
 			tempIncidentChosen = req.getParameter(storeParameter);
-			out.println("tempIncidentChosen is "+tempIncidentChosen);
+
+			//checks if that particular parameter was clicked
 			if(tempIncidentChosen!=null) {
-				out.println("Incident Chosen");
+				
+				//if it was clicked, check which option was chosen
+				if(tempIncidentChosen.equals("View Incident")) {
+				
+					viewIncident=true;
+				} else if (tempIncidentChosen.equals("Handle Incident")) {
+					
+					handleIncident=true;
+				} else if (tempIncidentChosen.equals("Close Incident")) {
+					
+					closeIncident=true;
+				} 
+				
+				//get the id of the incident clicked
 				incidentID=IncidentDAO.getIncidentsList().get(i).getIncidentID();
+				
+				//get the incident chosen
+				printIncident=IncidentDAO.getIncidentByIncidentID(incidentID);
 				break;
 			}
 		}
+	
 		
-		out.println(incidentID);
-		//finish new code
-		
-
-		//display Incident
-		for(int i=0;i<IncidentDAO.getIncidentsList().size();i++) {
-
-			
-			tempIncidentChosen=req.getParameter("Show"+i);
-			if(tempIncidentChosen!=null) {
-				index=i;
-				break;
-			}
-			
-			
+		if(viewIncident==true||handleIncident==true) {
+		aSession.setAttribute("incidentID", incidentID);
 		}
 		
-		if(index!=-1) {
-			//req.setAttribute("indexOfIncident", index);
-			
-			//new code
-			HttpSession aSession = req.getSession();
-			
-			//set index for future retrieval in analysis etc
-			aSession.setAttribute("indexOfIncident", index);
-			
-			IncidentBean displayIncident = IncidentDAO.getIncidentsList().get(index);
-			
-			//for use in DisplayIncidentReport.jsp
-			req.setAttribute("incidentTitle", displayIncident.getIncidentTitle());
-			req.setAttribute("incidentCategory", displayIncident.getIncidentCategory().toString());
-			req.setAttribute("incidentDate", displayIncident.getDateTimeFromTimeStamp());
-			req.setAttribute("incidentDescription", displayIncident.getDescriptionOfIncident());
-			
-			req.setAttribute("incidentKeywords", displayIncident.getIncidentKeywords());
-			req.setAttribute("incidentPriority", displayIncident.getPriorityRating().toString());
-			req.setAttribute("incidentPossibleCauses", displayIncident.getPossibleCausesOfIncident());
-			req.setAttribute("incidentPossibleSolutions", displayIncident.getPossibleSolutionsOfIncident());
-			
-			User staffReported = displayIncident.getUserReportedIncident();
-			req.setAttribute("staffName", staffReported.getName());
-			req.setAttribute("staffPosition", staffReported.getPosition());
-			req.setAttribute("staffID", staffReported.getStaffID());
-			
-			boolean checkDuplicate=false;
-			req.setAttribute("checkDuplicate", checkDuplicate);
-			//end use in displayIncidentReport.jsp
-			
-			//finish new code
-			
-			
+		req.setAttribute("incidentTitle", printIncident.getIncidentTitle());
+		req.setAttribute("incidentCategory", printIncident.getIncidentCategory().toString());
+		req.setAttribute("incidentDate", printIncident.getDateTimeFromTimeStamp());
+		req.setAttribute("incidentDescription", printIncident.getDescriptionOfIncident());
+		
+		req.setAttribute("incidentKeywords", printIncident.getIncidentKeywords());
+		req.setAttribute("incidentPriority", printIncident.getPriorityRating().toString());
+		req.setAttribute("incidentPossibleCauses", printIncident.getPossibleCausesOfIncident());
+		req.setAttribute("incidentPossibleSolutions", printIncident.getPossibleSolutionsOfIncident());
+		
+		User staffReported = printIncident.getUserReportedIncident();
+		req.setAttribute("staffName", staffReported.getName());
+		req.setAttribute("staffPosition", staffReported.getPosition());
+		req.setAttribute("staffID", staffReported.getStaffID());
+		
+		
+		if(viewIncident==true) {
 			req.getRequestDispatcher("DisplayIncidentReport.jsp").forward(req, res);
-			
-			//Handle Incident
-		} else {
-			
-			String theIncidentChosen;
-			
-			int theIndexOfIncident=-1;
-			
-			for(int i=0;i<IncidentDAO.getIncidentsList().size();i++) {
-				String theIncident = "Handle";
-				theIncident = theIncident.concat(Integer.toString(i));
-				theIncidentChosen=req.getParameter(theIncident);
-			
-				if(theIncidentChosen!=null) {
-					theIndexOfIncident=i;
-					break;
-				}
-				
-				
-				//Delete Incident
-				theIncident = "close".concat(theIncident);
-				String incidentDeleted = req.getParameter(theIncident);
-				
-				if (incidentDeleted!=null) {
-					index=i;
-					IncidentDAO.getIncidentsList().remove(i);
-					String path = getServletContext().getRealPath("./saves/incidents.dat");
-					FileOutputStream fout = new FileOutputStream(getServletContext().getRealPath("./saves/incidents.dat"));
-					ObjectOutputStream oout = new ObjectOutputStream(fout);
-					oout.writeObject(IncidentDAO.getIncidentsList());
-					oout.close();
-					fout.close();
-					req.getRequestDispatcher("ListOfIncidents.jsp").forward(req, res);
-					return;
-				}
-			}
-
-			out.println(theIndexOfIncident);
-			
-			req.setAttribute("indexForAssignStaff", theIndexOfIncident);
-			
-			req.getRequestDispatcher("AssignStaffToIncident.jsp").forward(req, res);
-			
+		} else if (handleIncident==true) {
+			req.getRequestDispatcher("AssignStaffToIncident.jsp");
+		} else if (closeIncident==true) {
+			IncidentDAO.deleteIncidentByIncidentID(incidentID);
+			req.getRequestDispatcher("prepareList").forward(req, res);
 		}
 		
+		
+
 
 	}
 	

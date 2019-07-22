@@ -53,6 +53,16 @@ public class IncidentDAO {
 		return incident;
 		
 	}
+	
+	public static void deleteIncidentByIncidentID(int id) {
+		for(int i=0;i<incidentsList.size();i++) {
+			if(incidentsList.get(i).getIncidentID()==id) {
+				incidentsList.remove(i);
+				break;
+			}
+		}
+	}
+	
 	public static ArrayList<IncidentBean> getDuplicatesList() {
 		return duplicatesList;
 	}

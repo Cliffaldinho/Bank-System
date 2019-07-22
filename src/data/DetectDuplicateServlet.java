@@ -23,7 +23,7 @@ public class DetectDuplicateServlet extends HttpServlet {
 			// if it is a duplicate
 			if(decision.equalsIgnoreCase("Yes")) {
 				
-			int originalIndex = (int) aSession.getAttribute("originalIndex");
+			int originalID = (int) aSession.getAttribute("originalID");
 				
 			//merge duplicated incident's description into original incident
 			IncidentBean originalIncident = (IncidentBean) aSession.getAttribute("originalIncident");
@@ -33,8 +33,7 @@ public class DetectDuplicateServlet extends HttpServlet {
 			String originalDescription = originalIncident.getDescriptionOfIncident();
 			String newDescription = originalDescription+"<br>"+currentDescription;
 			
-			IncidentDAO.getIncidentsList().get(originalIndex).setDescriptionOfIncident(newDescription);
-
+			IncidentDAO.getIncidentByIncidentID(originalID).setDescriptionOfIncident(newDescription);
 			
 			//merge duplicated incident's possible causes into original incident
 			String currentPossibleCauses = currentIncident.getPossibleCausesOfIncident();
@@ -48,7 +47,7 @@ public class DetectDuplicateServlet extends HttpServlet {
 				newPossibleCauses = originalPossibleCauses + currentPossibleCauses;
 			}
 			
-			IncidentDAO.getIncidentsList().get(originalIndex).setPossibleCausesOfIncident(newPossibleCauses);
+			IncidentDAO.getIncidentByIncidentID(originalID).setPossibleCausesOfIncident(newPossibleCauses);
 			
 			
 			//merge duplicated incident's possible solutions into original incident
@@ -63,14 +62,15 @@ public class DetectDuplicateServlet extends HttpServlet {
 				newPossibleSolutions = originalPossibleSolutions + currentPossibleSolutions;
 			}
 			
-			IncidentDAO.getIncidentsList().get(originalIndex).setPossibleSolutionsOfIncident(newPossibleSolutions);
+			IncidentDAO.getIncidentByIncidentID(originalID).setPossibleSolutionsOfIncident(newPossibleSolutions);
 			
 			//remove session attributes
-			aSession.removeAttribute("originalIndex");
+			aSession.removeAttribute("originalID");
 			aSession.removeAttribute("originalIncident");
 			aSession.removeAttribute("currentIncident");
+			//aSession.removeAttribute("checkDuplicate");
 			
-			req.getRequestDispatcher("ListOfIncidents.jsp").forward(req,res);
+			req.getRequestDispatcher("prepareList").forward(req,res);
 			}
 			
 			//if it is not a duplicate
@@ -81,11 +81,12 @@ public class DetectDuplicateServlet extends HttpServlet {
 			IncidentDAO.getIncidentsList().add(currentIncident);
 			
 			//remove session attributes
-			aSession.removeAttribute("originalIndex");
+			aSession.removeAttribute("originalID");
 			aSession.removeAttribute("originalIncident");
 			aSession.removeAttribute("currentIncident");
+			//aSession.removeAttribute("checkDuplicate");
 			
-			req.getRequestDispatcher("ListOfIncidents.jsp").forward(req,res);
+			req.getRequestDispatcher("prepareList").forward(req,res);
 			}
 		}
 

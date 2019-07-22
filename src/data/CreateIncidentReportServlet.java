@@ -40,7 +40,7 @@ public class CreateIncidentReportServlet extends HttpServlet {
 		
 		//set Incident ID
 		anIncident.setIncidentID(IncidentDAO.getIncidentCounter()+1);
-		IncidentDAO.setIncidentCounter(IncidentDAO.getIncidentCounter()+1);
+		//IncidentDAO.setIncidentCounter(IncidentDAO.getIncidentCounter()+1);
 		
 		
 		//Set Incident Title
@@ -166,8 +166,8 @@ public class CreateIncidentReportServlet extends HttpServlet {
 		//Detect Duplicates
 
 		boolean possibleDuplicate=false;
-		int duplicateIndex=anIncident.detectDuplicate();
-		if(duplicateIndex!=-1) {
+		int duplicateID=anIncident.detectDuplicate();
+		if(duplicateID!=-1) {
 			possibleDuplicate=true;
 		}
 		
@@ -179,18 +179,16 @@ public class CreateIncidentReportServlet extends HttpServlet {
 			
 			
 			//new code
-			IncidentBean originalIncident= IncidentDAO.getIncidentsList().get(duplicateIndex);
+			IncidentBean originalIncident= IncidentDAO.getIncidentByIncidentID(duplicateID);
 			boolean checkDuplicate=true;
 			
-			//for use in DetectDuplicateServlet
-			aSession.setAttribute("originalIndex",duplicateIndex);
+			//for use in DisplayIncidentReport.jsp and DetectDuplicateServlet
+			aSession.setAttribute("originalID",duplicateID);
 			aSession.setAttribute("originalIncident", originalIncident);
 			aSession.setAttribute("currentIncident", anIncident);
-			//end use in DetectDuplicateServlet
 			
-			//for use in DisplayIncidentReport.jsp
 			req.setAttribute("checkDuplicate", checkDuplicate);
-			
+	
 			req.setAttribute("incidentTitle", originalIncident.getIncidentTitle());
 			req.setAttribute("incidentCategory", originalIncident.getIncidentCategory().toString());
 			req.setAttribute("incidentDate", originalIncident.getDateTimeFromTimeStamp());
@@ -208,6 +206,8 @@ public class CreateIncidentReportServlet extends HttpServlet {
 			//end use in DisplayIncidentReport.jsp
 			
 			//finish new
+			 
+			 
 		
 			
 			req.getRequestDispatcher("DisplayIncidentReport.jsp").forward(req,res);
