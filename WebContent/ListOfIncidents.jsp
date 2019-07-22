@@ -4,13 +4,12 @@
     <%@ page import="data.UserDatabase" %>
     <%@ page import="data.IncidentDAO" %>
     <%@ page import = "data.User" %>
-    <%@ page import = "data.IncidentBean" %>
-
-<%
-	HttpSession aSession = request.getSession();
+    <%@ page import = "data.*" %>
+         <%@taglib
+    prefix="c"
+    uri="http://java.sun.com/jsp/jstl/core" 
 %>
 <jsp:useBean id="logAuth" class="data.StaffBean" scope="session" />
-    
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,38 +28,22 @@
 	    </div>
 	  </div>
 	</div>
-	
-	
-	<!-- To Naneth: PLease change the RolesForStaff.jsp to something only Branch Manager can access -->
-	<!-- Through the below code change -->
-	
-	<!-- Change 1: shift two lines of code up here -->
-	<%
-		int incidentsListSize=IncidentDAO.getIncidentsList().size();
-	int branchManagerAuthorization= logAuth.getAuthenticationLevel();
-	%>
+
 	
 	<div class="horizonta_nav">
 	  <a href="ListOfIncidents.jsp" class="active">Incidents</a>
 	  <a href="CreateIncidentReport.jsp">Report</a>
-		
-	  <!-- if user is branch manager, show this  -->
-	  <!-- Change 2: set these 2 lines code for RolesForStaff.jsp -->
-	  <!-- for all pages -->
-	 <%
-	 	if(branchManagerAuthorization==1) {
-	 %>
+	  <c:if test="${logAuth.authenticationLevel==1}">
+
 	  <a href="RolesForStaff.jsp">Roles</a>
-	  <%
-	  	}
-	  %>
+
+	  </c:if>
 	  <a href="index.jsp">Logout</a>
 	  
 	  
 	</div>
 	<br>
 	<br>
-
 
 <!--
 List to have
@@ -123,292 +106,68 @@ List to have
 			    </div>
 		</div>
 		
-		
-		<br/>
-		<form action="displayIncidentReport" method="post">
-		<%
-			ArrayList<Integer> searchList = (ArrayList<Integer>)request.getAttribute("listOfSearchIndexes");
-				ArrayList<Integer> sortList = (ArrayList<Integer>)request.getAttribute("sortReportsIndexes");
-				int searchSize = -1;
-				int sortSize = -1;
-				if(searchList!=null)
-			searchSize = searchList.size();
-				if(sortList!=null)
-			sortSize = sortList.size();
-
-				//COUNT
-				if(searchList==null) {
-			if(IncidentDAO.getIncidentsList().size()==1)
-				out.println(IncidentDAO.getIncidentsList().size() + " incident");
-			else
-				out.println(IncidentDAO.getIncidentsList().size() + " incidents");
-				} else if(searchList.size()==0) {
-			out.println("No search results to show.");
-				} else {
-			if(searchList.size()==1)
-				out.println(searchList.size() + " search result");
-			else
-				out.println(searchList.size() + " search results");
-				}
-		%>
+		<!-- new feature to refresh page -->
 		<div>
-		
-			<table>
-			<tr>
-			<th>#</th>
-			<th>Title</th>
-			<th>Category</th>
-			<th>Day</th>
-			<th>Month</th>
-			<th>Year</th>
-			<th>Reporter</th>
-			<th>Staff Position</th>
-			<th>Keywords</th>
-			<th>Details</th>
-			<%
-				if(branchManagerAuthorization==1) {
-			%>
-			<th>Staff Assigned</th>
-			<th>Handle Incident</th>
-			<th>Close Incident</th>
-			<%
-				}
-			%>
-			</tr>
-			<%
-				for(int i=0;i<incidentsListSize;i++) {
-					int number=i+1;
-				
-					String firstKeyword,secondKeyword,thirdKeyword;
-				
-					firstKeyword="N/A";
-					secondKeyword="N/A";
-					thirdKeyword="N/A";
-				
-					String keywords="N/A";
-				
-					firstKeyword=IncidentDAO.getIncidentsList().get(i).getIncidentKeywords()[0];
-					keywords=firstKeyword;
-				
-					if(IncidentDAO.getIncidentsList().get(i).getIncidentKeywords().length>1) {
-						secondKeyword=IncidentDAO.getIncidentsList().get(i).getIncidentKeywords()[1];
-						keywords=firstKeyword+", "+secondKeyword;
-					}
-				
-					if(IncidentDAO.getIncidentsList().get(i).getIncidentKeywords().length>2) {
-						thirdKeyword=IncidentDAO.getIncidentsList().get(i).getIncidentKeywords()[2];
-						keywords=firstKeyword+", "+secondKeyword+", "+thirdKeyword;
-					}
-				
-					String incidentMarker="Show"+i;
-					
-					
-					String handleIncident="Handle"+i;
-					
-					String theStaffAssigned,setNoStaff;
-					String tempStaffAssigned;
-					setNoStaff="No staff assigned";
-					tempStaffAssigned=IncidentDAO.getIncidentsList().get(i).getIdOfStaffAssigned();
-					if(tempStaffAssigned==null) {
-						theStaffAssigned=setNoStaff;
-					} else {
-						
-						theStaffAssigned=UserDatabase.findUserObjectByStaffID(tempStaffAssigned).getName();
-					}
-			%>
-				<%
-					if(searchList==null && sortList==null) {
-				%>
-					<tr>
-					<td><%
-						out.println(number);
-					%></td>
-					<td><%
-						out.println(IncidentDAO.getIncidentsList().get(i).getIncidentTitle());
-					%></td>
-					<td><%
-						out.println(IncidentDAO.getIncidentsList().get(i).getIncidentCategory());
-					%></td>
-					<td><%
-						out.println(IncidentDAO.getIncidentsList().get(i).getIncidentDateOfMonth());
-					%></td>
-					<td><%
-						out.println(IncidentDAO.getIncidentsList().get(i).getIncidentMonth());
-					%></td>
-					<td><%
-						out.println(IncidentDAO.getIncidentsList().get(i).getIncidentYear());
-					%></td>
-					<td><%
-						out.println(IncidentDAO.getIncidentsList().get(i).getUserReportedIncident().getName());
-					%></td>
-					<td><%
-						out.println(IncidentDAO.getIncidentsList().get(i).getUserReportedIncident().getPosition());
-					%></td>
-					<td><%
-						out.println(keywords);
-					%></td>
-					<td><%
-						out.println("<input type=\"submit\" name=\""+incidentMarker+"\" value=\"View Incident\">");
-					%></td>
-					<%
-						if(branchManagerAuthorization==1) {
-					%>
-						<td><%
-							out.println(theStaffAssigned);
-						%></td>
-						<td><%
-							out.println("<input type=\"submit\" name=\""+handleIncident+"\" value=\"Handle Incident\">");
-						%></td>
-						<td><%
-							out.println("<input type=\"submit\" name=\"close"+handleIncident+"\" value=\"Close Incident\">");
-						%></td>
-					<%
-						}
-					%>
-					</tr>
-				<%
-					} else if(searchSize==0 || sortSize==0) {
-				%>
-						<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<%
-							if(branchManagerAuthorization==1) {
-						%>
-							<td></td>
-							<td></td>
-						<%
-							}
-						%>
-						</tr>
-						<%
-							break;
-								} else if(sortList.size()!=0) {
-									int index;
-									for(int j=0; j<sortList.size();j++)
-									{
-						%>
-						<%
-							index = sortList.get(j);
-						%>
-						<tr>
-						<td><%
-							out.println(number);
-						%></td>
-						<td><%
-							out.println(IncidentDAO.getIncidentsList().get(index).getIncidentTitle());
-						%></td>
-						<td><%
-							out.println(IncidentDAO.getIncidentsList().get(index).getIncidentCategory());
-						%></td>
-						<td><%
-							out.println(IncidentDAO.getIncidentsList().get(index).getIncidentDateOfMonth());
-						%></td>
-						<td><%
-							out.println(IncidentDAO.getIncidentsList().get(index).getIncidentMonth());
-						%></td>
-						<td><%
-							out.println(IncidentDAO.getIncidentsList().get(index).getIncidentYear());
-						%></td>
-						<td><%
-							out.println(IncidentDAO.getIncidentsList().get(index).getUserReportedIncident().getName());
-						%></td>
-						<td><%
-							out.println(IncidentDAO.getIncidentsList().get(index).getUserReportedIncident().getPosition());
-						%></td>
-						<td><%
-							out.println(keywords);
-						%></td>
-						<td><%
-							out.println("<input type=\"submit\" name=\""+incidentMarker+"\" value=\"View Incident\">");
-						%></td>
-						<%
-							if(branchManagerAuthorization==1) {
-						%>
-							<td><%
-								out.println(theStaffAssigned);
-							%></td>
-							<td><%
-								out.println("<input type=\"submit\" name=\""+handleIncident+"\" value=\"Handle Incident\">");
-							%></td>
-							<td><%
-								out.println("<input type=\"submit\" name=\"close"+handleIncident+"\" value=\"Close Incident\">");
-							%></td>
-						<%
-							}
-						%>
-						</tr>
-					<%
-						number++;
-								}
-								break;
-							} else {
-								if(searchList.contains(number-1)) {
-					%>
-						<tr>
-						<td><%
-							out.println(number);
-						%></td>
-						<td><%
-							out.println(IncidentDAO.getIncidentsList().get(i).getIncidentTitle());
-						%></td>
-						<td><%
-							out.println(IncidentDAO.getIncidentsList().get(i).getIncidentCategory());
-						%></td>
-						<td><%
-							out.println(IncidentDAO.getIncidentsList().get(i).getIncidentDateOfMonth());
-						%></td>
-						<td><%
-							out.println(IncidentDAO.getIncidentsList().get(i).getIncidentMonth());
-						%></td>
-						<td><%
-							out.println(IncidentDAO.getIncidentsList().get(i).getIncidentYear());
-						%></td>
-						<td><%
-							out.println(IncidentDAO.getIncidentsList().get(i).getUserReportedIncident().getName());
-						%></td>
-						<td><%
-							out.println(IncidentDAO.getIncidentsList().get(i).getUserReportedIncident().getPosition());
-						%></td>
-						<td><%out.println(keywords); %></td>
-						<td><%out.println("<input type=\"submit\" name=\""+incidentMarker+"\" value=\"View Incident\">"); %></td>
-						<%if(branchManagerAuthorization==1) { %>
-							<td><%out.println(theStaffAssigned); %></td>
-							<td><%out.println("<input type=\"submit\" name=\""+handleIncident+"\" value=\"Handle Incident\">"); %></td>
-							<td><%out.println("<input type=\"submit\" name=\"close"+handleIncident+"\" value=\"Close Incident\">"); %></td>
-						<%} %>
-						</tr>
-					<%}
-				}%>
-			<%} %>
-			
-			</table>
-		
-		</div>	
+		<form action="prepareList" method="post">
+		<input type="submit" value="Refresh">
 		</form>
-		<br>
-		
-		
-		<form action="CreateIncidentReport.jsp" method="post">
-	
-		<label for="addIncident">Add an Incident</label>
-		<input type="submit" name="addIncident" value="Add">
-		</form>
-		<br>
-		
-		
+		</div>
+
+
+<form action="displayIncidentReport" method="post">
+	<div>
 		<table>
+			<tr>
+				<th>Incident ID</th>
+				<th>Title</th>
+				<th>Category</th>
+				<th>Day</th>
+				<th>Month</th>
+				<th>Year</th>
+				<th>Reporter</th>
+				<th>Staff Position</th>
+				<th>Keywords</th>
+				<th>Details</th>
+				<c:if test="${logAuth.authenticationLevel==1}">
+					<th>Staff Assigned</th>
+					<th>Handle Incident</th>
+					<th>Close Incident</th>
+				</c:if>
+			</tr>
+			<c:forEach items="${listOfIncidents}" var="report" varStatus="loop">
+			<tr>
+				<td><c:out value="${report.incidentID}"/></td>
+				<td><c:out value="${report.incidentTitle}"/></td>
+				<td><c:out value="${report.incidentCategory}"/></td>
+				<td><c:out value="${report.incidentDateOfMonth}"/></td>
+				<td><c:out value="${report.incidentMonth}"/></td>
+				<td><c:out value="${report.incidentYear}"/></td>
+				<td><c:out value="${report.userReportedIncident.name}"/></td>
+				<td><c:out value="${report.userReportedIncident.position}"/></td>
+				<td><c:out value="${report.incidentKeywordsInString}"/></td>
+				<td><input type="submit" name="${report.incidentID}" value="View Incident"></td>
+				<c:if test="${logAuth.authenticationLevel==1}">
+					<td><c:out value="${report.staffAssigned}"/></td>
+					<td><input type="submit" name="${report.incidentID}" value="Handle Incident"></td>
+					<td><input type="submit" name="${report.incidentID}" value="Close Incident"></td>
+				</c:if>
+			</tr>
+			</c:forEach>
 		</table>
 	</div>
-	<form action="userLogout" method="post">
-		<input type="submit" value="Log Out">
-	</form>
+</form> 
+<br>
+
+<form action="CreateIncidentReport.jsp" method="post">
+	<label for="addIncident">Add an Incident</label>
+	<input type="submit" name="addIncident" value="Add">
+</form>
+<br>
+</div>
+
+<form action="userLogout" method="post">
+	<input type="submit" value="Log Out">
+</form>
+
 </body>
 </html>

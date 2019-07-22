@@ -22,6 +22,25 @@ public class DisplayIncidentReportServlet extends HttpServlet{
 
 		int index=-1;
 		
+		//new code
+		int incidentID=-1;
+		
+		for(int i=0;i<IncidentDAO.getIncidentsList().size();i++) {
+			String storeParameter = Integer.toString(IncidentDAO.getIncidentsList().get(i).getIncidentID());
+			out.println("storeParameter is "+storeParameter);
+			tempIncidentChosen = req.getParameter(storeParameter);
+			out.println("tempIncidentChosen is "+tempIncidentChosen);
+			if(tempIncidentChosen!=null) {
+				out.println("Incident Chosen");
+				incidentID=IncidentDAO.getIncidentsList().get(i).getIncidentID();
+				break;
+			}
+		}
+		
+		out.println(incidentID);
+		//finish new code
+		
+/**
 		//display Incident
 		for(int i=0;i<IncidentDAO.getIncidentsList().size();i++) {
 
@@ -114,7 +133,8 @@ public class DisplayIncidentReportServlet extends HttpServlet{
 			req.getRequestDispatcher("AssignStaffToIncident.jsp").forward(req, res);
 			
 		}
-		
+		*/
 
 	}
+	
 }

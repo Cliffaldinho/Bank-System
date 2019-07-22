@@ -24,6 +24,7 @@ public class IncidentBean implements Serializable {
 	private String[] incidentKeywords;
 	private String possibleCausesOfIncident;
 	private String possibleSolutionsOfIncident;
+	private int incidentID;
 	
 	private boolean hasAnalysis;
 	private int indexInAnalysisDatabase;
@@ -33,18 +34,13 @@ public class IncidentBean implements Serializable {
 	private Timestamp ts;
 
 
-
-
-
-
-
-
 	public IncidentBean() {
 		hasAnalysis=false;
 		setTimeStamp();
 		setIncidentDateOfMonth();
 		setIncidentMonth();
 		setIncidentYear();
+		idOfStaffAssigned="None";
 	}
 
 
@@ -116,6 +112,15 @@ public class IncidentBean implements Serializable {
 		
 	}
 	
+	public void setIncidentID(int id) {
+		incidentID=id;
+	}
+	
+	public int getIncidentID() {
+		return incidentID;
+	}
+	
+	
 	public void setTimeStamp() {
 		
 		ts = new Timestamp(System.currentTimeMillis());
@@ -144,6 +149,18 @@ public class IncidentBean implements Serializable {
 
 	public void setIdOfStaffAssigned(String id) {
 		this.idOfStaffAssigned = id;
+	}
+	
+	public String getStaffAssigned() {
+		String staffName;
+		
+		if(idOfStaffAssigned.equalsIgnoreCase("None")) {
+			staffName="No staff assigned.";
+		} else {
+			staffName=UserDatabase.findUserObjectByStaffID(idOfStaffAssigned).getName();
+		}
+		
+		return staffName;
 	}
 	
 	public enum Category {
@@ -227,6 +244,19 @@ public class IncidentBean implements Serializable {
 	
 	public String[] getIncidentKeywords() {
 		return incidentKeywords;
+	}
+	
+	public String getIncidentKeywordsInString() {
+		String keywords="";
+	
+			int i=0;
+			while(i!=(incidentKeywords.length-1)) {
+				keywords=keywords+incidentKeywords[i]+", ";
+				i++;
+			}
+			keywords=keywords+incidentKeywords[i];
+			
+		return keywords;
 	}
 	
 	public void setIncidentKeywords(String[] keywords) {

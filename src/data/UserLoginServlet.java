@@ -105,7 +105,14 @@ public class UserLoginServlet extends HttpServlet {
 			
 					aSession.setAttribute("logAuth",logAuth);
 					
-					req.getRequestDispatcher("ListOfIncidents.jsp").forward(req,res);
+					boolean isSearch=false,isSort=false;
+					aSession.setAttribute("isSearch", isSearch);
+					aSession.setAttribute("isSort", isSort);
+					
+					ArrayList<IncidentBean> incidentsList = IncidentDAO.getIncidentsList();
+					aSession.setAttribute("printList", incidentsList);
+					
+					req.getRequestDispatcher("prepareList").forward(req,res);
 				}
 			}
 		}	

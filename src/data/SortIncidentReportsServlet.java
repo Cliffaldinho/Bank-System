@@ -10,10 +10,18 @@ import java.util.*;
 
 @WebServlet(urlPatterns={"/sortIncidentReports"})
 public class SortIncidentReportsServlet extends HttpServlet{
-	ArrayList<IncidentBean> incidentReports = null;
+
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-		ArrayList<IncidentBean> incidentReports = IncidentDAO.getIncidentsList();
+	
+	HttpSession aSession = req.getSession();
+	
+	aSession.setAttribute("isSort", true);
+	
+	//gets existing list of Incidents (thus allowing users to search then sort or sort then search)
+	ArrayList<IncidentBean> incidentReports = (ArrayList<IncidentBean>) aSession.getAttribute("listOfIncidents");
+	
+	
     ArrayList<Integer> sortedList = new ArrayList<Integer>();
     String sortTopic = req.getParameter("sortBy");
 
@@ -30,9 +38,12 @@ public class SortIncidentReportsServlet extends HttpServlet{
     {
       case "Title":
                           Map<Integer, String> indexesT = new HashMap<Integer, String>();
-                          for(IncidentBean i: incidentReports) //record indexes of incidents in copy
+                          for(IncidentBean i: incidentReports) //record indexes of incidents in copy //change to record id of incidents
                           {
-                            indexesT.put(index, i.getIncidentTitle()); //why not sort hashmap? can get messy
+                        	  
+                        	  //this code changed from "index" to "i.getIncidentID" coz retrieve by ID
+                            indexesT.put(i.getIncidentID(), i.getIncidentTitle()); //why not sort hashmap? can get messy
+
                             index++;
                           }
                           //sort copy
@@ -57,14 +68,12 @@ public class SortIncidentReportsServlet extends HttpServlet{
                             }
                             indexesT.remove(key); //so no duplicates added
                           }
-                          req.setAttribute("sortReportsIndexes", sortedList);
-                          req.getRequestDispatcher("ListOfIncidents.jsp").forward(req, res);
                           break;
       case "Category":
                       Map<Integer, String> indexes = new HashMap<Integer, String>();
                       for(IncidentBean i: incidentReports) //record indexes of incidents in copy
                       {
-                        indexes.put(index, i.getIncidentCategory().toString());
+                        indexes.put(i.getIncidentID(), i.getIncidentCategory().toString());
                         index++;
                       }
                       if (sortedIncidentReports.size() > 0) { //sort copy
@@ -88,14 +97,12 @@ public class SortIncidentReportsServlet extends HttpServlet{
                         }
                         indexes.remove(key);
                       }
-                      req.setAttribute("sortReportsIndexes", sortedList);
-                      req.getRequestDispatcher("ListOfIncidents.jsp").forward(req, res);
                       break;
       case "Year":
                   Map<Integer, Integer> indexesY = new HashMap<Integer, Integer>();
                   for(IncidentBean i: incidentReports) //record indexes of incidents in copy
                   {
-                    indexesY.put(index, i.getIncidentYear());
+                    indexesY.put(i.getIncidentID(), i.getIncidentYear());
                     index++;
                   }
                   if (sortedIncidentReports.size() > 0) { //sort copy
@@ -125,20 +132,23 @@ public class SortIncidentReportsServlet extends HttpServlet{
                     }
                     indexesY.remove(key);
                   }
-                  req.setAttribute("sortReportsIndexes", sortedList);
-                  req.getRequestDispatcher("ListOfIncidents.jsp").forward(req, res);
+                  
                   break;
       default:
               for(IncidentBean i: incidentReports)
               {
-                sortedList.add(index);
+                sortedList.add(i.getIncidentID());
                 index++;
               }
-              req.setAttribute("sortReportsIndexes", sortedList); //send back original list
-              req.getRequestDispatcher("ListOfIncidents.jsp").forward(req, res);
               break;
     }
     //end switch
 
+
+    //reset list of sorted indexes
+    aSession.setAttribute("sortReportsIndexes", sortedList); //send back original list
+    
+
+    req.getRequestDispatcher("prepareList").forward(req, res);
 	}
 }

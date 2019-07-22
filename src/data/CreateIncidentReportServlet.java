@@ -38,6 +38,11 @@ public class CreateIncidentReportServlet extends HttpServlet {
 		
 		PrintWriter out = res.getWriter();
 		
+		//set Incident ID
+		anIncident.setIncidentID(IncidentDAO.getIncidentCounter()+1);
+		IncidentDAO.setIncidentCounter(IncidentDAO.getIncidentCounter()+1);
+		
+		
 		//Set Incident Title
 		title=req.getParameter("incidentTitle");
 		anIncident.setIncidentTitle(title);
@@ -208,10 +213,11 @@ public class CreateIncidentReportServlet extends HttpServlet {
 			req.getRequestDispatcher("DisplayIncidentReport.jsp").forward(req,res);
 			
 		} else {
+
 			IncidentDAO.getIncidentsList().add(anIncident);
 			
 			//original functional line
-			req.getRequestDispatcher("ListOfIncidents.jsp").forward(req,res);
+			req.getRequestDispatcher("prepareList").forward(req,res);
 			
 			
 		}

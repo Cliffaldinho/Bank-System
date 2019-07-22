@@ -23,6 +23,11 @@ public class LogoutServlet extends HttpServlet {
 		StaffBean logAuth = (StaffBean) aSession.getAttribute("logAuth");
 		logAuth.setUsername(null);
 		req.setAttribute("loginError",null);
+		
+		aSession.removeAttribute("isSearch");
+		aSession.removeAttribute("isSort");
+		aSession.removeAttribute("printList");
+		
 		req.getRequestDispatcher("index.jsp").forward(req,res);
 	}
 	

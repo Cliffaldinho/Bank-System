@@ -10,13 +10,29 @@ import java.util.*;
 
 @WebServlet(urlPatterns={"/searchIncidentReports"})
 public class SearchIncidentReportsServlet extends HttpServlet{
-	ArrayList<IncidentBean> incidentReports = null;
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-		ArrayList<IncidentBean> incidentReports = IncidentDAO.getIncidentsList();
+		//new code
+		HttpSession aSession = req.getSession();
+		
+		PrintWriter out = res.getWriter();
+
+		//set the attributes for that session
+		aSession.setAttribute("isSearch", true);
+
+		//finish new code
+		
+	
+		//gets existing list of Incidents (thus allowing users to search then sort or sort then search)
+		ArrayList<IncidentBean> incidentReports = (ArrayList<IncidentBean>) aSession.getAttribute("listOfIncidents");
+		
 		ArrayList<Integer> searchReturn = new ArrayList<Integer>();
+		
+
 		String searchTopic = req.getParameter("searchTopic");
 		String search = req.getParameter("search");
+
+		
 		int index = 0;
 
 		switch(searchTopic)
@@ -26,7 +42,7 @@ public class SearchIncidentReportsServlet extends HttpServlet{
 											{
 												if(i.getIncidentTitle().equals(search))
 												{
-													searchReturn.add(index);
+													searchReturn.add(i.getIncidentID());
 												}
 												index++;
 											}
@@ -36,7 +52,7 @@ public class SearchIncidentReportsServlet extends HttpServlet{
 												{
 													if(i.getPossibleCausesOfIncident().contains(search))
 													{
-														searchReturn.add(index);
+														searchReturn.add(i.getIncidentID());
 													}
 													index++;
 												}
@@ -49,7 +65,7 @@ public class SearchIncidentReportsServlet extends HttpServlet{
 												{
 													if(k.equals(search))
 													{
-														searchReturn.add(index);
+														searchReturn.add(i.getIncidentID());
 														break;
 													}
 												}
@@ -62,7 +78,7 @@ public class SearchIncidentReportsServlet extends HttpServlet{
 												IncidentBean.Category category = i.getIncidentCategory();
 												if(category.toString().equals(search))
 												{
-													searchReturn.add(index);
+													searchReturn.add(i.getIncidentID());
 												}
 												index++;
 											}
@@ -70,14 +86,18 @@ public class SearchIncidentReportsServlet extends HttpServlet{
 			default:
 							for(IncidentBean i : incidentReports)
 							{
-								searchReturn.add(index);
+								searchReturn.add(i.getIncidentID());
 								index++;
 							}
 							break;
 		}
 
-		req.setAttribute("listOfSearchIndexes", searchReturn);
-		req.getRequestDispatcher("ListOfIncidents.jsp").forward(req, res);
+		//reset list of search indexes
+		aSession.setAttribute("listOfSearchIndexes",searchReturn);
+		
+		req.getRequestDispatcher("prepareList").forward(req, res);
+		
+
 
 	}
 }
