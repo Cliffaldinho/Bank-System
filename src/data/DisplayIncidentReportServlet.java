@@ -40,7 +40,7 @@ public class DisplayIncidentReportServlet extends HttpServlet{
 		out.println(incidentID);
 		//finish new code
 		
-/**
+
 		//display Incident
 		for(int i=0;i<IncidentDAO.getIncidentsList().size();i++) {
 
@@ -133,7 +133,7 @@ public class DisplayIncidentReportServlet extends HttpServlet{
 			req.getRequestDispatcher("AssignStaffToIncident.jsp").forward(req, res);
 			
 		}
-		*/
+		
 
 	}
 	
