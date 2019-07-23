@@ -13,7 +13,7 @@ public class IncidentBean implements Serializable {
 
 
 
-	private User userReportedIncident;
+	private UserBean userReportedIncident;
 	private String incidentTitle;
 	private Category incidentCategory;
 	private int incidentDateOfMonth;
@@ -112,8 +112,8 @@ public class IncidentBean implements Serializable {
 		
 	}
 	
-	public void setIncidentID(int id) {
-		incidentID=id;
+	public void setIncidentID() {
+		incidentID=IncidentDAO.getIncidentCounter()+1;
 		IncidentDAO.setIncidentCounter(IncidentDAO.getIncidentCounter()+1);
 	}
 	
@@ -144,11 +144,11 @@ public class IncidentBean implements Serializable {
 	}
 	
 	
-	public String getIdOfStaffAssigned() {
+	public String getAssignedStaffID() {
 		return idOfStaffAssigned;
 	}
 
-	public void setIdOfStaffAssigned(String id) {
+	public void setAssignedStaffID(String id) {
 		this.idOfStaffAssigned = id;
 	}
 	
@@ -158,7 +158,7 @@ public class IncidentBean implements Serializable {
 		if(idOfStaffAssigned.equalsIgnoreCase("None")) {
 			staffName="No staff assigned.";
 		} else {
-			staffName=UserDatabase.findUserObjectByStaffID(idOfStaffAssigned).getName();
+			staffName=UserDAO.findUserObjectByStaffID(idOfStaffAssigned).getName();
 		}
 		
 		return staffName;
@@ -228,11 +228,11 @@ public class IncidentBean implements Serializable {
 		return incidentTitle;
 	}
 	
-	public User getUserReportedIncident() {
+	public UserBean getUserReportedIncident() {
 		return userReportedIncident;
 	}
 
-	public void setUserReportedIncident(User u) {
+	public void setUserReportedIncident(UserBean u) {
 		this.userReportedIncident=u;
 	}
 	

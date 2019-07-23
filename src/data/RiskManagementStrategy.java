@@ -7,8 +7,8 @@ public class RiskManagementStrategy implements Serializable {
 
 
 
-	private User riskStrategyWriter;
-	private User.Position delegatedStaff;
+	private UserBean riskStrategyWriter;
+	private UserBean.Position delegatedStaff;
 	private String riskTitle;
 	private Category incidentCategory;
 	private String risk;
@@ -20,7 +20,7 @@ public class RiskManagementStrategy implements Serializable {
 	public RiskManagementStrategy() 
 	{	}
 	
-	public RiskManagementStrategy(User writer, User.Position newDelegatedStaff, String title, Category newCategory, String newRisk, String newStrategy) 
+	public RiskManagementStrategy(UserBean writer, UserBean.Position newDelegatedStaff, String title, Category newCategory, String newRisk, String newStrategy) 
 	{	
 		riskStrategyWriter = writer;
 		delegatedStaff = newDelegatedStaff;
@@ -65,11 +65,11 @@ public class RiskManagementStrategy implements Serializable {
 	}
 	
 
-	public User getRiskStrategyWriter() {
+	public UserBean getRiskStrategyWriter() {
 		return riskStrategyWriter;
 	}
 
-	public void setRiskStrategyWriter(User riskStrategyWriter) {
+	public void setRiskStrategyWriter(UserBean riskStrategyWriter) {
 		this.riskStrategyWriter = riskStrategyWriter;
 	}
 

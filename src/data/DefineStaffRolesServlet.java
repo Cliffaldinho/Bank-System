@@ -20,7 +20,7 @@ public class DefineStaffRolesServlet extends HttpServlet {
 		
 		int staffIndex=-1;
 		
-		for(int i=0;i<UserDatabase.getUsersList().size();i++) {
+		for(int i=0;i<UserDAO.getUsersList().size();i++) {
 			
 			String Staff = "Staff";
 			Staff = Staff.concat(Integer.toString(i));
@@ -36,11 +36,11 @@ public class DefineStaffRolesServlet extends HttpServlet {
 			
 			if (staffDeleted!=null) {
 				staffIndex = i;
-				UserDatabase.getUsersList().remove(i);
+				UserDAO.getUsersList().remove(i);
 				String path = getServletContext().getRealPath("./saves/users.dat");
 				FileOutputStream fout = new FileOutputStream(getServletContext().getRealPath("./saves/users.dat"));
 				ObjectOutputStream oout = new ObjectOutputStream(fout);
-				oout.writeObject(UserDatabase.getUsersList());
+				oout.writeObject(UserDAO.getUsersList());
 				oout.close();
 				fout.close();
 				req.getRequestDispatcher("RolesForStaff.jsp").forward(req, res);

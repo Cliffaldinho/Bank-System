@@ -32,12 +32,17 @@ public class PostAnalysisServlet extends HttpServlet {
 		tempStaffID =req.getParameter("staffIDWriting");
 		tempRootCause=req.getParameter("causes");
 		
+		//new code to acommodate change from getUserByIndex to getUserByStaffID
+		String staffID="";
+		//end code
+		
 		String databaseID;
-		for(int i=0;i<UserDatabase.getUsersList().size();i++) {
+		for(int i=0;i<UserDAO.getUsersList().size();i++) {
 			
-			databaseID=UserDatabase.getUsersList().get(i).getStaffID();
+			databaseID=UserDAO.getUsersList().get(i).getStaffID();
 			
 			if(databaseID.equalsIgnoreCase(tempStaffID)) {
+				staffID=databaseID;
 				userIndex=i;
 				break;
 			}
@@ -57,8 +62,9 @@ public class PostAnalysisServlet extends HttpServlet {
 		out.println("nearly finished");
 		
 		//Add user that reported it
-		AnalysisDatabase.getAnalysisList().get(analysisDatabaseIndex).getUsers().add(UserDatabase.getUserByIndex(userIndex));
-		//out.println(AnalysisDatabase.getAnalysisList().get(analysisDatabaseIndex).getUsers().get(0).getName());
+		//new code to acommodate change from getUserByIndex to getUserByStaffID
+		AnalysisDatabase.getAnalysisList().get(analysisDatabaseIndex).getUsers().add(UserDAO.getUserByStaffID(staffID));
+		//end code
 		
 		
 		

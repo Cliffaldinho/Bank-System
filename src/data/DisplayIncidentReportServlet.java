@@ -30,6 +30,7 @@ public class DisplayIncidentReportServlet extends HttpServlet{
 
 		
 		//Loops through all incidents in database
+		outerloop:
 		for(int i=0;i<IncidentDAO.getIncidentsList().size();i++) {
 			
 			//uses the incident IDs in database as parameter
@@ -41,23 +42,34 @@ public class DisplayIncidentReportServlet extends HttpServlet{
 			if(tempIncidentChosen!=null) {
 				
 				//if it was clicked, check which option was chosen
-				if(tempIncidentChosen.equals("View Incident")) {
+				innerloop:
+				switch(tempIncidentChosen) {
 				
+				case "View Incident":
 					viewIncident=true;
-				} else if (tempIncidentChosen.equals("Handle Incident")) {
-					
+					break innerloop;
+				
+				case "Handle Incident":
 					handleIncident=true;
-				} else if (tempIncidentChosen.equals("Close Incident")) {
+					break innerloop;
 					
+				case "Close Incident":
 					closeIncident=true;
-				} 
+					break innerloop;
+					
+				default:
+					System.out.println("Error: No user choice received for DisplayIncidentReportServlet.");
+					break innerloop;
+				}
+				
+				
 				
 				//get the id of the incident clicked
 				incidentID=IncidentDAO.getIncidentsList().get(i).getIncidentID();
 				
 				//get the incident chosen
 				printIncident=IncidentDAO.getIncidentByIncidentID(incidentID);
-				break;
+				break outerloop;
 			}
 		}
 	
@@ -76,16 +88,19 @@ public class DisplayIncidentReportServlet extends HttpServlet{
 		req.setAttribute("incidentPossibleCauses", printIncident.getPossibleCausesOfIncident());
 		req.setAttribute("incidentPossibleSolutions", printIncident.getPossibleSolutionsOfIncident());
 		
-		User staffReported = printIncident.getUserReportedIncident();
+		UserBean staffReported = printIncident.getUserReportedIncident();
 		req.setAttribute("staffName", staffReported.getName());
 		req.setAttribute("staffPosition", staffReported.getPosition());
 		req.setAttribute("staffID", staffReported.getStaffID());
 		
 		
+		
+		
 		if(viewIncident==true) {
 			req.getRequestDispatcher("DisplayIncidentReport.jsp").forward(req, res);
 		} else if (handleIncident==true) {
-			req.getRequestDispatcher("AssignStaffToIncident.jsp");
+
+			req.getRequestDispatcher("AssignStaffToIncident.jsp").forward(req, res);
 		} else if (closeIncident==true) {
 			IncidentDAO.deleteIncidentByIncidentID(incidentID);
 			req.getRequestDispatcher("prepareList").forward(req, res);

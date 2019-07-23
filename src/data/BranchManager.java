@@ -1,5 +1,5 @@
 package data;
 
-public class BranchManager extends User {
+public class BranchManager extends UserBean {
 
 }

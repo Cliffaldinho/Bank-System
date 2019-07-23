@@ -3,27 +3,27 @@ import java.util.*;
 import java.text.*;
 import java.io.*;
 
-public class UserDatabase{
+public class UserDAO{
 
-	private static ArrayList<User> usersList;
+	private static ArrayList<UserBean> usersList;
 	
 	static {
 		usersList = new ArrayList<>();
 	}
 	
-	public UserDatabase() {
+	public UserDAO() {
 		
 	}
 	
-	public static ArrayList<User> getUsersList() {
+	public static ArrayList<UserBean> getUsersList() {
 		return usersList;
 	}
 
-	public static void setUsers(ArrayList<User> in) {
+	public static void setUsers(ArrayList<UserBean> in) {
 		usersList = in;
 	}
 	
-	public static void addUsers(User u) {
+	public static void addUsers(UserBean u) {
 		usersList.add(u);
 	}
 
@@ -41,7 +41,7 @@ public class UserDatabase{
 		return index;
 	}
 	
-	public static User findUserObjectByStaffID(String id) {
+	public static UserBean findUserObjectByStaffID(String id) {
 		int index =-1;
 		
 		for(int i=0;i<usersList.size();i++) {
@@ -54,8 +54,15 @@ public class UserDatabase{
 		return usersList.get(index);
 	}
 	
-	public static User getUserByIndex(int index) {
-		return usersList.get(index);
+	public static UserBean getUserByStaffID(String id) {
+		UserBean user = new UserBean();
+		for(int i=0;i<usersList.size();i++) {
+			if(usersList.get(i).getStaffID().equalsIgnoreCase(id)) {
+				user = usersList.get(i);
+			}
+		}
+		
+		return user;
 	}
 	
 	public static int getUsersListSize() {
@@ -63,7 +70,7 @@ public class UserDatabase{
 	}
 
 	public static boolean checkID(String inID) {
-		for (User user: usersList) {
+		for (UserBean user: usersList) {
 			if (user.getStaffID().equals(inID)){
 				return true;
 			}

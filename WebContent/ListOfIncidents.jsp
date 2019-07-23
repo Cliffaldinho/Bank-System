@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 	<%@ page import="java.util.*" %>
-    <%@ page import="data.UserDatabase" %>
+    <%@ page import="data.UserDAO" %>
     <%@ page import="data.IncidentDAO" %>
-    <%@ page import = "data.User" %>
+    <%@ page import = "data.UserBean" %>
     <%@ page import = "data.*" %>
          <%@taglib
     prefix="c"

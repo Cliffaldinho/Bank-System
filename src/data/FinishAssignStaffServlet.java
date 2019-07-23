@@ -12,38 +12,37 @@ import java.util.*;
 public class FinishAssignStaffServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest req,HttpServletResponse res) throws IOException,ServletException {
-		PrintWriter out =res.getWriter();
-		String tempIncident;
 		
-		//tempStaff=req.getParameter("Assign"+i);
-		tempIncident=req.getParameter("IncidentIndex");
-	
-		int staffIndex=-1;
-		for(int i=0;i<UserDatabase.getUsersList().size();i++) {
+		PrintWriter out = res.getWriter();
 		
-			String getStaff=req.getParameter("Assign"+i);
+		String tempStaffChosen;
+		String staffID="";
+		
+		for(int i=0;i<UserDAO.getUsersList().size();i++) {
 			
-			if(getStaff!=null) {
-				staffIndex=i;
+			String storeParameter = UserDAO.getUsersList().get(i).getStaffID();
+			
+			tempStaffChosen = req.getParameter(storeParameter);
+			
+			if(tempStaffChosen!=null) {
+				
+				staffID = storeParameter;
+				//out.println("StaffID in for loop is" + staffID);
 				break;
+				
+				
 			}
-		
-		
-		
 		}
+
+		int incidentID;
+		HttpSession aSession = req.getSession();
+		incidentID = (int) aSession.getAttribute("incidentID");
 		
-		//out.println("Staff "+staffIndex);
-		//out.println("Incident "+tempIncident);
-		int incidentIndex;
-		incidentIndex=Integer.parseInt(tempIncident);
+		IncidentDAO.getIncidentByIncidentID(incidentID).setAssignedStaffID(staffID);
+		//out.println("Incident ID" + incidentID + " has "+IncidentDAO.getIncidentByIncidentID(incidentID).getAssignedStaffID()+ " assigned.");
 		
-		IncidentDAO.getIncidentsList().get(incidentIndex).setIdOfStaffAssigned(UserDatabase.getUsersList().get(staffIndex).getStaffID());
+		req.getRequestDispatcher("prepareList").forward(req, res);
 		
-		
-		
-		req.getRequestDispatcher("ListOfIncidents.jsp").forward(req, res);
-	
-	
 	
 	}
 }

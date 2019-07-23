@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <%@ page import="data.UserDatabase" %>
+    <%@ page import="data.UserDAO" %>
     <%@ page import="data.IncidentDAO" %>   
     
-<%HttpSession aSession = request.getSession();%>
+<%
+       	HttpSession aSession = request.getSession();
+       %>
 <jsp:useBean id="logAuth" class="data.StaffBean" scope="session" /> 
 
 <!DOCTYPE html>
@@ -38,7 +40,9 @@
 		<h2>View Staff</h2>
 		
 		<!-- Staff name, Staff position, Staff id -->
-		<%//int branchManagerAuthorization=logAuth.getAuthenticationLevel();  %>
+		<%
+			//int branchManagerAuthorization=logAuth.getAuthenticationLevel();
+		%>
 		<form name="staffRole" action="defineRolesForStaff" method="post">
 			<table>
 				<tr>
@@ -65,23 +69,24 @@
 					</th>
 				</tr>
 				<%
-				String staffName,staffPosition,staffID,currentRoles;
-				int number;
-						//if(branchManagerAuthorization==1) {
-							
-						for(int i=0;i<UserDatabase.getUsersList().size();i++) { 
-					    	staffName=UserDatabase.getUsersList().get(i).getName();
-					    	staffPosition=UserDatabase.getUsersList().get(i).getPosition().toString();
-					    	staffID=UserDatabase.getUsersList().get(i).getStaffID();
-					    	number=i+1;
-					    	
-					    	currentRoles=UserDatabase.getUsersList().get(i).getRolesToDo();
-					    	String setNone="None";
-					    	if(currentRoles==null || currentRoles.equals("")) {
-					    		currentRoles=setNone;
-					    	}
-					    	
-					    	String staffMarker="Staff"+i;%>
+					String staffName,staffPosition,staffID,currentRoles;
+						int number;
+								//if(branchManagerAuthorization==1) {
+									
+								for(int i=0;i<UserDAO.getUsersList().size();i++) { 
+							    	staffName=UserDAO.getUsersList().get(i).getName();
+							    	staffPosition=UserDAO.getUsersList().get(i).getPosition().toString();
+							    	staffID=UserDAO.getUsersList().get(i).getStaffID();
+							    	number=i+1;
+							    	
+							    	currentRoles=UserDAO.getUsersList().get(i).getRolesToDo();
+							    	String setNone="None";
+							    	if(currentRoles==null || currentRoles.equals("")) {
+							    		currentRoles=setNone;
+							    	}
+							    	
+							    	String staffMarker="Staff"+i;
+				%>
 				<tr>
 					<td>
 						<%out.println(number); %>

@@ -17,48 +17,50 @@ public class FinishSetStaffRoleServlet extends HttpServlet {
 		String tempLaw,tempSecurity,tempHuman,tempEquipment,tempAlgorithms,tempOther,tempIndex;
 		
 		tempIndex=req.getParameter("StaffIndex");
-		int theIndex=Integer.parseInt(tempIndex);
+		
+		//to change this line coz identify by staff id not index now
+		String theIndex=tempIndex;
 		
 		if (req.getParameter("name").equals(null) || req.getParameter("name").equals("")) {
 			//Do nothing
 		} else {
-			UserDatabase.getUserByIndex(theIndex).setName(req.getParameter("name"));
+			UserDAO.getUserByStaffID(theIndex).setName(req.getParameter("name"));
 		}
 		
 		if (req.getParameter("id").equals(null) || req.getParameter("id").equals("")) {
 			//Do nothing
 		} else {
-			UserDatabase.getUserByIndex(theIndex).setStaffID(req.getParameter("id"));
+			UserDAO.getUserByStaffID(theIndex).setStaffID(req.getParameter("id"));
 		}
 		
 		if (req.getParameter("password").equals(null) || req.getParameter("password").equals("")) {
 			//Do nothing
 		} else {
-			UserDatabase.getUserByIndex(theIndex).setPassword(req.getParameter("password"));
+			UserDAO.getUserByStaffID(theIndex).setPassword(req.getParameter("password"));
 		}
 		
 		if (req.getParameter("address").equals(null) || req.getParameter("address").equals("")) {
 			//Do nothing
 		} else {
-			UserDatabase.getUserByIndex(theIndex).setAddress(req.getParameter("address"));
+			UserDAO.getUserByStaffID(theIndex).setAddress(req.getParameter("address"));
 		}
 		
 		if (req.getParameter("contact").equals(null) || req.getParameter("contact").equals("")) {
 			//Do nothing
 		} else {
-			UserDatabase.getUserByIndex(theIndex).setContactNumber(req.getParameter("contact"));
+			UserDAO.getUserByStaffID(theIndex).setContactNumber(req.getParameter("contact"));
 		}
 		
 		if (req.getParameter("position").equals("branch")) {
-			UserDatabase.getUserByIndex(theIndex).setPosition(User.Position.Branch_Manager);
+			UserDAO.getUserByStaffID(theIndex).setPosition(UserBean.Position.Branch_Manager);
 		} else if (req.getParameter("position").equals("data")) {
-			UserDatabase.getUserByIndex(theIndex).setPosition(User.Position.Data_Processing_Officer);
+			UserDAO.getUserByStaffID(theIndex).setPosition(UserBean.Position.Data_Processing_Officer);
 		} else if (req.getParameter("position").equals("it")) {
-			UserDatabase.getUserByIndex(theIndex).setPosition(User.Position.IT);
+			UserDAO.getUserByStaffID(theIndex).setPosition(UserBean.Position.IT);
 		} else if (req.getParameter("position").equals("finance")) {
-			UserDatabase.getUserByIndex(theIndex).setPosition(User.Position.Financial_Analyst);
+			UserDAO.getUserByStaffID(theIndex).setPosition(UserBean.Position.Financial_Analyst);
 		} else if (req.getParameter("position").equals("auditor")) {
-			UserDatabase.getUserByIndex(theIndex).setPosition(User.Position.Internal_Auditor);
+			UserDAO.getUserByStaffID(theIndex).setPosition(UserBean.Position.Internal_Auditor);
 		}
 		
 		tempLaw=req.getParameter("Law");
@@ -113,7 +115,7 @@ public class FinishSetStaffRoleServlet extends HttpServlet {
 		
 		
 		total=law+security+human+equipment+algorithms+other;
-		UserDatabase.getUsersList().get(theIndex).setRolesToDo(total);
+		UserDAO.getUserByStaffID(tempIndex).setRolesToDo(total);
 		req.getRequestDispatcher("RolesForStaff.jsp").forward(req, res);
 	}
 }

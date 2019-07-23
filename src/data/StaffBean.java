@@ -24,9 +24,9 @@ public class StaffBean implements Serializable {
 	
 	public int getAuthenticationLevel() {
 		int authenticationLevel = -1;
-		for (int i = 0; i < UserDatabase.getUsersList().size(); i++){
-			if (UserDatabase.getUsersList().get(i).getStaffID().equals(username)){
-				String clearance = UserDatabase.getUsersList().get(i).getPosition().toString();
+		for (int i = 0; i < UserDAO.getUsersList().size(); i++){
+			if (UserDAO.getUsersList().get(i).getStaffID().equals(username)){
+				String clearance = UserDAO.getUsersList().get(i).getPosition().toString();
 				if (clearance.equals("Branch Manager")){
 					authenticationLevel = 1;
 				} else {
@@ -37,8 +37,8 @@ public class StaffBean implements Serializable {
 		return authenticationLevel;
 	}
 	
-	public User getUserByUsername() {
-		User user=UserDatabase.findUserObjectByStaffID(username);
+	public UserBean getUserByUsername() {
+		UserBean user=UserDAO.findUserObjectByStaffID(username);
 		return user;
 	}
 	

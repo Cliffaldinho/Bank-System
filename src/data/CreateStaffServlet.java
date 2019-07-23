@@ -20,7 +20,7 @@ public class CreateStaffServlet extends HttpServlet {
 		PrintWriter out = res.getWriter();
 		String tempLaw,tempSecurity,tempHuman,tempEquipment,tempAlgorithms,tempOther,tempIndex;
 		
-		User tempUser = new User();
+		UserBean tempUser = new UserBean();
 		boolean check = true;
 		
 		
@@ -32,7 +32,7 @@ public class CreateStaffServlet extends HttpServlet {
 			tempUser.setName(req.getParameter("name"));
 		}
 		
-		if (req.getParameter("id") == null || req.getParameter("id").equals("") || UserDatabase.checkID(req.getParameter("id"))) {
+		if (req.getParameter("id") == null || req.getParameter("id").equals("") || UserDAO.checkID(req.getParameter("id"))) {
 			req.setAttribute("errorType", "id");
 			req.getRequestDispatcher("CreateUser.jsp").forward(req, res);
 			return;
@@ -65,15 +65,15 @@ public class CreateStaffServlet extends HttpServlet {
 		}
 		
 		if (req.getParameter("position").equals("branch")) {
-			tempUser.setPosition(User.Position.Branch_Manager);
+			tempUser.setPosition(UserBean.Position.Branch_Manager);
 		} else if (req.getParameter("position").equals("data")) {
-			tempUser.setPosition(User.Position.Data_Processing_Officer);
+			tempUser.setPosition(UserBean.Position.Data_Processing_Officer);
 		} else if (req.getParameter("position").equals("it")) {
-			tempUser.setPosition(User.Position.IT);
+			tempUser.setPosition(UserBean.Position.IT);
 		} else if (req.getParameter("position").equals("finance")) {
-			tempUser.setPosition(User.Position.Financial_Analyst);
+			tempUser.setPosition(UserBean.Position.Financial_Analyst);
 		} else if (req.getParameter("position").equals("auditor")) {
-			tempUser.setPosition(User.Position.Internal_Auditor);
+			tempUser.setPosition(UserBean.Position.Internal_Auditor);
 		}
 		
 		tempLaw=req.getParameter("Law");
@@ -129,11 +129,11 @@ public class CreateStaffServlet extends HttpServlet {
 		
 		total=law+security+human+equipment+algorithms+other;
 		tempUser.setRolesToDo(total);
-		UserDatabase.addUsers(tempUser);
+		UserDAO.addUsers(tempUser);
 		String path = getServletContext().getRealPath("./saves/users.dat");
 		FileOutputStream fout = new FileOutputStream(getServletContext().getRealPath("./saves/users.dat"));
 		ObjectOutputStream oout = new ObjectOutputStream(fout);
-		oout.writeObject(UserDatabase.getUsersList());
+		oout.writeObject(UserDAO.getUsersList());
 		oout.close();
 		fout.close();
 		req.getRequestDispatcher("RolesForStaff.jsp").forward(req, res);

@@ -3,7 +3,7 @@ import java.util.*;
 
 public class CaseStudy {
 
-	private ArrayList<User> users;
+	private ArrayList<UserBean> users;
 	private ArrayList<IncidentBean> manyIncidents;
 	private String lessonsLearntFromIncident;
 	private String rootCauseOfIncident;
@@ -12,18 +12,18 @@ public class CaseStudy {
 		
 	}
 
-	public CaseStudy(ArrayList<User> u,ArrayList<IncidentBean> many,String lessonsLearnt, String rootCause) {
+	public CaseStudy(ArrayList<UserBean> u,ArrayList<IncidentBean> many,String lessonsLearnt, String rootCause) {
 		this.users=u;
 		this.manyIncidents=many;
 		this.lessonsLearntFromIncident=lessonsLearnt;
 		this.rootCauseOfIncident=rootCause;
 	}
 	
-	public ArrayList<User> getUsers() {
+	public ArrayList<UserBean> getUsers() {
 		return users;
 	}
 
-	public void setUsers(ArrayList<User> u) {
+	public void setUsers(ArrayList<UserBean> u) {
 		this.users = u;
 	}
 

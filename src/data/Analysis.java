@@ -3,7 +3,7 @@ import java.util.*;
 
 public class Analysis {
 
-	private ArrayList<User> users;
+	private ArrayList<UserBean> users;
 	private IncidentBean oneIncident;
 	private String lessonsLearntFromIncident;
 	private String rootCauseOfIncident;
@@ -12,11 +12,11 @@ public class Analysis {
 
 
 	public Analysis() {
-		users = new ArrayList<User>();
+		users = new ArrayList<UserBean>();
 		listOfSimulations= new ArrayList<Simulation>();
 	}
 	
-	public Analysis(ArrayList<User> u,IncidentBean one, String lessonsLearnt, String rootCause) {
+	public Analysis(ArrayList<UserBean> u,IncidentBean one, String lessonsLearnt, String rootCause) {
 		users = u;
 		oneIncident=one;
 		lessonsLearntFromIncident=lessonsLearnt;
@@ -31,11 +31,11 @@ public class Analysis {
 		this.listOfSimulations = simulations;
 	}
 	
-	public ArrayList<User> getUsers() {
+	public ArrayList<UserBean> getUsers() {
 		return users;
 	}
 
-	public void setUsers(ArrayList<User> u) {
+	public void setUsers(ArrayList<UserBean> u) {
 		this.users = u;
 	}
 	

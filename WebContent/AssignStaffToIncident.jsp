@@ -1,10 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-        <%@ page import="data.UserDatabase" %>
+        <%@ page import="data.UserDAO" %>
     <%@ page import="data.IncidentDAO" %>
 
 <%
 	HttpSession aSession = request.getSession();
+%>
+         <%@taglib
+    prefix="c"
+    uri="http://java.sun.com/jsp/jstl/core" 
 %>
 <jsp:useBean id="logAuth" class="data.StaffBean" scope="session" />
 
@@ -52,84 +56,48 @@ Staff id
 Staff position
 Staff roles
  -->
-<%
-	int theIncidentIndex=(int) request.getAttribute("indexForAssignStaff");
-//out.println(theIncidentIndex);
-
-String incidentTitle,incidentCategory,incidentDate,incidentMonth,dayOfIncident,yearOfIncident,staffWhoReportedIt,incidentDescription;
-int incidentDay,incidentYear;
-
-incidentTitle=IncidentDAO.getIncidentsList().get(theIncidentIndex).getIncidentTitle();
-incidentCategory=IncidentDAO.getIncidentsList().get(theIncidentIndex).getIncidentCategory().toString();
-incidentDay=IncidentDAO.getIncidentsList().get(theIncidentIndex).getIncidentDateOfMonth();
-incidentMonth=IncidentDAO.getIncidentsList().get(theIncidentIndex).getIncidentMonth();
-incidentYear = IncidentDAO.getIncidentsList().get(theIncidentIndex).getIncidentYear();
-dayOfIncident=Integer.toString(incidentDay);
-yearOfIncident=Integer.toString(incidentYear);
-incidentDate=dayOfIncident+" "+incidentMonth+" "+incidentYear;
-staffWhoReportedIt=IncidentDAO.getIncidentsList().get(theIncidentIndex).getUserReportedIncident().getName();
-incidentDescription=IncidentDAO.getIncidentsList().get(theIncidentIndex).getDescriptionOfIncident();
-
-String staffName,staffID,staffPosition,staffRoles;
-int number;
-%>
+Incident id:
+${incidentID}
+<br>
 Incident title:
-<%out.println(incidentTitle); %>
+${incidentTitle}
 <br>
 Incident category:
-<%out.println(incidentCategory); %>
+${incidentCategory}
 <br>
 Incident date:
-<%out.println(incidentDate); %>
+${incidentDate}
 <br>
 Incident description:
-<%out.println(incidentDescription); %>
+${incidentDescription }
 <br>
 Staff who reported it:
-<%out.println(staffWhoReportedIt); %>
+${staffName}
 <br>
 <br>
 <br>
-
-
 <form action="finishAssignStaff" method="post">
 <table>
 <tr>
-<th>Number</th>
-<th>Staff Name</th>
 <th>Staff ID</th>
+<th>Staff Name</th>
 <th>Staff Position</th>
 <th>Staff Roles</th>
 <th>Assign this staff to Incident</th>
 </tr>
-<%
-for(int i=0;i<UserDatabase.getUsersList().size();i++) {
-	number=i+1;
-	staffName=UserDatabase.getUsersList().get(i).getName();
-	staffID=UserDatabase.getUsersList().get(i).getStaffID();
-	staffPosition=UserDatabase.getUsersList().get(i).getPosition().toString();
-	staffRoles=UserDatabase.getUsersList().get(i).getRolesToDo();
-	String setNone="None";
-	if(staffRoles==null) {
-		staffRoles=setNone;
-	}
-	
-	String assignStaff="Assign"+i;
-%>
+<c:forEach items="${listOfStaff}" var="user">
 <tr>
-<td><%out.println(number); %></td>
-<td><%out.println(staffName); %></td>
-<td><%out.println(staffID); %></td>
-<td><%out.println(staffPosition); %></td>
-<td><%out.println(staffRoles); %></td>
-<td><%out.println("<input type=\"submit\" name=\""+assignStaff+"\" value=\"Assign Staff\">");%></td>
+<td><c:out value="${user.staffID}"/></td>
+<td><c:out value="${user.name}"/></td>
+<td><c:out value="${user.position}"/></td>
+<td><c:out value="${user.rolesToDo}"/></td>
+<td><input type="submit" name="${user.staffID}" value="Assign Staff"></td>
 </tr>
-<%} %>
+</c:forEach>
 </table>
-<%out.println("<input type= \"hidden\" name=\"IncidentIndex\" value=\""+theIncidentIndex+"\">"); %>
 </form>
 <br>
-<form action="ListOfIncidents.jsp">
+<form action="prepareList">
 <input type="submit" name="incidentsList" value="List">
 </form>
 </body>

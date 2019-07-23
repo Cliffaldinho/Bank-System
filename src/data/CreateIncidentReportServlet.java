@@ -39,7 +39,7 @@ public class CreateIncidentReportServlet extends HttpServlet {
 		PrintWriter out = res.getWriter();
 		
 		//set Incident ID
-		anIncident.setIncidentID(IncidentDAO.getIncidentCounter()+1);
+		anIncident.setIncidentID();
 		//IncidentDAO.setIncidentCounter(IncidentDAO.getIncidentCounter()+1);
 		
 		
@@ -102,7 +102,7 @@ public class CreateIncidentReportServlet extends HttpServlet {
 		//String theUserName=staff.getUsername();
 		//out.println("The user id is"+theUserName);
 		
-		User user;
+		UserBean user;
 		user=staff.getUserByUsername();
 		anIncident.setUserReportedIncident(user);
 		
@@ -199,7 +199,7 @@ public class CreateIncidentReportServlet extends HttpServlet {
 			req.setAttribute("incidentPossibleCauses", originalIncident.getPossibleCausesOfIncident());
 			req.setAttribute("incidentPossibleSolutions", originalIncident.getPossibleSolutionsOfIncident());
 			
-			User staffReported = originalIncident.getUserReportedIncident();
+			UserBean staffReported = originalIncident.getUserReportedIncident();
 			req.setAttribute("staffName", staffReported.getName());
 			req.setAttribute("staffPosition", staffReported.getPosition());
 			req.setAttribute("staffID", staffReported.getStaffID());

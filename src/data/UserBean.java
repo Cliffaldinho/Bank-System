@@ -1,6 +1,6 @@
 package data;
 
-public class User implements java.io.Serializable{
+public class UserBean implements java.io.Serializable{
 
 
 
@@ -22,7 +22,15 @@ public class User implements java.io.Serializable{
 
 
 	public String getRolesToDo() {
-		return rolesToDo;
+		String roles;
+		
+		if(rolesToDo.equalsIgnoreCase("None")) {
+			roles="No roles assigned.";
+		} else {
+			roles=rolesToDo;
+		}
+		
+		return roles;
 	}
 
 	public void setRolesToDo(String roles) {
@@ -44,10 +52,11 @@ public class User implements java.io.Serializable{
 	//very simple
 	//name etc
 	
-	public User() {
-		//rolesToDo="None";
+	public UserBean() {
+		rolesToDo="None";
 	}
 	
+	/**
 	public User(String n,String add, String number, Position p, String id, String pw) {
 		this.name=n;
 		this.address=add;
@@ -55,7 +64,7 @@ public class User implements java.io.Serializable{
 		this.userPosition=p;
 		this.staffID=id;
 		this.password = pw;
-	}
+	}*/
 	
 	public enum Position {
 		Branch_Manager {

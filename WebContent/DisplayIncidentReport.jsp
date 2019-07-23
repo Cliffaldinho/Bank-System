@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <%@ page import="data.UserDatabase" %>
+    <%@ page import="data.UserDAO" %>
     <%@ page import="data.IncidentDAO" %>
     <%@ page import="data.*" %>
      <%@ taglib
@@ -54,6 +54,10 @@
 	
 		<h2>Incident Details</h2>
 		<table style="table-layout:fixed">
+			<tr>
+				<td style="background: #dddddd">Incident ID:</td>
+				<td>${incidentID}</td>
+			</tr>
 			<tr>
 				<td style="background: #dddddd">Incident title:</td>
 				<td>${incidentTitle}</td>

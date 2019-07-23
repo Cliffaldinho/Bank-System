@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <%@ page import="data.UserDatabase" %>
+    <%@ page import="data.UserDAO" %>
 
-<%HttpSession aSession = request.getSession();%>
+<%
+	HttpSession aSession = request.getSession();
+%>
 <jsp:useBean id="logAuth" class="data.StaffBean" scope="session" />
     
 <!DOCTYPE html>
@@ -37,26 +39,26 @@
 	<div class="container">	
 		<h2>Set Staff Role</h2>
 		<%
-		int staff=(int) request.getAttribute("indexOfStaff");
-		String staffName;
-		String staffID;
-		String staffPosition;
-		String currentRole;
-		String password;
-		String address;
-		String contact;
-		staffName=UserDatabase.getUsersList().get(staff).getName();
-		staffID=UserDatabase.getUsersList().get(staff).getStaffID();
-		staffPosition=UserDatabase.getUsersList().get(staff).getPosition().toString();
-		if (UserDatabase.getUsersList().get(staff).getRolesToDo()!=null){
-			currentRole=UserDatabase.getUsersList().get(staff).getRolesToDo().toString();
-		} else {
+			int staff=(int) request.getAttribute("indexOfStaff");
+				String staffName;
+				String staffID;
+				String staffPosition;
+				String currentRole;
+				String password;
+				String address;
+				String contact;
+				staffName=UserDAO.getUsersList().get(staff).getName();
+				staffID=UserDAO.getUsersList().get(staff).getStaffID();
+				staffPosition=UserDAO.getUsersList().get(staff).getPosition().toString();
+				if (UserDAO.getUsersList().get(staff).getRolesToDo()!=null){
+			currentRole=UserDAO.getUsersList().get(staff).getRolesToDo().toString();
+				} else {
 			currentRole="None";
-		}
-		password = UserDatabase.getUsersList().get(staff).getPassword();
-		address = UserDatabase.getUsersList().get(staff).getAddress();
-		contact = UserDatabase.getUsersList().get(staff).getContactNumber();
-		String setNone="None";
+				}
+				password = UserDAO.getUsersList().get(staff).getPassword();
+				address = UserDAO.getUsersList().get(staff).getAddress();
+				contact = UserDAO.getUsersList().get(staff).getContactNumber();
+				String setNone="None";
 		%>
 		<!-- 
 		Staff Name
