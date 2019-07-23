@@ -16,13 +16,6 @@ public class CreateIncidentReportServlet extends HttpServlet {
 	
 
 
-	/**
-	@Override
-	public void init() throws ServletException {
-		
-		//anIncident = new Incident();
-
-	}*/
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 
@@ -123,17 +116,26 @@ public class CreateIncidentReportServlet extends HttpServlet {
 		
 		//--------------------------------------------------------------------------------------------------------------
 		
-		//Set Possible Causes for Incident
+		
+		String name,position;
+		name=user.getName();
+		position=user.getPosition().toString();
+		
+		//Set Possible Causes for Incident and Staff who wrote the Possible Cause
 		possibleCauses= req.getParameter("possibleCausesOfIncident");
-		if(possibleCauses!=null) {
+		
+		if(!possibleCauses.isBlank()) {
+			possibleCauses = possibleCauses + " ("+name+", "+position+")";		
 			anIncident.setPossibleCausesOfIncident(possibleCauses);
 		}
 		
 		//-----------------------------------------------------------------------------------------------------------------
 		
 		//Set Possible Solutions for Incident
-		possibleSolutions=req.getParameter("possibleSolutionsOfIncident");
-		if(possibleSolutions!=null) {
+		possibleSolutions = req.getParameter("possibleSolutionsOfIncident");
+		
+		if(!possibleSolutions.isBlank()) {
+			possibleSolutions = possibleSolutions + " ("+name+", "+position+")"; 
 			anIncident.setPossibleSolutionsOfIncident(possibleSolutions);
 		}
 				
@@ -183,26 +185,13 @@ public class CreateIncidentReportServlet extends HttpServlet {
 			boolean checkDuplicate=true;
 			
 			//for use in DisplayIncidentReport.jsp and DetectDuplicateServlet
-			aSession.setAttribute("originalID",duplicateID);
-			aSession.setAttribute("originalIncident", originalIncident);
+			aSession.setAttribute("incidentID",duplicateID);
+			aSession.setAttribute("incidentSelected", originalIncident);
 			aSession.setAttribute("currentIncident", anIncident);
 			
 			req.setAttribute("checkDuplicate", checkDuplicate);
 	
-			req.setAttribute("incidentTitle", originalIncident.getIncidentTitle());
-			req.setAttribute("incidentCategory", originalIncident.getIncidentCategory().toString());
-			req.setAttribute("incidentDate", originalIncident.getDateTimeFromTimeStamp());
-			req.setAttribute("incidentDescription", originalIncident.getDescriptionOfIncident());
 			
-			req.setAttribute("incidentKeywords", originalIncident.getIncidentKeywords());
-			req.setAttribute("incidentPriority", originalIncident.getPriorityRating().toString());
-			req.setAttribute("incidentPossibleCauses", originalIncident.getPossibleCausesOfIncident());
-			req.setAttribute("incidentPossibleSolutions", originalIncident.getPossibleSolutionsOfIncident());
-			
-			UserBean staffReported = originalIncident.getUserReportedIncident();
-			req.setAttribute("staffName", staffReported.getName());
-			req.setAttribute("staffPosition", staffReported.getPosition());
-			req.setAttribute("staffID", staffReported.getStaffID());
 			//end use in DisplayIncidentReport.jsp
 			
 			//finish new

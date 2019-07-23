@@ -33,7 +33,7 @@
 	
 	<!-- if user is branch manager, show this  -->
 	<div class="horizonta_nav">
-	  <a href="ListOfIncidents.jsp">Incidents</a>
+	  <a href="prepareList">Incidents</a>
 	  <a href="CreateIncidentReport.jsp">Report</a>
 	  <a href="RolesForStaff.jsp">Roles</a>
 	  <a href="index.jsp">Logout</a>
@@ -60,19 +60,19 @@ Incident id:
 ${incidentID}
 <br>
 Incident title:
-${incidentTitle}
+${incidentSelected.incidentTitle}
 <br>
 Incident category:
-${incidentCategory}
+${incidentSelected.incidentCategory}
 <br>
 Incident date:
-${incidentDate}
+${incidentSelected.dateTimeFromTimeStamp}
 <br>
 Incident description:
-${incidentDescription }
+${incidentSelected.descriptionOfIncident}
 <br>
 Staff who reported it:
-${staffName}
+${incidentSelected.userReportedIncident.name}
 <br>
 <br>
 <br>
@@ -95,10 +95,6 @@ ${staffName}
 </tr>
 </c:forEach>
 </table>
-</form>
-<br>
-<form action="prepareList">
-<input type="submit" name="incidentsList" value="List">
 </form>
 </body>
 </html>

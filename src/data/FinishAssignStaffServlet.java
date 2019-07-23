@@ -27,7 +27,6 @@ public class FinishAssignStaffServlet extends HttpServlet {
 			if(tempStaffChosen!=null) {
 				
 				staffID = storeParameter;
-				//out.println("StaffID in for loop is" + staffID);
 				break;
 				
 				
@@ -39,7 +38,6 @@ public class FinishAssignStaffServlet extends HttpServlet {
 		incidentID = (int) aSession.getAttribute("incidentID");
 		
 		IncidentDAO.getIncidentByIncidentID(incidentID).setAssignedStaffID(staffID);
-		//out.println("Incident ID" + incidentID + " has "+IncidentDAO.getIncidentByIncidentID(incidentID).getAssignedStaffID()+ " assigned.");
 		
 		req.getRequestDispatcher("prepareList").forward(req, res);
 		

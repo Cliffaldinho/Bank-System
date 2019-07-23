@@ -23,10 +23,10 @@ public class DetectDuplicateServlet extends HttpServlet {
 			// if it is a duplicate
 			if(decision.equalsIgnoreCase("Yes")) {
 				
-			int originalID = (int) aSession.getAttribute("originalID");
+			int originalID = (int) aSession.getAttribute("incidentID");
 				
 			//merge duplicated incident's description into original incident
-			IncidentBean originalIncident = (IncidentBean) aSession.getAttribute("originalIncident");
+			IncidentBean originalIncident = (IncidentBean) aSession.getAttribute("incidentSelected");
 			IncidentBean currentIncident = (IncidentBean) aSession.getAttribute("currentIncident");
 		
 			String currentDescription = currentIncident.getDescriptionOfIncident();
@@ -38,6 +38,7 @@ public class DetectDuplicateServlet extends HttpServlet {
 			//merge duplicated incident's possible causes into original incident
 			String currentPossibleCauses = currentIncident.getPossibleCausesOfIncident();
 			String originalPossibleCauses = originalIncident.getPossibleCausesOfIncident();
+			
 			String newPossibleCauses;
 			
 			if(!originalPossibleCauses.isBlank())
@@ -65,10 +66,7 @@ public class DetectDuplicateServlet extends HttpServlet {
 			IncidentDAO.getIncidentByIncidentID(originalID).setPossibleSolutionsOfIncident(newPossibleSolutions);
 			
 			//remove session attributes
-			aSession.removeAttribute("originalID");
-			aSession.removeAttribute("originalIncident");
 			aSession.removeAttribute("currentIncident");
-			//aSession.removeAttribute("checkDuplicate");
 			
 			req.getRequestDispatcher("prepareList").forward(req,res);
 			}
@@ -81,10 +79,7 @@ public class DetectDuplicateServlet extends HttpServlet {
 			IncidentDAO.getIncidentsList().add(currentIncident);
 			
 			//remove session attributes
-			aSession.removeAttribute("originalID");
-			aSession.removeAttribute("originalIncident");
 			aSession.removeAttribute("currentIncident");
-			//aSession.removeAttribute("checkDuplicate");
 			
 			req.getRequestDispatcher("prepareList").forward(req,res);
 			}

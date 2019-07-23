@@ -147,7 +147,7 @@ List to have
 				<td><c:out value="${report.incidentKeywordsInString}"/></td>
 				<td><input type="submit" name="${report.incidentID}" value="View Incident"></td>
 				<c:if test="${logAuth.authenticationLevel==1}">
-					<td><c:out value="${report.staffAssigned}"/></td>
+					<td><c:out value="${report.assignedStaffName}"/></td>
 					<td><input type="submit" name="${report.incidentID}" value="Handle Incident"></td>
 					<td><input type="submit" name="${report.incidentID}" value="Close Incident"></td>
 				</c:if>

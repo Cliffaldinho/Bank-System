@@ -13,9 +13,6 @@ public class StaffBean implements Serializable {
 	
 	public void setUsername(String user) {
 		this.username = user;
-		//User userObject = UserDatabase.findUserObjectByStaffID(username);
-		//staffName=userObject.getName();
-		//staffPosition=userObject.getPosition();
 	}
 	
 	public String getUsername() {

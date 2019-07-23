@@ -29,6 +29,9 @@ public class LogoutServlet extends HttpServlet {
 		aSession.removeAttribute("listOfIncidents");
 		aSession.removeAttribute("listOfStaff");
 		
+		aSession.removeAttribute("incidentID");
+		aSession.removeAttribute("incidentSelected");
+		
 		req.getRequestDispatcher("index.jsp").forward(req,res);
 	}
 	

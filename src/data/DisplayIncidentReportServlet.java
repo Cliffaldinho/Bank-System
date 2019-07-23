@@ -15,7 +15,6 @@ public class DisplayIncidentReportServlet extends HttpServlet{
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException,ServletException {
 		
-		
 		PrintWriter out = res.getWriter();
 		
 		String tempIncidentChosen;
@@ -25,7 +24,10 @@ public class DisplayIncidentReportServlet extends HttpServlet{
 		viewIncident=false;
 		handleIncident=false;
 		closeIncident=false;
+		
 		HttpSession aSession = req.getSession();
+		//String incidentDisplayStatus=(String) aSession.getAttribute("incidentDisplayStatus");
+		
 		IncidentBean printIncident = new IncidentBean();
 
 		
@@ -76,25 +78,9 @@ public class DisplayIncidentReportServlet extends HttpServlet{
 		
 		if(viewIncident==true||handleIncident==true) {
 		aSession.setAttribute("incidentID", incidentID);
+		aSession.setAttribute("incidentSelected", printIncident);
 		}
-		
-		req.setAttribute("incidentTitle", printIncident.getIncidentTitle());
-		req.setAttribute("incidentCategory", printIncident.getIncidentCategory().toString());
-		req.setAttribute("incidentDate", printIncident.getDateTimeFromTimeStamp());
-		req.setAttribute("incidentDescription", printIncident.getDescriptionOfIncident());
-		
-		req.setAttribute("incidentKeywords", printIncident.getIncidentKeywords());
-		req.setAttribute("incidentPriority", printIncident.getPriorityRating().toString());
-		req.setAttribute("incidentPossibleCauses", printIncident.getPossibleCausesOfIncident());
-		req.setAttribute("incidentPossibleSolutions", printIncident.getPossibleSolutionsOfIncident());
-		
-		UserBean staffReported = printIncident.getUserReportedIncident();
-		req.setAttribute("staffName", staffReported.getName());
-		req.setAttribute("staffPosition", staffReported.getPosition());
-		req.setAttribute("staffID", staffReported.getStaffID());
-		
-		
-		
+	
 		
 		if(viewIncident==true) {
 			req.getRequestDispatcher("DisplayIncidentReport.jsp").forward(req, res);

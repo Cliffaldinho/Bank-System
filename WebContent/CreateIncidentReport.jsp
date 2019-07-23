@@ -67,7 +67,7 @@ function validateForm() {
 	<div class="container">	
 		
 		<h2>Report Incident</h2>
-		<h3><%out.println(logAuth.getUsername()); %></h3>
+		<h3><%out.println(logAuth.getUsername()); //username is staff id%></h3>
 		<form action="createIncidentReport" method="post" id="createReport" onSubmit="return validateForm()">
 			<!-- Compulsory -->
 			<div class="container">

@@ -25,24 +25,62 @@ public class IncidentBean implements Serializable {
 	private String possibleCausesOfIncident;
 	private String possibleSolutionsOfIncident;
 	private int incidentID;
-	
-	private boolean hasAnalysis;
-	private int indexInAnalysisDatabase;
+	private String[] simulations;
+
+	//private boolean hasAnalysis;
+	private int analysisID;
 	
 	private String idOfStaffAssigned;
 	
 	private Timestamp ts;
 
+	
+	/**
+	 Removed Analysis object.
+	 
+	 Analysis class contained 
+	 analysis ID, which is same as incidentID,
+	 rootCause in IncidentBean, which is same as rootCause in Analysis,
+	 lessonsLearnt in IncidentBean, whch is same as lessonsLeart in Analysis
+	 
+	 Hence choose to store a particular colomn of data in one location, 
+	 so that fewer places to update and less risk of having different data in different places
+	 */
 
 	public IncidentBean() {
-		hasAnalysis=false;
+		//hasAnalysis=false;
 		setTimeStamp();
 		setIncidentDateOfMonth();
 		setIncidentMonth();
 		setIncidentYear();
 		idOfStaffAssigned="None";
+		possibleCausesOfIncident="";
+		possibleSolutionsOfIncident="";
+		simulations = new String[0];
 	}
 
+	public void addSimulation(Simulation simulation) {
+		String dateTime="Date: "+simulation.getDateTimeFromTimeStamp();
+		String actionsTaken="Actions taken: "+simulation.getActionsTaken();
+		String resultsFound="Results found: "+simulation.getResultsFound();
+		String rootCauseTargeted="Root cause targeted: "+simulation.getRootCauseTargeted();
+		String staff="Staff who completed this simulation: "+simulation.getStaff();
+		String totalSimulation=dateTime+"<br>"+staff+"<br>"+rootCauseTargeted+"<br>"+actionsTaken+"<br>"+resultsFound;
+		
+		List<String> storeSimulations = new LinkedList<String>(Arrays.asList(simulations));
+
+		
+		storeSimulations.add(totalSimulation);
+		simulations= storeSimulations.toArray(new String[storeSimulations.size()]);
+		
+	}
+	
+	public String[] getSimulations() {
+		
+return simulations;
+
+		
+	}
 
 	public int detectDuplicate() {
 		//boolean possibleDuplicate=false;
@@ -144,6 +182,7 @@ public class IncidentBean implements Serializable {
 	}
 	
 	
+	//get id of staff assigned
 	public String getAssignedStaffID() {
 		return idOfStaffAssigned;
 	}
@@ -152,7 +191,8 @@ public class IncidentBean implements Serializable {
 		this.idOfStaffAssigned = id;
 	}
 	
-	public String getStaffAssigned() {
+	//get name of staff assigned
+	public String getAssignedStaffName() {
 		String staffName;
 		
 		if(idOfStaffAssigned.equalsIgnoreCase("None")) {
@@ -201,20 +241,21 @@ public class IncidentBean implements Serializable {
 		Low, Medium, High;
 	}
 	
+	/**
 	public boolean getHasAnalysis() {
 		return hasAnalysis;
 	}
 
 	public void setHasAnalysis(boolean exist) {
 		this.hasAnalysis = exist;
+	}*/
+
+	public int getAnalysisID() {
+		return analysisID;
 	}
 
-	public int getIndexInAnalysisDatabase() {
-		return indexInAnalysisDatabase;
-	}
-
-	public void setIndexInAnalysisDatabase(int index) {
-		this.indexInAnalysisDatabase = index;
+	public void setAnalysisID(int index) {
+		this.analysisID = index;
 	}
 	
 	
@@ -312,6 +353,8 @@ public class IncidentBean implements Serializable {
 	public String getPossibleCausesOfIncident() {
 		return possibleCausesOfIncident;
 	}
+
+	
 	public void setPossibleCausesOfIncident(String possibleCauses) {
 		this.possibleCausesOfIncident = possibleCauses;
 	}

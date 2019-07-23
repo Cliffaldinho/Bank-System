@@ -121,19 +121,6 @@ public class UserLoginServlet extends HttpServlet {
 			System.out.println("An exception "+e.toString()+" has occurred.");
 		}
 		
-		try{
-			String path = getServletContext().getRealPath("./saves/duplicates.dat");
-			FileInputStream fstream = new FileInputStream(path);
-			ObjectInputStream ostream = new ObjectInputStream(fstream);
-			ArrayList<IncidentBean> duplicates = new ArrayList<IncidentBean>();
-			duplicates = (ArrayList<IncidentBean>)ostream.readObject();
-			IncidentDAO.setDuplicates(duplicates);
-			ostream.close();
-			fstream.close();
-		}
-		catch(Exception e){
-			System.out.println("An exception "+e.toString()+" has occurred.");
-		}
 		
 		for (int i = 0; i < UserDAO.getUsersList().size(); i++){
 			String id = UserDAO.getUsersList().get(i).getStaffID();
@@ -141,6 +128,8 @@ public class UserLoginServlet extends HttpServlet {
 			if (userid.equals(id)){
 				if (password.equals(pw)){
 					found = true;
+					
+					//username in staffBean = userID
 					logAuth.setUsername(userid);
 			
 					aSession.setAttribute("logAuth",logAuth);

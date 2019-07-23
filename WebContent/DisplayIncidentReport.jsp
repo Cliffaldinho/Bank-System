@@ -34,7 +34,7 @@
 	
 	<!-- if user is branch manager, show this  -->
 	<div class="horizonta_nav">
-	  <a href="ListOfIncidents.jsp">Incidents</a>
+	  <a href="prepareList">Incidents</a>
 	  <a href="CreateIncidentReport.jsp">Report</a>
 	  <a href="RolesForStaff.jsp">Roles</a>
 	  <a href="index.jsp">Logout</a>
@@ -42,9 +42,6 @@
 	<br>
 	<br>
 
-<%
-//temporarily removed
-//int theIndex=(int) request.getAttribute("indexOfIncident");%>
 
 	<div class="container">
 	
@@ -60,43 +57,43 @@
 			</tr>
 			<tr>
 				<td style="background: #dddddd">Incident title:</td>
-				<td>${incidentTitle}</td>
+				<td>${incidentSelected.incidentTitle}</td>
 			</tr>
 		
 			<tr>
 				<td style="background: #dddddd">Incident category:</td>
-				<td>${incidentCategory}</td>
+				<td>${incidentSelected.incidentCategory}</td>
 			</tr>
 		
 			<tr>
 				<td style="background: #dddddd">Incident date:</td>
-				<td>${incidentDate}</td>
+				<td>${incidentSelected.dateTimeFromTimeStamp}</td>
 			</tr>
 		
 			<tr>
 				<td style="background: #dddddd">Description of incident:</td>
-				<td>${incidentDescription }</td>
+				<td>${incidentSelected.descriptionOfIncident}</td>
 			</tr>
 		
 			<tr>
 				<td style="background: #dddddd">Name of staff who reported this incident:</td>
-				<td>${staffName}</td>
+				<td>${incidentSelected.userReportedIncident.name}</td>
 			</tr>
 		
 			<tr>
 				<td style="background: #dddddd">Position of staff who reported this incident:</td>
-				<td>${staffPosition}</td>
+				<td>${incidentSelected.userReportedIncident.position}</td>
 			</tr>
 		
 			<tr>
 				<td style="background: #dddddd">ID of staff who reported this incident:</td>
-				<td>${staffID}</td>
+				<td>${incidentSelected.userReportedIncident.staffID}</td>
 			</tr>
 		
 			<tr>
 				<td style="background: #dddddd">Incident keywords:</td>
 				<td>
-				<c:forEach var="temp" items="${incidentKeywords}">
+				<c:forEach var="temp" items="${incidentSelected.incidentKeywords}">
 				${temp}
 				<br>
 				</c:forEach>
@@ -105,24 +102,20 @@
 		
 			<tr>
 				<td style="background: #dddddd">Priority rating:</td>
-				<td>${incidentPriority}</td>
+				<td>${incidentSelected.priorityRating}</td>
 			</tr>
 		
 			<tr>
 				<td style="background: #dddddd">Possible causes:</td>
-				<td>${incidentPossibleCauses}</td>
+				<td>${incidentSelected.possibleCausesOfIncident}</td>
 			</tr>
 		
 			<tr>
 				<td style="background: #dddddd">Possible solutions:</td>
-				<td>${incidentPossibleSolutions}</td>
+				<td>${incidentSelected.possibleSolutionsOfIncident}</td>
 			</tr>
 		
 		</table>
-
-		
-		<!-- new uncompleted (for analysis) code. (functional) -->
-	
 		
 		<c:if test="${checkDuplicate}">
 		<p>Mark the submitted incident report as duplicate of this?</p>
@@ -135,14 +128,11 @@
 		
 		
 		<c:if test="${not checkDuplicate}">
-		<form action="performAnalysis" method="post">
+		<form action="PerformAnalysis.jsp" method="post">
 		<input type="submit" value="Analysis">
-		<%
-		//temporarily removed
-		//out.println("<input type=\"hidden\" name=\"indexForAnalysis\" value=\""+theIndex+"\">"); %>
+
 		</form>
 		</c:if>
-		<!-- finish new -->
 	</div>
 	
 	

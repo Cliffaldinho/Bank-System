@@ -14,54 +14,45 @@ public class ShowLessonsLearntServlet extends HttpServlet{
 
 	public void doPost(HttpServletRequest req,HttpServletResponse res) throws IOException,ServletException {
 		
+		HttpSession aSession = req.getSession();
+		StaffBean staff = (StaffBean) aSession.getAttribute("logAuth");
+		String staffID=staff.getUsername();
+		UserBean user = UserDAO.getUserByStaffID(staffID);
+		String name,position;
+		name=user.getName();
+		position=user.getPosition().toString();
+		
+		
 		Simulation aSimulation = new Simulation();
 		
-		String theDate=req.getParameter("date");
 		String theCause=req.getParameter("targetCause");
 		String theActions=req.getParameter("actions");
 		String theResults=req.getParameter("results");
 		
-		aSimulation.setDate(theDate);
 		aSimulation.setRootCauseTargeted(theCause);
 		aSimulation.setActionsTaken(theActions);
 		aSimulation.setResultsFound(theResults);
+		aSimulation.setStaff(name, position);
 		
-		int theIncidentListIndex,theAnalysisListIndex;
-		String tempIncidentListIndex,tempAnalysisListIndex;
+		String tempSolution;
+		tempSolution = theActions + " ("+name+", "+position+")";
 		
-		tempIncidentListIndex=req.getParameter("anIncidentDatabaseIndex");
-		tempAnalysisListIndex=req.getParameter("anAnalysisDatabaseIndex");
+		int incidentID = (int) aSession.getAttribute("incidentID");
+		IncidentBean incident = IncidentDAO.getIncidentByIncidentID(incidentID);
+		incident.addSimulation(aSimulation);
 		
-		theIncidentListIndex=Integer.parseInt(tempIncidentListIndex);
-		theAnalysisListIndex=Integer.parseInt(tempAnalysisListIndex);
+		String solution = incident.getPossibleSolutionsOfIncident();
 		
-		
-		
-		String solution=IncidentDAO.getIncidentsList().get(theIncidentListIndex).getPossibleSolutionsOfIncident();
-		boolean checkIfHasAlphabets;
-		checkIfHasAlphabets=solution.matches(".*[a-zA-Z]+.*");
 		String updateSolution;
-		
-		if(checkIfHasAlphabets==true) {
-			updateSolution=solution+" "+theActions;
+		if(!solution.isBlank()) {
+			updateSolution=solution+"<br>"+tempSolution;
 		} else {
-			updateSolution=theActions;
+			updateSolution=solution+tempSolution;
 		}
 		
-		/**
-		AnalysisDatabase.getAnalysisList().get(analysisDatabaseIndex).setRootCauseOfIncident(updateRootCause);
-		//out.println(AnalysisDatabase.getAnalysisList().get(0).getRootCauseOfIncident());
+		IncidentDAO.getIncidentByIncidentID(incidentID).setPossibleSolutionsOfIncident(updateSolution);
 		
-		IncidentDatabase.getIncidentsList().get(incidentDatabaseIndex).setPossibleCausesOfIncident(updateRootCause);
-		*/
-		
-		AnalysisDatabase.getAnalysisList().get(theAnalysisListIndex).getListOfSimulations().add(aSimulation);
-		
-		IncidentDAO.getIncidentsList().get(theIncidentListIndex).setPossibleSolutionsOfIncident(updateSolution);
-		
-		req.setAttribute("incidentDatabaseIndex", theIncidentListIndex);
-		req.setAttribute("analysisDatabaseIndex",theAnalysisListIndex);
 		req.getRequestDispatcher("PerformAnalysis.jsp").forward(req, res);
-		
+
 	}
 }

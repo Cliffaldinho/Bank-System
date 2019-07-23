@@ -14,81 +14,35 @@ public class PostAnalysisServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req,HttpServletResponse res) throws IOException,ServletException {
 		
 		PrintWriter out = res.getWriter();
-		//out.println("one");
-		String tempAnalysis,tempIncident;
-		tempAnalysis=req.getParameter("theAnalysisDatabaseIndex");
-		tempIncident=req.getParameter("theIncidentDatabaseIndex");
-		
-		int analysisDatabaseIndex,incidentDatabaseIndex;
-		analysisDatabaseIndex=Integer.parseInt(tempAnalysis);
-		incidentDatabaseIndex=Integer.parseInt(tempIncident);
-		
-		
-		//get from form
-		String tempStaffName,tempStaffID,tempRootCause;
-		int userIndex=-1;
-		
-		tempStaffName=req.getParameter("staffNameWriting");
-		tempStaffID =req.getParameter("staffIDWriting");
+	
+		String tempRootCause;
 		tempRootCause=req.getParameter("causes");
 		
-		//new code to acommodate change from getUserByIndex to getUserByStaffID
-		String staffID="";
-		//end code
+		HttpSession aSession = req.getSession();
 		
-		String databaseID;
-		for(int i=0;i<UserDAO.getUsersList().size();i++) {
-			
-			databaseID=UserDAO.getUsersList().get(i).getStaffID();
-			
-			if(databaseID.equalsIgnoreCase(tempStaffID)) {
-				staffID=databaseID;
-				userIndex=i;
-				break;
-			}
-		}
+		StaffBean staff = (StaffBean) aSession.getAttribute("logAuth");
+		String staffID=staff.getUsername();
+		UserBean user = UserDAO.getUserByStaffID(staffID);
+		String name,position;
+		name=user.getName();
+		position=user.getPosition().toString();
+		tempRootCause = tempRootCause + " ("+name+", "+position+")";
 		
-		//out.println("half finished");
-		
-		if(userIndex==-1) {
-			out.println("User not found");
-		} 
-		
-		else if (tempRootCause==null) {
-			out.println("No root cause entered");
-		}
-		
-		else {
-		out.println("nearly finished");
-		
-		//Add user that reported it
-		//new code to acommodate change from getUserByIndex to getUserByStaffID
-		AnalysisDatabase.getAnalysisList().get(analysisDatabaseIndex).getUsers().add(UserDAO.getUserByStaffID(staffID));
-		//end code
-		
-		
-		
-		String cause= IncidentDAO.getIncidentsList().get(incidentDatabaseIndex).getPossibleCausesOfIncident();
-		boolean checkIfHasAlphabets;
-		checkIfHasAlphabets=cause.matches(".*[a-zA-Z]+.*");
-		String updateRootCause;
-		if(checkIfHasAlphabets==true) {
-			updateRootCause = cause+" "+tempRootCause;
-		} else {
-			updateRootCause=tempRootCause;
-		}
+		int incidentID = (int) aSession.getAttribute("incidentID");
+		IncidentBean incident = IncidentDAO.getIncidentByIncidentID(incidentID);
 	
-		AnalysisDatabase.getAnalysisList().get(analysisDatabaseIndex).setRootCauseOfIncident(updateRootCause);
-		//out.println(AnalysisDatabase.getAnalysisList().get(0).getRootCauseOfIncident());
 		
-		IncidentDAO.getIncidentsList().get(incidentDatabaseIndex).setPossibleCausesOfIncident(updateRootCause);
-		
-		
-		req.getRequestDispatcher("ListOfIncidents.jsp").forward(req, res);
+		String rootCause = incident.getPossibleCausesOfIncident();
+		String updateRootCause;
+		if(!rootCause.isBlank()) {
+			updateRootCause = rootCause + "<br>" + tempRootCause;
+		} else {
+			updateRootCause = rootCause+tempRootCause;
 		}
 		
-		//out.println("Incident Database Index is "+incidentDatabaseIndex);
-		//out.println("Analysis Database Index is "+analysisDatabaseIndex);
+		IncidentDAO.getIncidentByIncidentID(incidentID).setPossibleCausesOfIncident(updateRootCause);
+
+		req.getRequestDispatcher("PerformAnalysis.jsp").forward(req, res);
+		}
 		
 	}
-}

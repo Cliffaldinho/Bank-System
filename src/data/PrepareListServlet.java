@@ -9,8 +9,33 @@ import java.util.*;
 
 @WebServlet(urlPatterns={"/prepareList"})
 public class PrepareListServlet extends HttpServlet {
+	
+	
+	//have this method because the href in web pages can't go to doPost
+	//DisplayIncidentReport.jsp, AssignStaffToIncident.jsp, PerformAnalysis.jsp, (UpdateIncident.jsp), all go through here
+	public void doGet(HttpServletRequest req,HttpServletResponse res) throws IOException,ServletException {
+		
+		
+		HttpSession aSession = req.getSession();
+		
+		//resets list
+		ArrayList<IncidentBean> printList = new ArrayList<IncidentBean>();
+		
+		printList=IncidentDAO.getIncidentsList();
+		
+		aSession.setAttribute("listOfIncidents", printList);
+		
+		//resets individual incident attributes that were being used
+		aSession.setAttribute("incidentID",-1);
+		aSession.setAttribute("incidentSelected", null);
+		
+		//forward to list
+		req.getRequestDispatcher("ListOfIncidents.jsp").forward(req, res);
+		
+	}
 
 	
+	//search and sort and refresh all go through here
 	public void doPost(HttpServletRequest req,HttpServletResponse res) throws IOException, ServletException {
 		PrintWriter out = res.getWriter();
 		
@@ -52,7 +77,6 @@ public class PrepareListServlet extends HttpServlet {
 		aSession.setAttribute("isSort", false);
 		aSession.removeAttribute("sortReportsIndexes");
 		
-		//out.println(printList.get(0).getIncidentKeywordsInString());
 		} else {
 			
 			//print original list

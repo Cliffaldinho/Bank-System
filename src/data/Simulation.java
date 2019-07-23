@@ -1,32 +1,52 @@
 package data;
+import java.util.*;
+import java.text.*;
+//import java.time.format.DateTimeFormatter;
+import java.sql.Timestamp;
+import java.time.*;
+import java.time.temporal.ChronoUnit;
+import java.time.format.DateTimeFormatter;
 
 public class Simulation {
 
-	private String date;
+	//private String date;
 	private String rootCauseTargeted;
 	private String actionsTaken;
 	private String resultsFound;
+	private String staff;
+	private Timestamp ts;
+	
+	public String getStaff() {
+		return staff;
+	}
+
+	public void setStaff(String name,String position) {
+		staff=name+", "+position;
+	}
+
+	
 	
 	public Simulation() {
 		
-	}
-	
-	public Simulation(String thedate,String rootCause,String actions,String results) {
-		
-		this.date=thedate;
-		this.rootCauseTargeted=rootCause;
-		this.actionsTaken=actions;
-		this.resultsFound=results;
-		
-	}
-	
-	public String getDate() {
-		return date;
+		setTimeStamp();
 	}
 
-	public void setDate(String theDate) {
-		this.date = theDate;
+	
+	public void setTimeStamp() {
+		ts = new Timestamp(System.currentTimeMillis());
 	}
+	
+	public Timestamp getTimeStamp() {
+		return ts;
+	}
+	
+	public String getDateTimeFromTimeStamp() {
+		LocalDateTime dateTime=	ts.toLocalDateTime();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		String printDateTime=dateTime.format(formatter);
+		return printDateTime;
+	}
+
 
 	public String getRootCauseTargeted() {
 		return rootCauseTargeted;

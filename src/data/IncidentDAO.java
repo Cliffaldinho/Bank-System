@@ -8,13 +8,10 @@ public class IncidentDAO {
 
 
 	private static ArrayList<IncidentBean> incidentsList;
-	private static ArrayList<IncidentBean> duplicatesList;
-	
 
 	static {
 		incidentsList = new ArrayList<>();
 		incidentCounter=0;
-		duplicatesList = new ArrayList<>();
 	}
 	
 	public IncidentDAO() {
@@ -35,9 +32,12 @@ public class IncidentDAO {
 	}
 	
 	public static void addIncident(IncidentBean in) {
+		
+
+		
+		//add the incidentBean to Incident database
 		incidentsList.add(in);
-		//incidentCounter++;
-		//in.setIncidentID(incidentCounter);
+		
 	}
 	
 	public static IncidentBean getIncidentByIncidentID(int id) {
@@ -62,21 +62,8 @@ public class IncidentDAO {
 			}
 		}
 	}
-	
-	public static ArrayList<IncidentBean> getDuplicatesList() {
-		return duplicatesList;
-	}
-	
-	public static void addDuplicate(IncidentBean duplicate) {
-		duplicatesList.add(duplicate);
-	}
-
 	public static void setIncidents(ArrayList<IncidentBean> in) {
 		incidentsList = in;
 	}
-	
-	public static void setDuplicates(ArrayList<IncidentBean> in) {
-		duplicatesList = in;
-	}
-	
+
 }
