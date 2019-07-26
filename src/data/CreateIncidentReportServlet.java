@@ -33,16 +33,11 @@ public class CreateIncidentReportServlet extends HttpServlet {
 		
 		//set Incident ID
 		anIncident.setIncidentID();
-		//IncidentDAO.setIncidentCounter(IncidentDAO.getIncidentCounter()+1);
-		
 		
 		//Set Incident Title
 		title=req.getParameter("incidentTitle");
 		anIncident.setIncidentTitle(title);
 		
-
-
-		//--------------------------------------------------------------------------------------------
 		
 		//Set Incident Category
 		String tempCategory;
@@ -80,29 +75,19 @@ public class CreateIncidentReportServlet extends HttpServlet {
 		//Set Incident Description
 		anIncidentDescription=req.getParameter("incidentDescription");
 		
-
-		
 		anIncident.setDescriptionOfIncident(anIncidentDescription);
-		
-		//------------------------------------------------------------------------------------------------------
 		
 
 		//Set User which reported the Incident
-		
 		HttpSession aSession=req.getSession();
 		StaffBean staff =(StaffBean) aSession.getAttribute("logAuth");
-
-		//String theUserName=staff.getUsername();
-		//out.println("The user id is"+theUserName);
 		
 		UserBean user;
 		user=staff.getUserByUsername();
 		anIncident.setUserReportedIncident(user);
 		
-		//-----------------------------------------------------------------------------------------------------------
 		
 		//Set Incident Keywords
-
 		String receiveKeywords,removeCommas,removeDots,removeMultipleSpaces,allLowerCases;
 		receiveKeywords = req.getParameter("incidentKeywords");
 		removeCommas=receiveKeywords.replaceAll("\\,", " ");
@@ -114,8 +99,7 @@ public class CreateIncidentReportServlet extends HttpServlet {
 		
 		
 		
-		//--------------------------------------------------------------------------------------------------------------
-		
+		//Set possible causes and solutions
 		
 		String name,position;
 		name=user.getName();
@@ -129,9 +113,8 @@ public class CreateIncidentReportServlet extends HttpServlet {
 			anIncident.setPossibleCausesOfIncident(possibleCauses);
 		}
 		
-		//-----------------------------------------------------------------------------------------------------------------
 		
-		//Set Possible Solutions for Incident
+		//Set Possible Solutions for Incident and Staff who wrote the Possible Solutions
 		possibleSolutions = req.getParameter("possibleSolutionsOfIncident");
 		
 		if(!possibleSolutions.isBlank()) {
@@ -139,7 +122,6 @@ public class CreateIncidentReportServlet extends HttpServlet {
 			anIncident.setPossibleSolutionsOfIncident(possibleSolutions);
 		}
 				
-		//-------------------------------------------------------------------------------------------------------------------
 		
 		//Set Priority for Incident
 		String tempPriority;
@@ -147,74 +129,52 @@ public class CreateIncidentReportServlet extends HttpServlet {
 		
 		if(tempPriority!=null) {
 			
-			if(tempPriority.equalsIgnoreCase("Low")) {
-				anIncident.setPriorityRating(IncidentBean.Priority.Low);
-			}
-			else if (tempPriority.equalsIgnoreCase("Medium")) {
-				anIncident.setPriorityRating(IncidentBean.Priority.Medium);
-			}
-			else if (tempPriority.equalsIgnoreCase("High")) {
-				anIncident.setPriorityRating(IncidentBean.Priority.High);
+			switch(tempPriority) {
+				case "Low":
+					anIncident.setPriorityRating(IncidentBean.Priority.Low);
+					break;
+				
+				case "Medium":
+					anIncident.setPriorityRating(IncidentBean.Priority.Medium);	
+					break;
+				
+				case "High":
+					anIncident.setPriorityRating(IncidentBean.Priority.High);
+					break;
 			}
 			
+			
 		}
-		//Note:This implementation differs slightly from the use case description.
-		//In Use Case Description, only branch manager can set priority
-		//In here, any staff who hands in the incident report can set priority, and branch manager can modify/add priority if they think it's incorrect
-	
-		//---------------------------------------------------------------------------------------------------------------------
-
 		
 		//Detect Duplicates
-
 		boolean possibleDuplicate=false;
 		int duplicateID=anIncident.detectDuplicate();
 		if(duplicateID!=-1) {
 			possibleDuplicate=true;
 		}
-		
-		
-		//-----------------------------------------------------------------------------------------------------------------------
+	
 		
 		if(possibleDuplicate==true) {
 	
-			
-			
-			//new code
 			IncidentBean originalIncident= IncidentDAO.getIncidentByIncidentID(duplicateID);
 			boolean checkDuplicate=true;
 			
-			//for use in DisplayIncidentReport.jsp and DetectDuplicateServlet
 			aSession.setAttribute("incidentID",duplicateID);
 			aSession.setAttribute("incidentSelected", originalIncident);
 			aSession.setAttribute("currentIncident", anIncident);
 			
 			req.setAttribute("checkDuplicate", checkDuplicate);
-	
-			
-			//end use in DisplayIncidentReport.jsp
-			
-			//finish new
-			 
-			 
-		
-			
+
 			req.getRequestDispatcher("DisplayIncidentReport.jsp").forward(req,res);
 			
 		} else {
 
 			IncidentDAO.getIncidentsList().add(anIncident);
 			
-			//original functional line
 			req.getRequestDispatcher("prepareList").forward(req,res);
-			
 			
 		}
 	
-		
-
-		
 	}
-	
 	
 }

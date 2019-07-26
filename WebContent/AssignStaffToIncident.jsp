@@ -18,6 +18,7 @@
 <meta charset="ISO-8859-1">
 <link rel="stylesheet" type="text/css" href="style.css" />
 <title>Assign Staff to Incident</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 </head>
 <body>
 	<div class="top-banner">
@@ -91,10 +92,20 @@ ${incidentSelected.userReportedIncident.name}
 <td><c:out value="${user.name}"/></td>
 <td><c:out value="${user.position}"/></td>
 <td><c:out value="${user.rolesToDo}"/></td>
-<td><input type="submit" name="${user.staffID}" value="Assign Staff"></td>
+<td><input type="submit" value="Assign Staff"  onClick="staffClicked('${user.staffID}')"></td>
 </tr>
 </c:forEach>
 </table>
+<input type="hidden" name="clicked" id="storeStaffClicked" value="three"  > 
 </form>
+<script>
+//alert("one");
+function staffClicked(id) {
+	var staff=id;
+	//alert("Pass is "+staff);
+	document.getElementById("storeStaffClicked").value=staff;
+	//alert(document.getElementById("storeStaffClicked").value);
+}
+</script>
 </body>
 </html>

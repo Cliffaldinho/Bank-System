@@ -11,20 +11,11 @@ public class UserBean implements java.io.Serializable{
 	
 	private String staffID;
 	private String rolesToDo;
-	//for staffID, 
-	//if it's bxxxx, then is Branch Manager
-	//if it's ixxxx, then is IT
-	//if it's dxxxx, then is DPO
-	//if it's fxxxx, then is Financial Analyst
-	//if it's axxxx, then is Internal Auditor
-	//if it's oxxxx, then is Other
-	
-
 
 	public String getRolesToDo() {
 		String roles;
 		
-		if(rolesToDo.equalsIgnoreCase("None")) {
+		if(rolesToDo.isBlank()) {
 			roles="No roles assigned.";
 		} else {
 			roles=rolesToDo;
@@ -37,6 +28,9 @@ public class UserBean implements java.io.Serializable{
 
 		this.rolesToDo = roles;
 	}
+	
+	
+	
 
 	public Position getUserPosition() {
 		return userPosition;
@@ -53,18 +47,11 @@ public class UserBean implements java.io.Serializable{
 	//name etc
 	
 	public UserBean() {
-		rolesToDo="None";
+		rolesToDo="";
+		//password="password";
+		
 	}
-	
-	/**
-	public User(String n,String add, String number, Position p, String id, String pw) {
-		this.name=n;
-		this.address=add;
-		this.contactNumber=number;
-		this.userPosition=p;
-		this.staffID=id;
-		this.password = pw;
-	}*/
+
 	
 	public enum Position {
 		Branch_Manager {
@@ -97,9 +84,11 @@ public class UserBean implements java.io.Serializable{
 	public String getStaffID() {
 		return staffID;
 	}
-
+	
 	public void setStaffID(String id) {
-		this.staffID = id;
+		
+		this.staffID=id;
+		
 	}
 	
 	public String getName() {

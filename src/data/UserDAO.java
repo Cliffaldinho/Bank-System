@@ -5,10 +5,15 @@ import java.io.*;
 
 public class UserDAO{
 
+	//Counters for users added throughout history. Remain same even after a user is deleted.
+
+	private static int userCounter;
+	
 	private static ArrayList<UserBean> usersList;
 	
 	static {
 		usersList = new ArrayList<>();
+		userCounter=0;
 	}
 	
 	public UserDAO() {
@@ -23,36 +28,35 @@ public class UserDAO{
 		usersList = in;
 	}
 	
-	public static void addUsers(UserBean u) {
-		usersList.add(u);
-	}
-
-	public static int findUserIndexByStaffID(String id) {
-
-		int index=-1;
-		
-		for (int i=0;i<usersList.size();i++) {
-			if(usersList.get(i).getStaffID().equalsIgnoreCase(id)) {
-				index = i;
-				break;
-			}
-		}
-		
-		return index;
+	public static int getUserCounter() {
+		return userCounter;
 	}
 	
-	public static UserBean findUserObjectByStaffID(String id) {
-		int index =-1;
-		
-		for(int i=0;i<usersList.size();i++) {
-			if(usersList.get(i).getStaffID().equalsIgnoreCase(id)) {
-				index =i;
-				break;
-			}
-		}
-		
-		return usersList.get(index);
+	public static void setUserCounter(int counter) {
+		userCounter=counter;
 	}
+	
+	public static void addUsers(UserBean u) {
+		
+		//create staff id (i.e. b1,b2,b3,b4,b5)
+		String append="b";
+		
+		int tempCounter=userCounter+1;
+		userCounter++;
+		
+		String stringCounter=String.valueOf(tempCounter);
+		String id=append+stringCounter;
+		
+		u.setStaffID(id);
+		
+		//default password given by system is password. user can then change it themselves.
+		u.setPassword("password");
+		
+		
+		usersList.add(u);
+		
+	}
+
 	
 	public static UserBean getUserByStaffID(String id) {
 		UserBean user = new UserBean();
@@ -65,16 +69,18 @@ public class UserDAO{
 		return user;
 	}
 	
+	public static void deleteUserByUserID(String id) {
+		for(int i=0;i<usersList.size();i++) {
+			if(usersList.get(i).getStaffID().equalsIgnoreCase(id)) {
+				usersList.remove(i);
+				break;
+			}
+		}
+	}
+	
 	public static int getUsersListSize() {
 		return usersList.size();
 	}
 
-	public static boolean checkID(String inID) {
-		for (UserBean user: usersList) {
-			if (user.getStaffID().equals(inID)){
-				return true;
-			}
-		}
-		return false;
-	}
+
 }

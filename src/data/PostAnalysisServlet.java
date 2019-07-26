@@ -23,6 +23,7 @@ public class PostAnalysisServlet extends HttpServlet {
 		StaffBean staff = (StaffBean) aSession.getAttribute("logAuth");
 		String staffID=staff.getUsername();
 		UserBean user = UserDAO.getUserByStaffID(staffID);
+		
 		String name,position;
 		name=user.getName();
 		position=user.getPosition().toString();

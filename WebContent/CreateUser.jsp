@@ -1,9 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@ page import="data.UserDAO" %>
+    <%@ page import="data.*" %>
+        <%@taglib
+    prefix="c"
+    uri="http://java.sun.com/jsp/jstl/core" 
+%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%    pageContext.setAttribute("userPosition", data.UserBean.Position.values()); %>
+<%    pageContext.setAttribute("userRoles", data.IncidentBean.Category.values()); %>
 
 <%HttpSession aSession = request.getSession();%>
 <jsp:useBean id="logAuth" class="data.StaffBean" scope="session" />
+
     
 <!DOCTYPE html>
 <html>
@@ -11,43 +20,20 @@
 <meta charset="ISO-8859-1">
 <link rel="stylesheet" type="text/css" href="style.css" />
 <title>Insert title here</title>
-<script>
-function validateName(){
-	window.alert("Please enter a name."); 
+<style>
+select:required:invalid{
+color:gray;
 }
-function validateID(){
-	window.alert("Please enter a valid ID."); 
+#invalidOption{
+display:none
 }
-function validateAddress(){
-	window.alert("Please enter an address."); 
+#validOption{
+color:black
 }
-function validateContact(){
-	window.alert("Please enter a contact number."); 
-}
-function validatePassword(){
-	window.alert("Please enter a password."); 
-}
-</script>
+
+</style>
 </head>
-<%
-System.out.println(request.getAttribute("errorType"));
-if (request.getAttribute("errorType") != null){
-	String errorType = (String)request.getAttribute("errorType");
-	System.out.println(errorType);
-	if (errorType.equals("name")){
-		out.print("<body onload=\"validateName()\">");
-	} else if (errorType.equals("password")){
-		out.print("<body onload=\"validatePassword()\">");
-	} else if (errorType.equals("id")){
-		out.print("<body onload=\"validateID()\">");
-	} else if (errorType.equals("address")){
-		out.print("<body onload=\"validateAddress()\">");
-	} else if (errorType.equals("contact")){
-		out.print("<body onload=\"validateContact()\">");
-	}
-} else {
-	out.print("<body>");
-}%>
+<body>
 	<div class="top-banner">
 	  <div class="row">
 	    <div class="col-75">
@@ -71,93 +57,86 @@ if (request.getAttribute("errorType") != null){
 
 	<div class="container">	
 		<h2>Set Staff Role</h2>
-		<!-- 
-		Staff Name
-		Staff Position
-		Current Role
-		Set New Role
-		 -->
-		 <form name="UserCreate" action="createUser" method="post">
-		 <input type="hidden" name="index" value="">
+
+		 <form name="UserCreate" action="createUser" method="post" onSubmit="return validateForm()">
 		<table>
 				<tr>
 					<td style="background: #dddddd">
 						Staff Name:
 					</td>
 					<td>
-						<input type="text" name="name" value="<%if(request.getAttribute("errorType") != null){out.print(request.getParameter("name"));}%>">
+						<input type="text" name="name" id="staffName">
 					</td>
 				</tr>
-				
-				<tr>
-					<td style="background: #dddddd">
-						Staff ID:
-					</td>
-					<td>
-						<input type="text" name="id" value="<%if(request.getAttribute("errorType") != null){out.print(request.getParameter("id"));}%>">
-					</td>
-				</tr>
-				
-				<tr>
-					<td style="background: #dddddd">
-						Password:
-					</td>
-					<td>
-						<input type="text" name="password" value="<%if(request.getAttribute("errorType") != null){out.print(request.getParameter("password"));}%>">
-					</td>
-				</tr>
-				
-				<tr>
-					<td style="background: #dddddd">
-						Staff Position:
-					</td>
-					<td>
-						<select name="position">
-							<option value="branch">Branch Manager</option>
-							<option value="data">Data Processing Officer</option>
-							<option value="it">IT</option>
-							<option value="finance">Financial Analyst</option>
-							<option value="auditor">Internal Auditor</option>
-						</select>
-					</td>
-				</tr>
-				
-				<tr>
-					<td style="background: #dddddd">
-						Address:
-					</td>
-					<td>
-						<input type="text" name="address" value="<%if(request.getAttribute("errorType") != null){out.print(request.getParameter("address"));}%>">
-					</td>
-				</tr>
-				
 				<tr>
 					<td style="background: #dddddd">
 						Contact Number:
 					</td>
 					<td>
-						<input type="text" name="contact" value="<%if(request.getAttribute("errorType") != null){out.print(request.getParameter("contact"));}%>">
+						<input type="text" name="contact" id="staffContactNumber">
+					</td>
+				</tr>
+				<tr>
+					<td style="background: #dddddd">
+						Address:
+					</td>
+					<td>
+						<input type="text" name="address" id="staffAddress">
+					</td>
+				</tr>
+				<tr>
+					<td style="background: #dddddd">
+						Staff Position:
+					</td>
+					<td>
+					
+					<select name="position" required>
+					<option disabled selected value="" id="invalidOption">Select position..</option>
+					<c:forEach var = "element" items="${userPosition}">
+					<option value="${element}" id="validOption">
+					${element.toString()}
+					</option>
+					</c:forEach>
+					
+					</select>
+					
+					<!--  	<select name="position">
+					 		<option disabled selected value>Please choose a position</option>
+							<option value="branch">Branch Manager</option>
+							<option value="data">Data Processing Officer</option>
+							<option value="it">IT</option>
+							<option value="finance">Financial Analyst</option>
+							<option value="auditor">Internal Auditor</option>
+						</select>-->
 					</td>
 				</tr>
 				
-				<tr>
-					<td style="background: #dddddd">
-						Current Role:
-					</td>
-					<td>
-						None
-					</td>
-				</tr>				
+				
+
+				
 		</table> 
 		<br>
+		
 			<table>
 				
 					<tr>
 						<th colspan="2">
-							Set New Role:
+							Set Role:
 						</th>
 					</tr>
 					
+					<c:forEach var="options" items="${userRoles}">
+					<tr>
+					<td>
+					${options.toString()}
+					</td>
+					<td>
+					<input type="checkbox" name="roles" value="${options.toString()}" >
+					</td>
+					</tr>
+					</c:forEach>
+					
+					 <!-- 
 					<tr>
 						<td>	
 							Regulatory Law
@@ -211,6 +190,7 @@ if (request.getAttribute("errorType") != null){
 							<input type="checkbox" name="Other"><br>
 						</td>
 					</tr>
+					 -->
 			</table>		
 			<input type="submit" name="createUser" value="create New User"><br>
 				
@@ -218,5 +198,31 @@ if (request.getAttribute("errorType") != null){
 		
 	
 	</div>
+<script>
+
+function validateForm() {
+	
+	if(document.getElementById("staffName").value=="") {
+		window.alert("Please enter a name."); 
+		return false;
+	}
+	
+	if(document.getElementById("staffAddress").value=="") {
+		window.alert("Please enter an address."); 
+		return false;
+	}
+	
+	if(document.getElementById("staffContactNumber").value=="") {
+		window.alert("Please enter a contact number."); 
+		return false;
+	}
+	
+/*	if(document.getElementById("staffPosition").value=="") {
+		window.alert("Please select a position."); 
+		return false;
+	}*/
+
+}
+</script>
 </body>
 </html>

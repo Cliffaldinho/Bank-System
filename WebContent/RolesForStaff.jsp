@@ -2,11 +2,16 @@
     pageEncoding="ISO-8859-1"%>
     <%@ page import="data.UserDAO" %>
     <%@ page import="data.IncidentDAO" %>   
+             <%@taglib
+    prefix="c"
+    uri="http://java.sun.com/jsp/jstl/core" 
+%>
     
 <%
        	HttpSession aSession = request.getSession();
        %>
 <jsp:useBean id="logAuth" class="data.StaffBean" scope="session" /> 
+
 
 <!DOCTYPE html>
 <html>
@@ -40,20 +45,16 @@
 		<h2>View Staff</h2>
 		
 		<!-- Staff name, Staff position, Staff id -->
-		<%
-			//int branchManagerAuthorization=logAuth.getAuthenticationLevel();
-		%>
+
 		<form name="staffRole" action="defineRolesForStaff" method="post">
 			<table>
 				<tr>
+					
 					<th>
-						Number
+						Staff ID
 					</th>
 					<th>
 						Staff name
-					</th>
-					<th>
-						Staff ID
 					</th>
 					<th>
 						Staff position
@@ -68,49 +69,33 @@
 						Delete staff
 					</th>
 				</tr>
-				<%
-					String staffName,staffPosition,staffID,currentRoles;
-						int number;
-								//if(branchManagerAuthorization==1) {
-									
-								for(int i=0;i<UserDAO.getUsersList().size();i++) { 
-							    	staffName=UserDAO.getUsersList().get(i).getName();
-							    	staffPosition=UserDAO.getUsersList().get(i).getPosition().toString();
-							    	staffID=UserDAO.getUsersList().get(i).getStaffID();
-							    	number=i+1;
-							    	
-							    	currentRoles=UserDAO.getUsersList().get(i).getRolesToDo();
-							    	String setNone="None";
-							    	if(currentRoles==null || currentRoles.equals("")) {
-							    		currentRoles=setNone;
-							    	}
-							    	
-							    	String staffMarker="Staff"+i;
-				%>
+				
+				<c:forEach items="${listOfStaff }" var="user">
 				<tr>
 					<td>
-						<%out.println(number); %>
+						<c:out value="${user.staffID}"/>
 					</td>
 					<td>
-						<%out.println(staffName); %>
+						<c:out value="${user.name}"/>
+					</td>
+
+					<td>
+						<c:out value="${user.position}"/>
 					</td>
 					<td>
-						<%out.println(staffID); %>
+						<c:out value="${user.rolesToDo}"/>
 					</td>
 					<td>
-						<%out.println(staffPosition); %>
+					<input type="submit" value="Modify Staff Role" id="Modify" onClick="userClicked('${user.staffID}',this.id)">
 					</td>
 					<td>
-						<%out.println(currentRoles); %>
-					</td>
-					<td>
-						<%out.println("<input type=\"submit\" name=\""+staffMarker+"\" value=\"Modify Staff/Role\">"); %>
-					</td>
-					<td>
-						<%out.println("<input type=\"submit\" name=\"delete"+staffMarker+"\" value=\"Delete User\">");} %>
+					<input type="submit" value="Delete User" id="Delete" onClick="userClicked('${user.staffID}',this.id)">
 					</td>
 				</tr>
+				</c:forEach>
 			</table>
+		<input type="hidden" name="userChosen" id="storeUser" value="three"  > 
+		<input type="hidden" name="actionChosen" id="storeAction" value="five">
 		</form>
 		
 		<form action="CreateUser.jsp">
@@ -121,5 +106,17 @@
 			<input type="submit" name="theIncidentsList" value="List">
 		</form>
 	</div>
+<script>
+function userClicked(staff,action) {
+	var staffID=staff;
+	var actionOnStaff=action;
+	
+	//alert(staffID+actionOnStaff);
+	
+	document.getElementById("storeUser").value= staffID;
+	document.getElementById("storeAction").value= actionOnStaff;
+	//alert(document.getElementById("storeUser").value);
+}
+</script>
 </body>
 </html>

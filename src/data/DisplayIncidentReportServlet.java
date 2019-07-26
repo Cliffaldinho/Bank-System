@@ -13,87 +13,58 @@ import java.util.*;
 @WebServlet(urlPatterns={"/displayIncidentReport"})
 public class DisplayIncidentReportServlet extends HttpServlet{
 
+	//receive from ListOfIncidents.jsp. Processes which report was clicked, and which option chosen (view,handle,close)
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException,ServletException {
 		
 		PrintWriter out = res.getWriter();
+	//out.println("Reached servlet");
 		
-		String tempIncidentChosen;
+	String incidentID = req.getParameter("clicked");
+	String optionChosen = req.getParameter("chosen");
 	
-		int incidentID=-1;
-		boolean viewIncident,handleIncident,closeIncident;//,checkDuplicate;
-		viewIncident=false;
-		handleIncident=false;
-		closeIncident=false;
-		
-		HttpSession aSession = req.getSession();
-		//String incidentDisplayStatus=(String) aSession.getAttribute("incidentDisplayStatus");
-		
-		IncidentBean printIncident = new IncidentBean();
+	//out.println("Incident is "+incidentID+", Option is "+optionChosen);
 
-		
-		//Loops through all incidents in database
-		outerloop:
-		for(int i=0;i<IncidentDAO.getIncidentsList().size();i++) {
-			
-			//uses the incident IDs in database as parameter
-			String storeParameter = Integer.toString(IncidentDAO.getIncidentsList().get(i).getIncidentID());
-
-			tempIncidentChosen = req.getParameter(storeParameter);
-
-			//checks if that particular parameter was clicked
-			if(tempIncidentChosen!=null) {
-				
-				//if it was clicked, check which option was chosen
-				innerloop:
-				switch(tempIncidentChosen) {
-				
-				case "View Incident":
-					viewIncident=true;
-					break innerloop;
-				
-				case "Handle Incident":
-					handleIncident=true;
-					break innerloop;
-					
-				case "Close Incident":
-					closeIncident=true;
-					break innerloop;
-					
-				default:
-					System.out.println("Error: No user choice received for DisplayIncidentReportServlet.");
-					break innerloop;
-				}
-				
-				
-				
-				//get the id of the incident clicked
-				incidentID=IncidentDAO.getIncidentsList().get(i).getIncidentID();
-				
-				//get the incident chosen
-				printIncident=IncidentDAO.getIncidentByIncidentID(incidentID);
-				break outerloop;
-			}
-		}
+	int id=Integer.parseInt(incidentID);
+	IncidentBean incident=IncidentDAO.getIncidentByIncidentID(id);
 	
-		
-		if(viewIncident==true||handleIncident==true) {
-		aSession.setAttribute("incidentID", incidentID);
-		aSession.setAttribute("incidentSelected", printIncident);
-		}
+	boolean viewIncident,handleIncident,closeIncident;
+	viewIncident=false;
+	handleIncident=false;
+	closeIncident=false;
 	
-		
-		if(viewIncident==true) {
-			req.getRequestDispatcher("DisplayIncidentReport.jsp").forward(req, res);
-		} else if (handleIncident==true) {
+	switch(optionChosen) {
+		case "View":
+			viewIncident=true;
+			break;
+		case "Handle":
+			handleIncident=true;
+			break;
+		case "Close":
+			closeIncident=true;
+			break;
+		default:
+			System.out.println("Error: No user choice received for DisplayIncidentReportServlet.");
+			break;
+	}
+	
+	HttpSession aSession = req.getSession();
+	
+	if(viewIncident==true||handleIncident==true) {
+	aSession.setAttribute("incidentID", id);
+	aSession.setAttribute("incidentSelected", incident);
+	}
+	
+	if(viewIncident==true) {
+		req.getRequestDispatcher("DisplayIncidentReport.jsp").forward(req, res);
+	} else if (handleIncident==true) {
 
-			req.getRequestDispatcher("AssignStaffToIncident.jsp").forward(req, res);
-		} else if (closeIncident==true) {
-			IncidentDAO.deleteIncidentByIncidentID(incidentID);
-			req.getRequestDispatcher("prepareList").forward(req, res);
-		}
-		
-		
-
+		req.getRequestDispatcher("AssignStaffToIncident.jsp").forward(req, res);
+	} else if (closeIncident==true) {
+		IncidentDAO.deleteIncidentByIncidentID(id);
+		req.getRequestDispatcher("prepareList").forward(req, res);
+	}
+	
+	
 
 	}
 	

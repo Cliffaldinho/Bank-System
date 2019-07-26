@@ -14,6 +14,52 @@ public class FinishSetStaffRoleServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req,HttpServletResponse res) throws IOException,ServletException {
 		
 		PrintWriter out = res.getWriter();
+		
+		HttpSession aSession = req.getSession();
+		
+		UserBean user = (UserBean) aSession.getAttribute("userSelected");
+		String userID = (String) aSession.getAttribute("userID");
+		
+		
+		
+		String[] receivedRoles =  req.getParameterValues("roles");
+		//out.println(receivedRoles.length);
+		String total="";
+		String append="";
+		
+		//see if checkbox checked, so that won't get index out of bounds error
+		if(receivedRoles!=null) {
+			for(int i=0;i<receivedRoles.length;i++) {
+			append=receivedRoles[i];
+			total=total+append+". ";
+			}
+		}
+		UserDAO.getUserByStaffID(userID).setRolesToDo(total);
+		
+		
+		//out.println(total);
+		
+		//user.setRolesToDo(total);
+		
+		
+		
+
+		String positionValue =req.getParameter("position");
+		
+		UserBean.Position staffPosition=UserBean.Position.valueOf(positionValue);
+		
+		UserDAO.getUserByStaffID(userID).setPosition(staffPosition);
+		
+		//user.setPosition(staffPosition);
+		
+		//out.println(user.getPosition().toString());
+		
+		
+		req.getRequestDispatcher("RolesForStaff.jsp").forward(req, res);
+		
+		
+		
+		/**
 		String tempLaw,tempSecurity,tempHuman,tempEquipment,tempAlgorithms,tempOther,tempIndex;
 		
 		tempIndex=req.getParameter("StaffIndex");
@@ -117,5 +163,6 @@ public class FinishSetStaffRoleServlet extends HttpServlet {
 		total=law+security+human+equipment+algorithms+other;
 		UserDAO.getUserByStaffID(tempIndex).setRolesToDo(total);
 		req.getRequestDispatcher("RolesForStaff.jsp").forward(req, res);
+		*/
 	}
 }

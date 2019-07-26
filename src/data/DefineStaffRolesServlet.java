@@ -15,44 +15,43 @@ import java.util.*;
 public class DefineStaffRolesServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest req,HttpServletResponse res) throws IOException,ServletException {
+		
 		PrintWriter out = res.getWriter();
-		String staffSelected;
+		String userID = req.getParameter("userChosen");
 		
-		int staffIndex=-1;
+		//Integer id=Integer.parseInt(userID);
+		UserBean user = UserDAO.getUserByStaffID(userID);
 		
-		for(int i=0;i<UserDAO.getUsersList().size();i++) {
+		//out.println(user.getPosition().toString());
+		
+		String action = req.getParameter("actionChosen");
+		
+		//out.println(userID+" "+action);
+		
+		switch(action) {
+		
+		case "Modify":
+			HttpSession aSession = req.getSession();
+			aSession.setAttribute("userID", userID);
+			aSession.setAttribute("userSelected", user);
 			
-			String Staff = "Staff";
-			Staff = Staff.concat(Integer.toString(i));
-			staffSelected=req.getParameter(Staff);
+			//out.println(aSession.getAttribute("userID"));
+			//UserBean aUser= (UserBean) aSession.getAttribute("userSelected");
+			//out.println(aUser.getName());
+			req.getRequestDispatcher("SetStaffRole.jsp").forward(req, res);
+			break;
 			
-			if(staffSelected!=null) {
-				staffIndex=i;
-				break;
-			}
+		case "Delete":
+			UserDAO.deleteUserByUserID(userID);
+			req.getRequestDispatcher("RolesForStaff.jsp").forward(req, res);
+			break;
 			
-			Staff="delete".concat(Staff);
-			String staffDeleted = req.getParameter(Staff);
-			
-			if (staffDeleted!=null) {
-				staffIndex = i;
-				UserDAO.getUsersList().remove(i);
-				String path = getServletContext().getRealPath("./saves/users.dat");
-				FileOutputStream fout = new FileOutputStream(getServletContext().getRealPath("./saves/users.dat"));
-				ObjectOutputStream oout = new ObjectOutputStream(fout);
-				oout.writeObject(UserDAO.getUsersList());
-				oout.close();
-				fout.close();
-				req.getRequestDispatcher("RolesForStaff.jsp").forward(req, res);
-				return;
-				
-			}
+		default:
+			System.out.println("Error: No action received for DefineStaffRoleServlet, from RolesForStaff.jsp");
+			break;
 		}
 		
-		req.setAttribute("indexOfStaff", staffIndex);
-		req.getRequestDispatcher("SetStaffRole.jsp").forward(req, res);
-		//req.setAttribute("indexOfIncident", index);
-		//req.getRequestDispatcher("DisplayIncidentReport.jsp").forward(req, res);
+
 		
 	}
 	

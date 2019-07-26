@@ -18,63 +18,61 @@ public class CreateStaffServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req,HttpServletResponse res) throws IOException,ServletException {
 		
 		PrintWriter out = res.getWriter();
-		String tempLaw,tempSecurity,tempHuman,tempEquipment,tempAlgorithms,tempOther,tempIndex;
+
 		
 		UserBean tempUser = new UserBean();
-		boolean check = true;
 		
-		
-		if (req.getParameter("name") == null || req.getParameter("name").equals("")) {
-			req.setAttribute("errorType", "name");
-			req.getRequestDispatcher("CreateUser.jsp").forward(req, res);
-			return;
-		} else {
 			tempUser.setName(req.getParameter("name"));
-		}
-		
-		if (req.getParameter("id") == null || req.getParameter("id").equals("") || UserDAO.checkID(req.getParameter("id"))) {
-			req.setAttribute("errorType", "id");
-			req.getRequestDispatcher("CreateUser.jsp").forward(req, res);
-			return;
-		} else {
-			tempUser.setStaffID(req.getParameter("id"));
-		}
-		
-		if (req.getParameter("password") == null || req.getParameter("password").equals("")) {
-			req.setAttribute("errorType", "password");
-			req.getRequestDispatcher("CreateUser.jsp").forward(req, res);
-			return;
-		} else {
-			tempUser.setPassword(req.getParameter("password"));
-		}
-		
-		if (req.getParameter("address") == null || req.getParameter("address").equals("")) {
-			req.setAttribute("errorType", "address");
-			req.getRequestDispatcher("CreateUser.jsp").forward(req, res);
-			return;
-		} else {
-			tempUser.setAddress(req.getParameter("address"));
-		}
-		
-		if (req.getParameter("contact") == null || req.getParameter("contact").equals("")) {
-			req.setAttribute("errorType", "contact");
-			req.getRequestDispatcher("CreateUser.jsp").forward(req, res);
-			return;
-		} else {
+	
 			tempUser.setContactNumber(req.getParameter("contact"));
-		}
+
+			tempUser.setAddress(req.getParameter("address"));
+			
+			
+			String positionValue =req.getParameter("position");
+			
+			UserBean.Position staffPosition=UserBean.Position.valueOf(positionValue);
+			
+			tempUser.setPosition(staffPosition);
+			
+
+			String[] receivedRoles =  req.getParameterValues("roles");
+			String total="";
+			String append="";
+			
+			//see if checkbox checked, so that won't get index out of bounds error
+			if(receivedRoles!=null) {
+				for(int i=0;i<receivedRoles.length;i++) {
+					append=receivedRoles[i];
+					total=total+append+". ";
+				}
+			}
+			tempUser.setRolesToDo(total);
+	/**		String position=req.getParameter("position");
 		
-		if (req.getParameter("position").equals("branch")) {
+		switch(position) {
+		
+		case "branch":
 			tempUser.setPosition(UserBean.Position.Branch_Manager);
-		} else if (req.getParameter("position").equals("data")) {
+			break;
+		case "data":
 			tempUser.setPosition(UserBean.Position.Data_Processing_Officer);
-		} else if (req.getParameter("position").equals("it")) {
+			break;
+		case "it":
 			tempUser.setPosition(UserBean.Position.IT);
-		} else if (req.getParameter("position").equals("finance")) {
+			break;
+		case "finance":
 			tempUser.setPosition(UserBean.Position.Financial_Analyst);
-		} else if (req.getParameter("position").equals("auditor")) {
+			break;
+		case "auditor":
 			tempUser.setPosition(UserBean.Position.Internal_Auditor);
-		}
+			break;			
+		default:
+			System.out.println("Error: No staff position received for CreateStaffServlet.");
+			break;
+		}*/
+
+	/**	String tempLaw,tempSecurity,tempHuman,tempEquipment,tempAlgorithms,tempOther;
 		
 		tempLaw=req.getParameter("Law");
 		tempSecurity=req.getParameter("Security");
@@ -83,59 +81,11 @@ public class CreateStaffServlet extends HttpServlet {
 		tempAlgorithms=req.getParameter("Algorithms");
 		tempOther=req.getParameter("Other");
 		
+		//String total=tempUser.getRolesFromParameterInputs(tempLaw, tempSecurity, tempHuman, tempEquipment, tempAlgorithms, tempOther);
+		//tempUser.setRolesToDo(total);*/
 		
-		
-		String total;
-		
-		String law,security,human,equipment,algorithms,other;
-		
-		if(tempLaw!=null) {
-			law=IncidentBean.Category.Regulatory_Law.toString()+". ";
-		} else {
-			law="";
-		}
-		
-		if(tempSecurity!=null) {
-			security=IncidentBean.Category.Cyber_Security.toString()+". ";
-		} else {
-			security="";
-		}
-		
-		if(tempHuman!=null) {
-			human=IncidentBean.Category.Human_Issues.toString()+". ";
-		} else {
-			human="";
-		}
-		
-		if(tempEquipment!=null) {
-			equipment=IncidentBean.Category.Bank_Equipment.toString()+". ";
-		} else {
-			equipment="";
-		}
-		
-		if(tempAlgorithms!=null) {
-			algorithms=IncidentBean.Category.Bank_Algorithms.toString()+". ";
-		} else {
-			algorithms="";
-		}
-		
-		if(tempOther!=null) {
-			other=IncidentBean.Category.Other.toString()+". ";
-		} else {
-			other="";
-		}
-		
-		
-		
-		total=law+security+human+equipment+algorithms+other;
-		tempUser.setRolesToDo(total);
 		UserDAO.addUsers(tempUser);
-		String path = getServletContext().getRealPath("./saves/users.dat");
-		FileOutputStream fout = new FileOutputStream(getServletContext().getRealPath("./saves/users.dat"));
-		ObjectOutputStream oout = new ObjectOutputStream(fout);
-		oout.writeObject(UserDAO.getUsersList());
-		oout.close();
-		fout.close();
+
 		req.getRequestDispatcher("RolesForStaff.jsp").forward(req, res);
 	}
 }

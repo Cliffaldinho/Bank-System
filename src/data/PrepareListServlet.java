@@ -25,10 +25,6 @@ public class PrepareListServlet extends HttpServlet {
 		
 		aSession.setAttribute("listOfIncidents", printList);
 		
-		//resets individual incident attributes that were being used
-		aSession.setAttribute("incidentID",-1);
-		aSession.setAttribute("incidentSelected", null);
-		
 		//forward to list
 		req.getRequestDispatcher("ListOfIncidents.jsp").forward(req, res);
 		
@@ -54,7 +50,7 @@ public class PrepareListServlet extends HttpServlet {
 		//get indexes of searched list
 		ArrayList<Integer> indexList = (ArrayList<Integer>) aSession.getAttribute("listOfSearchIndexes");
 		
-		//add it to list to be printed
+		//add it to the printed list
 		for(int i=0;i<indexList.size();i++) {
 			IncidentBean storeIncident = IncidentDAO.getIncidentByIncidentID(indexList.get(i));
 			printList.add(storeIncident);	
@@ -68,7 +64,7 @@ public class PrepareListServlet extends HttpServlet {
 		//get indexes of sorted list
 		ArrayList<Integer> indexList = (ArrayList<Integer>) aSession.getAttribute("sortReportsIndexes");
 		
-		//add it to list to be printed
+		//add it to the printed list
 		for(int i=0;i<indexList.size();i++) {
 			IncidentBean storeIncident = IncidentDAO.getIncidentByIncidentID(indexList.get(i));
 			printList.add(storeIncident);	

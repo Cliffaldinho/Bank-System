@@ -16,6 +16,9 @@
 <meta charset="ISO-8859-1">
 <link rel="stylesheet" type="text/css" href="style.css" />
 <title>View List of Incidents</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<!--  <script src="js/scripts.js"></script>-->
+
 </head>
 <body>
 	<div class="top-banner">
@@ -113,8 +116,11 @@ List to have
 		</form>
 		</div>
 
+<!--  action="displayIncidentReport"-->
+<!--  <form  id="list"  method="post">-->
+<form name="list" action="displayIncidentReport" method="post">
 
-<form action="displayIncidentReport" method="post">
+<!--  <input type="hidden" name="optionChosen" id="storeOptionChosen"  > -->
 	<div>
 		<table>
 			<tr>
@@ -145,17 +151,21 @@ List to have
 				<td><c:out value="${report.userReportedIncident.name}"/></td>
 				<td><c:out value="${report.userReportedIncident.position}"/></td>
 				<td><c:out value="${report.incidentKeywordsInString}"/></td>
-				<td><input type="submit" name="${report.incidentID}" value="View Incident"></td>
+				<td><input type="submit" value="View Incident" id="View" onClick="incidentClicked(${report.incidentID},this.id)"></td>
 				<c:if test="${logAuth.authenticationLevel==1}">
 					<td><c:out value="${report.assignedStaffName}"/></td>
-					<td><input type="submit" name="${report.incidentID}" value="Handle Incident"></td>
-					<td><input type="submit" name="${report.incidentID}" value="Close Incident"></td>
+					<td><input type="submit" value="Handle Incident" id="Handle" onClick="incidentClicked(${report.incidentID},this.id)"></td>
+					<td><input type="submit" value="Close Incident" id="Close" onClick="incidentClicked(${report.incidentID},this.id)"></td>
 				</c:if>
 			</tr>
 			</c:forEach>
+			
 		</table>
+		<input type="hidden" name="chosen" id="storeOptionChosen" value="three"  > 
+		<input type="hidden" name="clicked" id="storeIncidentClicked" value="five">
 	</div>
-</form> 
+
+</form>
 <br>
 
 <form action="CreateIncidentReport.jsp" method="post">
@@ -165,9 +175,27 @@ List to have
 <br>
 </div>
 
+<form action="personalDetails" method="post">
+<input type="submit" name = "details" value="Personal details">
+</form>
+<br>
+
 <form action="userLogout" method="post">
 	<input type="submit" value="Log Out">
 </form>
 
+
+<script>
+function incidentClicked(id,option) {
+var incidentID=id;
+var optionChosen=option;
+//alert(incidentID+" "+optionChosen);
+document.getElementById("storeIncidentClicked").value=incidentID;
+document.getElementById("storeOptionChosen").value=optionChosen;
+//document.list.storeIncidentClicked.value=incidentID;
+//alert(document.getElementById("storeIncidentClicked").value);
+}
+
+</script>
 </body>
 </html>

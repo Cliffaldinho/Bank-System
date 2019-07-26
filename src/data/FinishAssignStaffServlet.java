@@ -15,24 +15,10 @@ public class FinishAssignStaffServlet extends HttpServlet {
 		
 		PrintWriter out = res.getWriter();
 		
-		String tempStaffChosen;
-		String staffID="";
+		String staffID=req.getParameter("clicked");
+		out.println(staffID);
+		//Integer userID=Integer.parseInt(staffID);
 		
-		for(int i=0;i<UserDAO.getUsersList().size();i++) {
-			
-			String storeParameter = UserDAO.getUsersList().get(i).getStaffID();
-			
-			tempStaffChosen = req.getParameter(storeParameter);
-			
-			if(tempStaffChosen!=null) {
-				
-				staffID = storeParameter;
-				break;
-				
-				
-			}
-		}
-
 		int incidentID;
 		HttpSession aSession = req.getSession();
 		incidentID = (int) aSession.getAttribute("incidentID");
@@ -40,7 +26,6 @@ public class FinishAssignStaffServlet extends HttpServlet {
 		IncidentDAO.getIncidentByIncidentID(incidentID).setAssignedStaffID(staffID);
 		
 		req.getRequestDispatcher("prepareList").forward(req, res);
-		
 	
 	}
 }

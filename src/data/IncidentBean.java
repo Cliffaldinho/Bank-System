@@ -28,7 +28,7 @@ public class IncidentBean implements Serializable {
 	private String[] simulations;
 
 	//private boolean hasAnalysis;
-	private int analysisID;
+	//private int analysisID;
 	
 	private String idOfStaffAssigned;
 	
@@ -198,11 +198,13 @@ return simulations;
 		if(idOfStaffAssigned.equalsIgnoreCase("None")) {
 			staffName="No staff assigned.";
 		} else {
-			staffName=UserDAO.findUserObjectByStaffID(idOfStaffAssigned).getName();
+			staffName=UserDAO.getUserByStaffID(idOfStaffAssigned).getName();
 		}
 		
 		return staffName;
 	}
+	
+	
 	
 	public enum Category {
 		Regulatory_Law {
@@ -241,24 +243,7 @@ return simulations;
 		Low, Medium, High;
 	}
 	
-	/**
-	public boolean getHasAnalysis() {
-		return hasAnalysis;
-	}
 
-	public void setHasAnalysis(boolean exist) {
-		this.hasAnalysis = exist;
-	}*/
-
-	public int getAnalysisID() {
-		return analysisID;
-	}
-
-	public void setAnalysisID(int index) {
-		this.analysisID = index;
-	}
-	
-	
 
 	
 	public void setIncidentTitle(String title) {

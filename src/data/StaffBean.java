@@ -19,6 +19,8 @@ public class StaffBean implements Serializable {
 		return username;
 	}
 	
+
+	
 	public int getAuthenticationLevel() {
 		int authenticationLevel = -1;
 		for (int i = 0; i < UserDAO.getUsersList().size(); i++){
@@ -35,7 +37,7 @@ public class StaffBean implements Serializable {
 	}
 	
 	public UserBean getUserByUsername() {
-		UserBean user=UserDAO.findUserObjectByStaffID(username);
+		UserBean user=UserDAO.getUserByStaffID(username);
 		return user;
 	}
 	
