@@ -89,7 +89,6 @@ color:black
 						Staff Position:
 					</td>
 					<td>
-					
 					<select name="position" required>
 					<option disabled selected value="" id="invalidOption">Select position..</option>
 					<c:forEach var = "element" items="${userPosition}">
@@ -97,26 +96,12 @@ color:black
 					${element.toString()}
 					</option>
 					</c:forEach>
-					
 					</select>
-					
-					<!--  	<select name="position">
-					 		<option disabled selected value>Please choose a position</option>
-							<option value="branch">Branch Manager</option>
-							<option value="data">Data Processing Officer</option>
-							<option value="it">IT</option>
-							<option value="finance">Financial Analyst</option>
-							<option value="auditor">Internal Auditor</option>
-						</select>-->
 					</td>
 				</tr>
-				
-				
-
-				
+					
 		</table> 
 		<br>
-		
 			<table>
 				
 					<tr>
@@ -135,62 +120,6 @@ color:black
 					</td>
 					</tr>
 					</c:forEach>
-					
-					 <!-- 
-					<tr>
-						<td>	
-							Regulatory Law
-						</td>
-						<td>	
-							<input type="checkbox" name="Law"><br>
-						</td>
-					</tr>
-					
-					<tr>
-						<td>	
-							Cyber Security
-						</td>
-						<td>	
-							<input type="checkbox" name="Security"><br>
-						</td>
-					</tr>
-					
-					<tr>
-						<td>	
-							Human Issues
-						</td>
-						<td>	
-							<input type="checkbox" name="Human"><br>
-						</td>
-					</tr>
-					
-					<tr>
-						<td>	
-							Bank Equipment
-						</td>
-						<td>	
-							<input type="checkbox" name="Equipment"><br>
-						</td>
-					</tr>
-					
-					<tr>
-						<td>	
-							Bank Algorithms
-						</td>
-						<td>	
-							<input type="checkbox" name="Algorithms"><br>
-						</td>
-					</tr>
-					
-					<tr>
-						<td>	
-							Other
-						</td>
-						<td>	
-							<input type="checkbox" name="Other"><br>
-						</td>
-					</tr>
-					 -->
 			</table>		
 			<input type="submit" name="createUser" value="create New User"><br>
 				
@@ -217,10 +146,7 @@ function validateForm() {
 		return false;
 	}
 	
-/*	if(document.getElementById("staffPosition").value=="") {
-		window.alert("Please select a position."); 
-		return false;
-	}*/
+
 
 }
 </script>

@@ -17,12 +17,10 @@ public class DisplayIncidentReportServlet extends HttpServlet{
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException,ServletException {
 		
 		PrintWriter out = res.getWriter();
-	//out.println("Reached servlet");
 		
 	String incidentID = req.getParameter("clicked");
 	String optionChosen = req.getParameter("chosen");
 	
-	//out.println("Incident is "+incidentID+", Option is "+optionChosen);
 
 	int id=Integer.parseInt(incidentID);
 	IncidentBean incident=IncidentDAO.getIncidentByIncidentID(id);

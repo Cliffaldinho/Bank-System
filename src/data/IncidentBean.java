@@ -27,8 +27,6 @@ public class IncidentBean implements Serializable {
 	private int incidentID;
 	private String[] simulations;
 
-	//private boolean hasAnalysis;
-	//private int analysisID;
 	
 	private String idOfStaffAssigned;
 	
@@ -171,8 +169,6 @@ return simulations;
 	}
 	
 	public String getDateTimeFromTimeStamp() {
-		//Date date = new Date(ts.getTime());
-		//DateTime dateTime = n
 		LocalDateTime dateTime=	ts.toLocalDateTime();
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");

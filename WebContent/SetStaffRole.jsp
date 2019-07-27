@@ -54,37 +54,7 @@ text-align-last:center;
 
 	<div class="container">	
 		<h2>Set Staff Role</h2>
-		<%/**
-		UserBean staff =(UserBean) aSession.getAttribute("userSelected");
-		String id=(String) aSession.getAttribute("userID");
-				String staffName;
-				String staffID;
-				String staffPosition;
-				String currentRole;
-				String password;
-				String address;
-				String contact;
-				staffName=staff.getName();
-				staffID=staff.getStaffID();
-				staffPosition=staff.getPosition().toString();
-				if (staff.getRolesToDo()!=null){
-			currentRole=staff.getRolesToDo().toString();
-				} else {
-			currentRole="None";
-				}
-				password =staff.getPassword();
-				address = staff.getAddress();
-				contact = staff.getContactNumber();
-				String setNone="None";
-			*/
-		%>
-		<!-- 
-		Staff Name
-		Staff Position
-		Current Role
-		Set New Role
-		 -->
-
+	
 		 <form action="finishDefineStaffRole" method="post">
 		<!--   <input type="hidden" name="index" value="<%//out.println(staff);%>">-->
 		<table>
@@ -122,13 +92,7 @@ text-align-last:center;
 						${element.toString()}
 						</option>
 						</c:forEach>
-							<!--  
-							<option value="branch" <%//if(staffPosition.equals("Branch Manager")){out.println("selected");}%>>Branch Manager</option>
-							<option value="data" <%//if(staffPosition.equals("Data Processing Officer")){out.println("selected");}%>>Data Processing Officer</option>
-							<option value="it" <%//if(staffPosition.equals("IT")){out.println("selected");}%>>IT</option>
-							<option value="finance" <%//if(staffPosition.equals("Financial Analyst")){out.println("selected");}%>>Financial Analyst</option>
-							<option value="auditor" <%//if(staffPosition.equals("Internal Auditor")){out.println("selected");}%>>Internal Auditor</option>
-							-->
+							
 						</select>
 					</td>
 				</tr>
@@ -139,7 +103,6 @@ text-align-last:center;
 					</td>
 					<td>
 					${userSelected.contactNumber}
-						<!--  <input type="text" name="contact" value="<%//out.println(contact);%>">"-->
 					</td>
 				</tr>
 				
@@ -149,7 +112,6 @@ text-align-last:center;
 					</td>
 					<td>
 						${userSelected.address}
-						<!--  <input type="text" name="address" value="<%//out.println(address);%>">"-->
 					</td>
 				</tr>
 				
@@ -159,7 +121,6 @@ text-align-last:center;
 					</td>
 					<td>
 					${userSelected.rolesToDo}
-						<%//out.println(currentRole); %>
 					</td>
 				</tr>				
 		</table> 
@@ -182,63 +143,8 @@ text-align-last:center;
 					</td>
 					</tr>
 					</c:forEach>
-					<!--  
-					<tr>
-						<td>	
-							Regulatory Law
-						</td>
-						<td>	
-							<input type="checkbox" name="Law" <%//if(currentRole.contains("Regulatory Law")){out.println("checked");}%>><br>
-						</td>
-					</tr>
 					
-					<tr>
-						<td>	
-							Cyber Security
-						</td>
-						<td>	
-							<input type="checkbox" name="Security" <%//if(currentRole.contains("Cyber Security")){out.println("checked");}%>><br>
-						</td>
-					</tr>
-					
-					<tr>
-						<td>	
-							Human Issues
-						</td>
-						<td>	
-							<input type="checkbox" name="Human" <%//if(currentRole.contains("Human Issues")){out.println("checked");}%>><br>
-						</td>
-					</tr>
-					
-					<tr>
-						<td>	
-							Bank Equipment
-						</td>
-						<td>	
-							<input type="checkbox" name="Equipment" <%//if(currentRole.contains("Bank Equipment")){out.println("checked");}%>><br>
-						</td>
-					</tr>
-					
-					<tr>
-						<td>	
-							Bank Algorithms
-						</td>
-						<td>	
-							<input type="checkbox" name="Algorithms" <%//if(currentRole.contains("Bank Algorithms")){out.println("checked");}%>><br>
-						</td>
-					</tr>
-					
-					<tr>
-						<td>	
-							Other
-						</td>
-						<td>	
-							<input type="checkbox" name="Other" <%//if(currentRole.contains("Other")){out.println("checked");}%>><br>
-						</td>
-					</tr>
-					-->
-			</table>		
-			<%//out.println("<input type= \"hidden\" name=\"StaffIndex\" value=\""+staff+"\">"); %>
+			</table>	
 			<input type="submit" name="setTheRole" value="Modify User/Role"><br>
 				
 		</form>	

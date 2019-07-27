@@ -48,41 +48,7 @@ public class CreateStaffServlet extends HttpServlet {
 				}
 			}
 			tempUser.setRolesToDo(total);
-	/**		String position=req.getParameter("position");
-		
-		switch(position) {
-		
-		case "branch":
-			tempUser.setPosition(UserBean.Position.Branch_Manager);
-			break;
-		case "data":
-			tempUser.setPosition(UserBean.Position.Data_Processing_Officer);
-			break;
-		case "it":
-			tempUser.setPosition(UserBean.Position.IT);
-			break;
-		case "finance":
-			tempUser.setPosition(UserBean.Position.Financial_Analyst);
-			break;
-		case "auditor":
-			tempUser.setPosition(UserBean.Position.Internal_Auditor);
-			break;			
-		default:
-			System.out.println("Error: No staff position received for CreateStaffServlet.");
-			break;
-		}*/
-
-	/**	String tempLaw,tempSecurity,tempHuman,tempEquipment,tempAlgorithms,tempOther;
-		
-		tempLaw=req.getParameter("Law");
-		tempSecurity=req.getParameter("Security");
-		tempHuman=req.getParameter("Human");
-		tempEquipment=req.getParameter("Equipment");
-		tempAlgorithms=req.getParameter("Algorithms");
-		tempOther=req.getParameter("Other");
-		
-		//String total=tempUser.getRolesFromParameterInputs(tempLaw, tempSecurity, tempHuman, tempEquipment, tempAlgorithms, tempOther);
-		//tempUser.setRolesToDo(total);*/
+	
 		
 		UserDAO.addUsers(tempUser);
 

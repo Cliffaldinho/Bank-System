@@ -25,41 +25,35 @@ public class UserLoginServlet extends HttpServlet {
 		HttpSession aSession = req.getSession(true);
 		StaffBean logAuth = (StaffBean) aSession.getAttribute("logAuth");
 		String userid = req.getParameter("userid");
-		//Integer userid=Integer.parseInt(tempUserID);
 		String password = req.getParameter("password");
 		boolean found = false;
 		if (UserDAO.getUsersList().isEmpty()) {
 			File file = new File(getServletContext().getRealPath("./saves/users.dat"));
 			if (!file.exists()) {
-				//User tempUser = new User("Bob Smith","Elm Street","0403526395",User.Position.Financial_Analyst,"f111", "password");
 				UserBean tempUser = new UserBean();
 				tempUser.setName("Bob Smith");
 				tempUser.setAddress("Elm Street");
 				tempUser.setContactNumber("0403526395");
 				tempUser.setPosition(UserBean.Position.Financial_Analyst);
 				
-				//User tempUserTwo = new User("Alice Diaz","Avoca Lane","0423436405",User.Position.Internal_Auditor,"a111", "password");
 				UserBean tempUserTwo = new UserBean();
 				tempUserTwo.setName("Alice Diaz");
 				tempUserTwo.setAddress("Avoca Lane");
 				tempUserTwo.setContactNumber("0423436405");
 				tempUserTwo.setPosition(UserBean.Position.Internal_Auditor);
 				
-				//User tempUserThree = new User("Henry Stewart","Mahogany Lane","0435243964",User.Position.Data_Processing_Officer,"d111", "password");
 				UserBean tempUserThree = new UserBean();
 				tempUserThree.setName("Henry Stewart");
 				tempUserThree.setAddress("Mahogany Lane");
 				tempUserThree.setContactNumber("0435243964");
 				tempUserThree.setPosition(UserBean.Position.Data_Processing_Officer);
 				
-				//User tempUserFour = new User("Enzo Rogers","Wilsons Creek","0432364354",User.Position.Branch_Manager,"b111", "password");
 				UserBean tempUserFour = new UserBean();
 				tempUserFour.setName("Enzo Rogers");
 				tempUserFour.setAddress("Wilsons Creek");
 				tempUserFour.setContactNumber("0432364354");
 				tempUserFour.setPosition(UserBean.Position.Branch_Manager);
 				
-				//User tempUserFive = new User ("Chloe Morgan","Chicago Lane","0473423537",User.Position.IT,"i111", "password");
 				UserBean tempUserFive = new UserBean();
 				tempUserFive.setName("Chloe Morgan");
 				tempUserFive.setAddress("Chicago Lane");
@@ -115,10 +109,10 @@ public class UserLoginServlet extends HttpServlet {
 		PrintWriter out =res.getWriter();
 		for (int i = 0; i < UserDAO.getUsersList().size(); i++){
 			String id = UserDAO.getUsersList().get(i).getStaffID();
-			//out.println(id);
+		
 			
 			String pw = UserDAO.getUsersList().get(i).getPassword();
-			//out.println(pw);
+		
 			
 			if (userid.equals(id)){
 				if (password.equals(pw)){

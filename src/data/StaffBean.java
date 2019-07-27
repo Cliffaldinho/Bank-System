@@ -41,6 +41,12 @@ public class StaffBean implements Serializable {
 		return user;
 	}
 	
+	public String getStaffName() {
+		UserBean user = UserDAO.getUserByStaffID(username);
+		String name=user.getName();
+		return name;
+	}
+	
 	
 
 

@@ -16,12 +16,17 @@ public class ModifyPersonalDetailsServlet extends HttpServlet {
 	
 	public void doPost(HttpServletRequest req,HttpServletResponse res) throws IOException,ServletException {
 		
+		PrintWriter out = res.getWriter();
+		
+		
 		HttpSession aSession = req.getSession();
 		StaffBean staffLoggedIn = (StaffBean) aSession.getAttribute("logAuth");
+		
 		UserBean user = staffLoggedIn.getUserByUsername();
-		req.setAttribute("name", user.getName());
-		req.setAttribute("address", user.getAddress());
-		req.setAttribute("contact", user.getContactNumber());
+		aSession.setAttribute("staffName", user.getName());
+		aSession.setAttribute("staffAddress", user.getAddress());
+		aSession.setAttribute("staffContact", user.getContactNumber());
+
 		
 		req.getRequestDispatcher("PersonalDetails.jsp").forward(req, res);
 		

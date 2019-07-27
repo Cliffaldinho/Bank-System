@@ -15,32 +15,74 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="ModifyPersonalDetails.js"></script>
 <style>
+/*id is one element, class can identify more than one */
+
+
+.hidden {
+visibility:hidden;
+}
+
+.visible {
+visibility:visible;
+}
+
 </style>
 </head>
 <body>
 
-<form>
-
-Name:
-${name}
-<input></input>
-
+<p>
+ID:${userid}
+</p>
+<form action="finishPersonalDetails" method="post" onSubmit="return validateForm()">
+<p>
+Name:${staffName}
 <br>
-ID:
+<input  type="button" value="Edit Name" id="name" ></input>
+<input class="name hidden" type="text" id="nameInput"  name="modifyName">
+</p>
 
+<p>
+Address:${staffAddress}
 <br>
-Password:
+<input  type="button" value="Edit Address" id="address" ></input>
+<input class="address hidden" type="text" id="addressInput"  name="modifyAddress">
+</p>
 
+<p>
+Contact Number:${staffContact}
 <br>
-Address:
-${address}
-
+<input  type="button" value="Edit Contact Number" id="contact" ></input>
+<input class="contact hidden" type="text" id="contactInput"  name="modifyContact">
+</p>
+<c:if test="${incorrectPassword}">
+<p>
+Oops. The old password you entered is incorrect. Hence your password was not edited.
+</p>
+</c:if>
+<p>
+Password
 <br>
-Contact:
-${contact}
+<input type="button" value="Edit Password" id="password"></input>
+</p>
+<p class="password hidden" id="passwordInput" >
+Please enter old password:
+<input type="password" id="oldPassword" name="originalPassword" value="">
 <br>
+<br>
+Please enter new password:
+<input type="password" id="newPassword" name="modifyPassword" value="">
+<br>
+Please reenter new password:
+<input type="password" id="reenterNewPassword" value="">
+<br>
+</p>
+<p><input type="submit" value="Modify personal details" style="visibility: hidden" id="submitButton" ></p>
 </form>
-
+<form action="prepareList" method="post">
+<input type="submit" value="List">
+</form>
 </body>
 </html>

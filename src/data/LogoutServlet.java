@@ -22,7 +22,6 @@ public class LogoutServlet extends HttpServlet {
 		HttpSession aSession = req.getSession(true);
 		StaffBean logAuth = (StaffBean) aSession.getAttribute("logAuth");
 		logAuth.setUsername(null); 
-		//username or user id is now an int (coz users can change positions, hence can't user the alphabet preceding to identify their position)
 		req.setAttribute("loginError",null); //is String
 		
 		aSession.removeAttribute("isSearch");
@@ -35,6 +34,10 @@ public class LogoutServlet extends HttpServlet {
 		
 		aSession.removeAttribute("userID");
 		aSession.removeAttribute("userSelected");
+		
+		aSession.removeAttribute("staffName");
+		aSession.removeAttribute("staffAddress");
+		aSession.removeAttribute("staffContact");
 		
 		req.getRequestDispatcher("index.jsp").forward(req,res);
 	}

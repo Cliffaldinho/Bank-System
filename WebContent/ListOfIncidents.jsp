@@ -189,11 +189,8 @@ List to have
 function incidentClicked(id,option) {
 var incidentID=id;
 var optionChosen=option;
-//alert(incidentID+" "+optionChosen);
 document.getElementById("storeIncidentClicked").value=incidentID;
 document.getElementById("storeOptionChosen").value=optionChosen;
-//document.list.storeIncidentClicked.value=incidentID;
-//alert(document.getElementById("storeIncidentClicked").value);
 }
 
 </script>

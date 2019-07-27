@@ -111,11 +111,8 @@ function userClicked(staff,action) {
 	var staffID=staff;
 	var actionOnStaff=action;
 	
-	//alert(staffID+actionOnStaff);
-	
 	document.getElementById("storeUser").value= staffID;
 	document.getElementById("storeAction").value= actionOnStaff;
-	//alert(document.getElementById("storeUser").value);
 }
 </script>
 </body>

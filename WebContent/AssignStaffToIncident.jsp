@@ -44,19 +44,7 @@
 	
 Assign Staff to Incident
 <br>
-<!-- 
-Incident:
-Incident title
-Incident category
-Incident date
-Name of staff who reported the incident
 
-Staff:
-Staff name
-Staff id
-Staff position
-Staff roles
- -->
 Incident id:
 ${incidentID}
 <br>
@@ -102,9 +90,7 @@ ${incidentSelected.userReportedIncident.name}
 //alert("one");
 function staffClicked(id) {
 	var staff=id;
-	//alert("Pass is "+staff);
 	document.getElementById("storeStaffClicked").value=staff;
-	//alert(document.getElementById("storeStaffClicked").value);
 }
 </script>
 </body>

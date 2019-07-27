@@ -19,14 +19,11 @@ public class DefineStaffRolesServlet extends HttpServlet {
 		PrintWriter out = res.getWriter();
 		String userID = req.getParameter("userChosen");
 		
-		//Integer id=Integer.parseInt(userID);
 		UserBean user = UserDAO.getUserByStaffID(userID);
 		
-		//out.println(user.getPosition().toString());
 		
 		String action = req.getParameter("actionChosen");
 		
-		//out.println(userID+" "+action);
 		
 		switch(action) {
 		
@@ -35,9 +32,6 @@ public class DefineStaffRolesServlet extends HttpServlet {
 			aSession.setAttribute("userID", userID);
 			aSession.setAttribute("userSelected", user);
 			
-			//out.println(aSession.getAttribute("userID"));
-			//UserBean aUser= (UserBean) aSession.getAttribute("userSelected");
-			//out.println(aUser.getName());
 			req.getRequestDispatcher("SetStaffRole.jsp").forward(req, res);
 			break;
 			
