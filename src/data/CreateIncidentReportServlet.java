@@ -42,34 +42,10 @@ public class CreateIncidentReportServlet extends HttpServlet {
 		//Set Incident Category
 		String tempCategory;
 		tempCategory=req.getParameter("incidentCategory");
-		if(tempCategory!=null) {
-	
-			
-			switch(tempCategory) {
-			
-			case "regulatoryLaw":
-				anIncident.setIncidentCategory(IncidentBean.Category.Regulatory_Law);
-				break;
-			case "cyberSecurity":
-				anIncident.setIncidentCategory(IncidentBean.Category.Cyber_Security);
-				break;
-			case "humanIssues":
-				anIncident.setIncidentCategory(IncidentBean.Category.Human_Issues);
-				break;
-			case "bankEquipment":
-				anIncident.setIncidentCategory(IncidentBean.Category.Bank_Equipment);
-				break;
-			case "bankAlgorithms":
-				anIncident.setIncidentCategory(IncidentBean.Category.Bank_Algorithms);
-				break;
-			case "other":
-				anIncident.setIncidentCategory(IncidentBean.Category.Other);
-				break;
-			default:
-				break;
-			
-			}
-		}
+		
+		IncidentBean.Category category=IncidentBean.Category.valueOf(tempCategory);
+		
+		anIncident.setIncidentCategory(category);
 		
 		
 		//Set Incident Description
@@ -127,24 +103,10 @@ public class CreateIncidentReportServlet extends HttpServlet {
 		String tempPriority;
 		tempPriority=req.getParameter("thePriority");
 		
-		if(tempPriority!=null) {
-			
-			switch(tempPriority) {
-				case "Low":
-					anIncident.setPriorityRating(IncidentBean.Priority.Low);
-					break;
-				
-				case "Medium":
-					anIncident.setPriorityRating(IncidentBean.Priority.Medium);	
-					break;
-				
-				case "High":
-					anIncident.setPriorityRating(IncidentBean.Priority.High);
-					break;
-			}
-			
-			
-		}
+		IncidentBean.Priority priority=IncidentBean.Priority.valueOf(tempPriority);
+		anIncident.setPriorityRating(priority);
+		
+	
 		
 		//Detect Duplicates
 		boolean possibleDuplicate=false;

@@ -5,7 +5,9 @@
     prefix="c"
     uri="http://java.sun.com/jsp/jstl/core" 
 %>
-    
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%    pageContext.setAttribute("reportCategory", IncidentBean.Category.values()); %>
+<%    pageContext.setAttribute("reportPriority", IncidentBean.Priority.values()); %>
 <%HttpSession aSession = request.getSession();%>
 <jsp:useBean id="logAuth" class="data.StaffBean" scope="session" />
     
@@ -89,55 +91,16 @@ function validateForm() {
 				    </div>
 				    <div class="col-75">
 			    
-						<div class="row2">
-						    <div class="col-75">			    
-						      <label for="incidentCategory">Law</label>
-						    </div>
-						    <div class="col-25">
-						      <input type="radio" name="incidentCategory" value="regulatoryLaw" checked>
-						    </div>
-						</div>				
-						<div class="row2">
-						    <div class="col-75">			    
-						      <label for="incidentCategory">Cyber security</label>
-						    </div>
-						    <div class="col-25">
-						      <input type="radio" name="incidentCategory" value="cyberSecurity">
-						    </div>
-						</div>		
-						<div class="row2">
-						    <div class="col-75">			    
-						      <label for="incidentCategory">Human issues</label>
-						    </div>
-						    <div class="col-25">
-						      <input type="radio" name="incidentCategory" value="humanIssues">
-						    </div>
-						</div>
-						<div class="row2">
-						    <div class="col-75">			    
-						      <label for="incidentCategory">Bank equipment</label>
-						    </div>
-						    <div class="col-25">
-						      <input type="radio" name="incidentCategory" value="bankEquipment">
-						    </div>
-						</div>
-						<div class="row2">
-						    <div class="col-75">			    
-						      <label for="incidentCategory">Bank algorithms</label>
-						    </div>
-						    <div class="col-25">
-						      <input type="radio" name="incidentCategory" value="bankAlgorithms">
-						    </div>
-						</div>
-						<div class="row2">
-						    <div class="col-75">			    
-						      <label for="incidentCategory">Other (please specify in Incident description)</label>
-						    </div>
-						    <div class="col-25">
-						      <input type="radio" name="incidentCategory" value="other">
-						    </div>
-						</div>
-
+			    <c:forEach var="category" items="${reportCategory}">
+				<div class="row2">
+				<div class="col-75">			    
+				<label for="incidentCategory">${category.toString()}</label>
+				</div>
+				<div class="col-25">
+				<input type="radio" name="incidentCategory" value="${category}" ${category.toString()=="Regulatory Law"? "checked" : "" } >
+				</div>
+				</div>	
+			    </c:forEach>
 				    </div>
 				</div>	
 			</div>	
@@ -177,33 +140,17 @@ function validateForm() {
 			    </div>
 			    <div class="col-75">
 			    
-						<div class="row2">
+			    <c:forEach var="priority" items="${reportPriority}">
+			    <div class="row2">
 						    <div class="col-25">			    
-						      <label for="thePriority">Low</label>
+						      <label for="thePriority">${priority.toString()}</label>
 						    </div>
 						    <div class="col-75">
-						      <input type="radio" name="thePriority" value="Low">
+						      <input type="radio" name="thePriority" value="${priority}" ${priority.toString()=="Medium"? "checked" : "" } >
 						    </div>
-						</div>						
-						
-						<div class="row2">
-						    <div class="col-25">			    
-						      <label for="thePriority">Medium</label>
-						    </div>
-						    <div class="col-75">
-						      <input type="radio" name="thePriority" value="Medium" checked>
-						    </div>
-						</div>
-						
-						<div class="row2">
-						    <div class="col-25">			    
-						      <label for="thePriority">High</label>
-						    </div>
-						    <div class="col-75">
-						      <input type="radio" name="thePriority" value="High">
-						    </div>
-						</div>
-
+						</div>	
+			    </c:forEach>
+			   
 			    </div>
 			</div>
 		</div>
