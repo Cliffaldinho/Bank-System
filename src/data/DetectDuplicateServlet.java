@@ -36,8 +36,12 @@ public class DetectDuplicateServlet extends HttpServlet {
 			IncidentDAO.getIncidentByIncidentID(originalID).setDescriptionOfIncident(newDescription);
 			
 			//merge duplicated incident's possible causes into original incident
-			String currentPossibleCauses = currentIncident.getPossibleCausesOfIncident();
-			String originalPossibleCauses = originalIncident.getPossibleCausesOfIncident();
+		
+			//String currentPossibleCauses = currentIncident.getPossibleCausesOfIncident();
+			String currentPossibleCauses = currentIncident.getPostIncident().getPossibleCausesOfIncident();
+			
+			//String originalPossibleCauses = originalIncident.getPossibleCausesOfIncident();
+			String originalPossibleCauses = originalIncident.getPostIncident().getPossibleCausesOfIncident();
 			
 			String newPossibleCauses;
 			
@@ -48,12 +52,18 @@ public class DetectDuplicateServlet extends HttpServlet {
 				newPossibleCauses = originalPossibleCauses + currentPossibleCauses;
 			}
 			
-			IncidentDAO.getIncidentByIncidentID(originalID).setPossibleCausesOfIncident(newPossibleCauses);
+			
+			//IncidentDAO.getIncidentByIncidentID(originalID).setPossibleCausesOfIncident(newPossibleCauses);
+			IncidentDAO.getIncidentByIncidentID(originalID).getPostIncident().setPossibleCausesOfIncident(newPossibleCauses);
 			
 			
 			//merge duplicated incident's possible solutions into original incident
-			String currentPossibleSolutions = currentIncident.getPossibleSolutionsOfIncident();
-			String originalPossibleSolutions = originalIncident.getPossibleSolutionsOfIncident();
+			//String currentPossibleSolutions = currentIncident.getPossibleSolutionsOfIncident();
+			String currentPossibleSolutions = currentIncident.getPostIncident().getPossibleSolutionsOfIncident();
+			
+			//String originalPossibleSolutions = originalIncident.getPossibleSolutionsOfIncident();
+			String originalPossibleSolutions = originalIncident.getPostIncident().getPossibleSolutionsOfIncident();
+			
 			String newPossibleSolutions;
 			
 			if(!originalPossibleSolutions.isBlank())
@@ -63,7 +73,8 @@ public class DetectDuplicateServlet extends HttpServlet {
 				newPossibleSolutions = originalPossibleSolutions + currentPossibleSolutions;
 			}
 			
-			IncidentDAO.getIncidentByIncidentID(originalID).setPossibleSolutionsOfIncident(newPossibleSolutions);
+			//IncidentDAO.getIncidentByIncidentID(originalID).setPossibleSolutionsOfIncident(newPossibleSolutions);
+			IncidentDAO.getIncidentByIncidentID(originalID).getPostIncident().setPossibleSolutionsOfIncident(newPossibleSolutions);
 			
 			//remove session attributes
 			aSession.removeAttribute("currentIncident");

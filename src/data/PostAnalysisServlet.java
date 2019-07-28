@@ -33,7 +33,8 @@ public class PostAnalysisServlet extends HttpServlet {
 		IncidentBean incident = IncidentDAO.getIncidentByIncidentID(incidentID);
 	
 		
-		String rootCause = incident.getPossibleCausesOfIncident();
+		//String rootCause = incident.getPossibleCausesOfIncident();
+		String rootCause = incident.getPostIncident().getPossibleCausesOfIncident();
 		String updateRootCause;
 		if(!rootCause.isBlank()) {
 			updateRootCause = rootCause + "<br>" + tempRootCause;
@@ -41,7 +42,8 @@ public class PostAnalysisServlet extends HttpServlet {
 			updateRootCause = rootCause+tempRootCause;
 		}
 		
-		IncidentDAO.getIncidentByIncidentID(incidentID).setPossibleCausesOfIncident(updateRootCause);
+		//IncidentDAO.getIncidentByIncidentID(incidentID).setPossibleCausesOfIncident(updateRootCause);
+		IncidentDAO.getIncidentByIncidentID(incidentID).getPostIncident().setPossibleCausesOfIncident(updateRootCause);
 
 		req.getRequestDispatcher("PerformAnalysis.jsp").forward(req, res);
 		}

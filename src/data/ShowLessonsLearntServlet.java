@@ -39,9 +39,12 @@ public class ShowLessonsLearntServlet extends HttpServlet{
 		
 		int incidentID = (int) aSession.getAttribute("incidentID");
 		IncidentBean incident = IncidentDAO.getIncidentByIncidentID(incidentID);
-		incident.addSimulation(aSimulation);
 		
-		String solution = incident.getPossibleSolutionsOfIncident();
+		//incident.addSimulation(aSimulation);
+		incident.getPostIncident().addSimulation(aSimulation);
+		
+		//String solution = incident.getPossibleSolutionsOfIncident();
+		String solution = incident.getPostIncident().getPossibleSolutionsOfIncident();
 		
 		String updateSolution;
 		if(!solution.isBlank()) {
@@ -50,7 +53,8 @@ public class ShowLessonsLearntServlet extends HttpServlet{
 			updateSolution=solution+tempSolution;
 		}
 		
-		IncidentDAO.getIncidentByIncidentID(incidentID).setPossibleSolutionsOfIncident(updateSolution);
+		//IncidentDAO.getIncidentByIncidentID(incidentID).setPossibleSolutionsOfIncident(updateSolution);
+		IncidentDAO.getIncidentByIncidentID(incidentID).getPostIncident().setPossibleSolutionsOfIncident(updateSolution);
 		
 		req.getRequestDispatcher("PerformAnalysis.jsp").forward(req, res);
 

@@ -62,12 +62,12 @@ Incident analyzing
 		
 		<tr>
 			<td style="background: #dddddd">Reported possible causes:</td>
-			<td>${incidentSelected.possibleCausesOfIncident}</td>
+			<td>${incidentSelected.postIncident.possibleCausesOfIncident}</td>
 		</tr>
 				 
 		<tr>
 			<td style="background: #dddddd">Reported possible solutions:</td>
-			<td>${incidentSelected.possibleSolutionsOfIncident}</td>
+			<td>${incidentSelected.postIncident.possibleSolutionsOfIncident}</td>
 		</tr>
 	
 	</table>
@@ -78,11 +78,11 @@ Incident analyzing
 	<div class="container">
 	<h3>Simulations done for this incident</h3>
 	<c:choose>
-	<c:when test="${empty incidentSelected.simulations}">
+	<c:when test="${empty incidentSelected.postIncident.simulations}">
 	None
 	</c:when>
 	<c:otherwise>
-	<c:forEach var="temp" items="${incidentSelected.simulations}">
+	<c:forEach var="temp" items="${incidentSelected.postIncident.simulations}">
 	${temp}
 	<br>
 	<br>

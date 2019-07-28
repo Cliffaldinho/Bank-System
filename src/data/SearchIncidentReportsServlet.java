@@ -50,7 +50,8 @@ public class SearchIncidentReportsServlet extends HttpServlet{
 			case "RootCause":
 												for(IncidentBean i : incidentReports)
 												{
-													if(i.getPossibleCausesOfIncident().contains(search))
+													//if(i.getPossibleCausesOfIncident().contains(search))
+													if(i.getPostIncident().getPossibleCausesOfIncident().contains(search))
 													{
 														searchReturn.add(i.getIncidentID());
 													}

@@ -85,8 +85,10 @@ public class CreateIncidentReportServlet extends HttpServlet {
 		possibleCauses= req.getParameter("possibleCausesOfIncident");
 		
 		if(!possibleCauses.isBlank()) {
-			possibleCauses = possibleCauses + " ("+name+", "+position+")";		
-			anIncident.setPossibleCausesOfIncident(possibleCauses);
+			possibleCauses = possibleCauses + " ("+name+", "+position+")";	
+			
+			//anIncident.setPossibleCausesOfIncident(possibleCauses);
+			anIncident.getPostIncident().setPossibleCausesOfIncident(possibleCauses);
 		}
 		
 		
@@ -95,7 +97,9 @@ public class CreateIncidentReportServlet extends HttpServlet {
 		
 		if(!possibleSolutions.isBlank()) {
 			possibleSolutions = possibleSolutions + " ("+name+", "+position+")"; 
-			anIncident.setPossibleSolutionsOfIncident(possibleSolutions);
+			
+			anIncident.getPostIncident().setPossibleSolutionsOfIncident(possibleSolutions);
+			//anIncident.setPossibleSolutionsOfIncident(possibleSolutions);
 		}
 				
 		

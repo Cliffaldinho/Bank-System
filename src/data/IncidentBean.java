@@ -24,44 +24,10 @@ public class IncidentBean implements Serializable {
 	 */
 	
 	
-	/**
-	 Removed Analysis object.
-	 
-	 Analysis class contained 
-	 analysis ID, which is same as incidentID,
-	 rootCause in IncidentBean, which is same as rootCause in Analysis,
-	 lessonsLearnt in IncidentBean, whch is same as lessonsLeart in Analysis
-	 
-	 Hence choose to store a particular colomn of data in one location, 
-	 so that fewer places to update and less risk of having different data in different places
-	 */
-	
-	
-	/**
-	 Removed RiskManagement object
-	 Risk class contained attributes
-	 
-	 String riskStrategyWriter. which is equal to branch manager.
-	 String delegatedStaff. which is equal to everybody (for ratings), Simulation class (for possible solutions/test strategy)
-	 String riskTitle: which is equal to IncidentBean title
-	 Category riskCategory: which is equal to IncidentBean category
-	 (of which all overlap with IncidentBean or are already defined)
-	 
-	 And:
-	 String risk: merged into IncidentBean as String riskForeseen
-	 String managementStrategy: merged into IncidentBean as String strategyImplemented
-	 
-	 Chose to join it all into this class, as they are linked to attributes in this class.
-	 i.e. 
-	 riskCategory linked to IncidentBean category
-	 riskTitle linked to IncidentBean title 
-	 String riskForeseen is deduced off IncidentBean possibleCausesOfIncident
-	 String strategyImplemented is deduced off IncidentBean possibleSolutionsOfIncident, and Simulations done
-	 
-	 thus linked it here to prevent adding/updating in multiple database tables for each entry
-	 as they all go in a linear timeline of New->...->Analysis->Strategy->Archive
-	 
-	 */
+	//JOIN of IncidentBean and PostIncidentBean
+	//incidentID same
+	//act as primary key
+	//split into two tables coz was tough to read in one big table
 	
 	//------------------------------------
 	//New phase
@@ -76,40 +42,73 @@ public class IncidentBean implements Serializable {
 	private Priority priorityRating;
 	private String[] incidentKeywords;//can be converted to String?
 	private Timestamp ts;
+	private Status incidentStatus;
 	
-	//----------------------------------------
-	//Analysis phase
-	private String possibleCausesOfIncident;
-	private String possibleSolutionsOfIncident;
 	
-	private String[] simulations;
-	
-	//-----------------------------------------
-	//Strategy phase
-	private String riskForeseen;//Reocurrence as default	//linked to possibleCausesOfIncident
-	private double riskEvaluation;//consequence x probability	
-	
-	private String strategyImplemented;	//linked to possibleSolutionsOfIncident
-	
-	//rating of strategy implemented
-	//ratings are 1-5
-	private int ratingOverall;
-	private int amountOfRatingsReceived;
 
-	private int ratingEffectiveness;
-	private int ratingImprovementFromSituationBefore;
-	private int ratingPractical;
-	private int ratingRelevanceToIncident;
-	private int ratingSatisfactionOfStrategy;
-	//this can then be used in Archive for predictive analytics in future
-	//hence used numbers instead of enum, as will need those numbers in large amounts of data for analytics
-	
+	//---------------------------------------
+	//Assigned phase
 	private String idOfStaffAssigned;
+	private String incidentLog;
+	
+	
+	
+	//---------------------------------------
+	//Verified phase
+	private PostIncidentBean postIncident;
+	
+	
+
 	
 	
 	
 	//-------------------------------------------
 	//enums
+	
+	public enum Status {
+		New {
+			public String toString() {
+				return "New Incident";
+			}
+		},
+		
+		Assigned {
+			public String toString() {
+				return "Staff Assigned";
+			}
+		},
+		
+		Fixed {
+			public String toString() {
+				return "Incident fixed";
+			}
+		},
+		
+		Verified {
+			public String toString() {
+				return "Solution verified";
+			}
+		},
+		
+		Analysis {
+			public String toString() {
+				return "Undergoing analysis";
+			}
+		},
+		
+		Strategy {
+			public String toString() {
+				return "Strategy implementation";
+			}
+		},
+		
+		Archived {
+			public String toString() {
+				return "Archived";
+			}
+		}
+	}
+	
 	public enum Category {
 		Regulatory_Law {
 			public String toString() {
@@ -160,149 +159,26 @@ public class IncidentBean implements Serializable {
 		
 		idOfStaffAssigned="None";
 		
-		//Analysis phase 
-		possibleCausesOfIncident="";
-		possibleSolutionsOfIncident="";
 		
-		simulations = new String[0];
-		
-		//Strategy phase
-		riskForeseen="";
-		riskEvaluation=0;
-		strategyImplemented="";
-		
-		amountOfRatingsReceived=0;
-		ratingOverall=0;
-		ratingEffectiveness=0;
-		ratingImprovementFromSituationBefore=0;
-		ratingPractical=0;
-		ratingRelevanceToIncident=0;
-		ratingSatisfactionOfStrategy=0;
-		
-		//Archive phase
-		//is once rating feedback of strategy have been received
-		//finite amount of people?
 		
 	}
 	
-	//Methods for Strategy phase
-	//----------------------------------------------------------------------------------------------------------------------------------
-	public int getAmountOfRatingsReceived() {
-		return amountOfRatingsReceived;
-	}
-
-	public void setAmountOfRatingsReceived(int amount) {
-		this.amountOfRatingsReceived = amount;
-	}
-	
-	public String getRiskForeseen() {
-		return riskForeseen;
-	}
-
-	public void setRiskForeseen(String foreseen) {
-		this.riskForeseen = foreseen;
-	}
-
-	public double getRiskEvaluation() {
-		return riskEvaluation;
-	}
-
-	public void setRiskEvaluation(double probability, double consequence) {
-		double evaluation=probability*consequence;
-		double evaluationRounded=(Math.round(evaluation*100))/100;
-		riskEvaluation=evaluationRounded;
-
-	}
-
-	public String getStrategyImplemented() {
-		return strategyImplemented;
-	}
-
-	public void setStrategyImplemented(String implemented) {
-		this.strategyImplemented = implemented;
-	}
 	
 	
-	public int getRatingOverall() {
-		return ratingOverall;
-	}
-
-	public void setRatingOverall(int overall) {
-		this.ratingOverall = overall;
-	}
-
-	public int getRatingEffectiveness() {
-		return ratingEffectiveness;
-	}
-
-	public void setRatingEffectiveness(int effectiveness) {
-		this.ratingEffectiveness = effectiveness;
-	}
-
-	public int getRatingImprovementFromSituationBefore() {
-		return ratingImprovementFromSituationBefore;
-	}
-
-	public void setRatingImprovementFromSituationBefore(int improvement) {
-		this.ratingImprovementFromSituationBefore = improvement;
-	}
-
-	public int getRatingPractical() {
-		return ratingPractical;
-	}
-
-	public void setRatingPractical(int practical) {
-		this.ratingPractical = practical;
-	}
-
-	public int getRatingRelevanceToIncident() {
-		return ratingRelevanceToIncident;
-	}
-
-	public void setRatingRelevanceToIncident(int relevance) {
-		this.ratingRelevanceToIncident = relevance;
-	}
-
-	public int getRatingSatisfactionOfStrategy() {
-		return ratingSatisfactionOfStrategy;
-	}
-
-	public void setRatingSatisfactionOfStrategy(int satisfaction) {
-		this.ratingSatisfactionOfStrategy = satisfaction;
-	}
-	
-	//----------------------------------------------------------------------------------------------------------------------------------------
-	//End Methods for Strategy phase
-	
-	//Methods for Analysis phase
-	//-----------------------------------------------------------------------------------------------------------------------------------------
-	public void addSimulation(Simulation simulation) {
-		String dateTime="Date: "+simulation.getDateTimeFromTimeStamp();
-		String actionsTaken="Actions taken: "+simulation.getActionsTaken();
-		String resultsFound="Results found: "+simulation.getResultsFound();
-		String rootCauseTargeted="Root cause targeted: "+simulation.getRootCauseTargeted();
-		String staff="Staff who completed this simulation: "+simulation.getStaff();
-		String totalSimulation=dateTime+"<br>"+staff+"<br>"+rootCauseTargeted+"<br>"+actionsTaken+"<br>"+resultsFound;
-		
-		List<String> storeSimulations = new LinkedList<String>(Arrays.asList(simulations));
-
-		
-		storeSimulations.add(totalSimulation);
-		simulations= storeSimulations.toArray(new String[storeSimulations.size()]);
-		
-	}
-	
-	public String[] getSimulations() {
-		
-		return simulations;
-
-		
-	}
-	//----------------------------------------------------------------------------------------------------------------------------------------
-	//End Methods for Analysis phase
 	
 	//Methods for New phase
 	//-----------------------------------------------------------------------------------------------------------------------------------------
+	
+	
+	public Status getIncidentStatus() {
+		return incidentStatus;
+	}
+
+	public void setIncidentStatus(Status status) {
+		this.incidentStatus = status;
+	}
+	
+	
 	public int detectDuplicate() {
 		//boolean possibleDuplicate=false;
 		int duplicateID=-1;
@@ -374,6 +250,7 @@ public class IncidentBean implements Serializable {
 	public void setIncidentID() {
 		incidentID=IncidentDAO.getIncidentCounter()+1;
 		IncidentDAO.setIncidentCounter(IncidentDAO.getIncidentCounter()+1);
+		setPostIncident();
 	}
 	
 	public int getIncidentID() {
@@ -509,6 +386,19 @@ public class IncidentBean implements Serializable {
 		return staffName;
 	}
 	
+	public PostIncidentBean getPostIncident() {
+		PostIncidentBean postIncident = new PostIncidentBean();
+		postIncident=PostIncidentDAO.getPostIncidentByIncidentID(incidentID);
+		return postIncident;
+	}
+	
+	public void setPostIncident() {
+		PostIncidentBean postIncident = new PostIncidentBean();
+		postIncident.setIncidentID(incidentID);
+		PostIncidentDAO.addPostIncident(postIncident);
+		
+	}
+	
 	
 	
 	
@@ -523,20 +413,5 @@ public class IncidentBean implements Serializable {
 		this.priorityRating = p;
 	}
 	
-
-	public String getPossibleCausesOfIncident() {
-		return possibleCausesOfIncident;
-	}
-
-	
-	public void setPossibleCausesOfIncident(String possibleCauses) {
-		this.possibleCausesOfIncident = possibleCauses;
-	}
-	public String getPossibleSolutionsOfIncident() {
-		return possibleSolutionsOfIncident;
-	}
-	public void setPossibleSolutionsOfIncident(String possibleSolutions) {
-		this.possibleSolutionsOfIncident = possibleSolutions;
-	}
 
 }

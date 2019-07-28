@@ -107,12 +107,12 @@
 		
 			<tr>
 				<td style="background: #dddddd">Possible causes:</td>
-				<td>${incidentSelected.possibleCausesOfIncident}</td>
+				<td>${incidentSelected.postIncident.possibleCausesOfIncident}</td>
 			</tr>
 		
 			<tr>
 				<td style="background: #dddddd">Possible solutions:</td>
-				<td>${incidentSelected.possibleSolutionsOfIncident}</td>
+				<td>${incidentSelected.postIncident.possibleSolutionsOfIncident}</td>
 			</tr>
 		
 		</table>
