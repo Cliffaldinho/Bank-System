@@ -11,27 +11,18 @@ import java.time.format.DateTimeFormatter;
 //is now a JavaBean
 public class IncidentBean implements Serializable {
 
-
-
-	private UserBean userReportedIncident;
-	private String incidentTitle;
-	private Category incidentCategory;
-	private int incidentDateOfMonth;
-	private String incidentMonth;
-	private int incidentYear;
-	private String descriptionOfIncident;
-	private Priority priorityRating;
-	private String[] incidentKeywords;
-	private String possibleCausesOfIncident;
-	private String possibleSolutionsOfIncident;
-	private int incidentID;
-	private String[] simulations;
-
+	/**
+	 database normalization reference:
+	 reduce data redundancy and improve data integrity
+	 
+	 database dependency:
+	 when information in the same table uniquely determines other information stored in same table.
+	 is a functional dependency between those attributes.
+	 i.e. name is dependent upon Social Security Number
+	 a relationship where knowing the value of one attribute is enough to tell you the value of another attribute in the same table
+	 
+	 */
 	
-	private String idOfStaffAssigned;
-	
-	private Timestamp ts;
-
 	
 	/**
 	 Removed Analysis object.
@@ -44,19 +35,247 @@ public class IncidentBean implements Serializable {
 	 Hence choose to store a particular colomn of data in one location, 
 	 so that fewer places to update and less risk of having different data in different places
 	 */
+	
+	
+	/**
+	 Removed RiskManagement object
+	 Risk class contained attributes
+	 
+	 String riskStrategyWriter. which is equal to branch manager.
+	 String delegatedStaff. which is equal to everybody (for ratings), Simulation class (for possible solutions/test strategy)
+	 String riskTitle: which is equal to IncidentBean title
+	 Category riskCategory: which is equal to IncidentBean category
+	 (of which all overlap with IncidentBean or are already defined)
+	 
+	 And:
+	 String risk: merged into IncidentBean as String riskForeseen
+	 String managementStrategy: merged into IncidentBean as String strategyImplemented
+	 
+	 Chose to join it all into this class, as they are linked to attributes in this class.
+	 i.e. 
+	 riskCategory linked to IncidentBean category
+	 riskTitle linked to IncidentBean title 
+	 String riskForeseen is deduced off IncidentBean possibleCausesOfIncident
+	 String strategyImplemented is deduced off IncidentBean possibleSolutionsOfIncident, and Simulations done
+	 
+	 thus linked it here to prevent adding/updating in multiple database tables for each entry
+	 as they all go in a linear timeline of New->...->Analysis->Strategy->Archive
+	 
+	 */
+	
+	//------------------------------------
+	//New phase
+	private int incidentID;
+	private UserBean userReportedIncident;//can be converted to String
+	private String incidentTitle;
+	private Category incidentCategory;
+	private int incidentDateOfMonth;
+	private String incidentMonth;
+	private int incidentYear;
+	private String descriptionOfIncident;
+	private Priority priorityRating;
+	private String[] incidentKeywords;//can be converted to String?
+	private Timestamp ts;
+	
+	//----------------------------------------
+	//Analysis phase
+	private String possibleCausesOfIncident;
+	private String possibleSolutionsOfIncident;
+	
+	private String[] simulations;
+	
+	//-----------------------------------------
+	//Strategy phase
+	private String riskForeseen;//Reocurrence as default	//linked to possibleCausesOfIncident
+	private double riskEvaluation;//consequence x probability	
+	
+	private String strategyImplemented;	//linked to possibleSolutionsOfIncident
+	
+	//rating of strategy implemented
+	//ratings are 1-5
+	private int ratingOverall;
+	private int amountOfRatingsReceived;
+
+	private int ratingEffectiveness;
+	private int ratingImprovementFromSituationBefore;
+	private int ratingPractical;
+	private int ratingRelevanceToIncident;
+	private int ratingSatisfactionOfStrategy;
+	//this can then be used in Archive for predictive analytics in future
+	//hence used numbers instead of enum, as will need those numbers in large amounts of data for analytics
+	
+	private String idOfStaffAssigned;
+	
+	
+	
+	//-------------------------------------------
+	//enums
+	public enum Category {
+		Regulatory_Law {
+			public String toString() {
+				return "Regulatory Law";
+			}
+		},
+		Cyber_Security {
+			public String toString() {
+				return "Cyber Security";
+			}
+		},
+		Human_Issues {
+			public String toString() {
+				return "Human Issues";
+			}
+		},
+		Bank_Equipment {
+			public String toString() {
+				return "Bank Equipment";
+			}
+		},
+		Bank_Algorithms {
+			public String toString() {
+				return "Bank Algorithms";
+			}
+		},
+		Other {
+			public String toString() {
+				return "Other";
+			}
+		};
+	}
+	
+	public enum Priority {
+		Low, Medium, High;
+	}
+	
+
 
 	public IncidentBean() {
-		//hasAnalysis=false;
+		
+		
+		//New/Assigned/Fixed/Verified phase
 		setTimeStamp();
 		setIncidentDateOfMonth();
 		setIncidentMonth();
 		setIncidentYear();
+		
 		idOfStaffAssigned="None";
+		
+		//Analysis phase 
 		possibleCausesOfIncident="";
 		possibleSolutionsOfIncident="";
+		
 		simulations = new String[0];
+		
+		//Strategy phase
+		riskForeseen="";
+		riskEvaluation=0;
+		strategyImplemented="";
+		
+		amountOfRatingsReceived=0;
+		ratingOverall=0;
+		ratingEffectiveness=0;
+		ratingImprovementFromSituationBefore=0;
+		ratingPractical=0;
+		ratingRelevanceToIncident=0;
+		ratingSatisfactionOfStrategy=0;
+		
+		//Archive phase
+		//is once rating feedback of strategy have been received
+		//finite amount of people?
+		
+	}
+	
+	//Methods for Strategy phase
+	//----------------------------------------------------------------------------------------------------------------------------------
+	public int getAmountOfRatingsReceived() {
+		return amountOfRatingsReceived;
 	}
 
+	public void setAmountOfRatingsReceived(int amount) {
+		this.amountOfRatingsReceived = amount;
+	}
+	
+	public String getRiskForeseen() {
+		return riskForeseen;
+	}
+
+	public void setRiskForeseen(String foreseen) {
+		this.riskForeseen = foreseen;
+	}
+
+	public double getRiskEvaluation() {
+		return riskEvaluation;
+	}
+
+	public void setRiskEvaluation(double probability, double consequence) {
+		double evaluation=probability*consequence;
+		double evaluationRounded=(Math.round(evaluation*100))/100;
+		riskEvaluation=evaluationRounded;
+
+	}
+
+	public String getStrategyImplemented() {
+		return strategyImplemented;
+	}
+
+	public void setStrategyImplemented(String implemented) {
+		this.strategyImplemented = implemented;
+	}
+	
+	
+	public int getRatingOverall() {
+		return ratingOverall;
+	}
+
+	public void setRatingOverall(int overall) {
+		this.ratingOverall = overall;
+	}
+
+	public int getRatingEffectiveness() {
+		return ratingEffectiveness;
+	}
+
+	public void setRatingEffectiveness(int effectiveness) {
+		this.ratingEffectiveness = effectiveness;
+	}
+
+	public int getRatingImprovementFromSituationBefore() {
+		return ratingImprovementFromSituationBefore;
+	}
+
+	public void setRatingImprovementFromSituationBefore(int improvement) {
+		this.ratingImprovementFromSituationBefore = improvement;
+	}
+
+	public int getRatingPractical() {
+		return ratingPractical;
+	}
+
+	public void setRatingPractical(int practical) {
+		this.ratingPractical = practical;
+	}
+
+	public int getRatingRelevanceToIncident() {
+		return ratingRelevanceToIncident;
+	}
+
+	public void setRatingRelevanceToIncident(int relevance) {
+		this.ratingRelevanceToIncident = relevance;
+	}
+
+	public int getRatingSatisfactionOfStrategy() {
+		return ratingSatisfactionOfStrategy;
+	}
+
+	public void setRatingSatisfactionOfStrategy(int satisfaction) {
+		this.ratingSatisfactionOfStrategy = satisfaction;
+	}
+	
+	//----------------------------------------------------------------------------------------------------------------------------------------
+	//End Methods for Strategy phase
+	
+	//Methods for Analysis phase
+	//-----------------------------------------------------------------------------------------------------------------------------------------
 	public void addSimulation(Simulation simulation) {
 		String dateTime="Date: "+simulation.getDateTimeFromTimeStamp();
 		String actionsTaken="Actions taken: "+simulation.getActionsTaken();
@@ -75,11 +294,15 @@ public class IncidentBean implements Serializable {
 	
 	public String[] getSimulations() {
 		
-return simulations;
+		return simulations;
 
 		
 	}
-
+	//----------------------------------------------------------------------------------------------------------------------------------------
+	//End Methods for Analysis phase
+	
+	//Methods for New phase
+	//-----------------------------------------------------------------------------------------------------------------------------------------
 	public int detectDuplicate() {
 		//boolean possibleDuplicate=false;
 		int duplicateID=-1;
@@ -177,71 +400,6 @@ return simulations;
 		return printDateTime;
 	}
 	
-	
-	//get id of staff assigned
-	public String getAssignedStaffID() {
-		return idOfStaffAssigned;
-	}
-
-	public void setAssignedStaffID(String id) {
-		this.idOfStaffAssigned = id;
-	}
-	
-	//get name of staff assigned
-	public String getAssignedStaffName() {
-		String staffName;
-		
-		if(idOfStaffAssigned.equalsIgnoreCase("None")) {
-			staffName="No staff assigned.";
-		} else {
-			staffName=UserDAO.getUserByStaffID(idOfStaffAssigned).getName();
-		}
-		
-		return staffName;
-	}
-	
-	
-	
-	public enum Category {
-		Regulatory_Law {
-			public String toString() {
-				return "Regulatory Law";
-			}
-		},
-		Cyber_Security {
-			public String toString() {
-				return "Cyber Security";
-			}
-		},
-		Human_Issues {
-			public String toString() {
-				return "Human Issues";
-			}
-		},
-		Bank_Equipment {
-			public String toString() {
-				return "Bank Equipment";
-			}
-		},
-		Bank_Algorithms {
-			public String toString() {
-				return "Bank Algorithms";
-			}
-		},
-		Other {
-			public String toString() {
-				return "Other";
-			}
-		};
-	}
-	
-	public enum Priority {
-		Low, Medium, High;
-	}
-	
-
-
-	
 	public void setIncidentTitle(String title) {
 		this.incidentTitle=title;
 	}
@@ -256,13 +414,6 @@ return simulations;
 
 	public void setUserReportedIncident(UserBean u) {
 		this.userReportedIncident=u;
-	}
-	
-	public Priority getPriorityRating() {
-		return priorityRating;
-	}
-	public void setPriorityRating(Priority p) {
-		this.priorityRating = p;
 	}
 	
 	public String[] getIncidentKeywords() {
@@ -331,6 +482,48 @@ return simulations;
 	public void setDescriptionOfIncident(String description) {
 		this.descriptionOfIncident = description;
 	}
+	
+	//----------------------------------------------------------------------------------------------------------------------------------------
+	//End Methods for New phase
+	
+	
+	//get id of staff assigned
+	public String getAssignedStaffID() {
+		return idOfStaffAssigned;
+	}
+
+	public void setAssignedStaffID(String id) {
+		this.idOfStaffAssigned = id;
+	}
+	
+	//get name of staff assigned
+	public String getAssignedStaffName() {
+		String staffName;
+		
+		if(idOfStaffAssigned.equalsIgnoreCase("None")) {
+			staffName="No staff assigned.";
+		} else {
+			staffName=UserDAO.getUserByStaffID(idOfStaffAssigned).getName();
+		}
+		
+		return staffName;
+	}
+	
+	
+	
+	
+
+
+	
+	
+	public Priority getPriorityRating() {
+		return priorityRating;
+	}
+	public void setPriorityRating(Priority p) {
+		this.priorityRating = p;
+	}
+	
+
 	public String getPossibleCausesOfIncident() {
 		return possibleCausesOfIncident;
 	}
