@@ -107,7 +107,10 @@ public class PostIncidentBean {
 		//finite amount of people?
 	}
 	
+	//add a simulation event to the existing array of simulations
 	public void addSimulation(Simulation simulation) {
+		
+		//combine all aspects into a string
 		String dateTime="Date: "+simulation.getDateTimeFromTimeStamp();
 		String actionsTaken="Actions taken: "+simulation.getActionsTaken();
 		String resultsFound="Results found: "+simulation.getResultsFound();
@@ -115,10 +118,13 @@ public class PostIncidentBean {
 		String staff="Staff who completed this simulation: "+simulation.getStaff();
 		String totalSimulation=dateTime+"<br>"+staff+"<br>"+rootCauseTargeted+"<br>"+actionsTaken+"<br>"+resultsFound;
 		
+		//convert existing simulation array in database, to a list
 		List<String> storeSimulations = new LinkedList<String>(Arrays.asList(simulations));
-
 		
+		//use list method to add the simulation 
 		storeSimulations.add(totalSimulation);
+
+		//convert the list back to an array
 		simulations= storeSimulations.toArray(new String[storeSimulations.size()]);
 		
 	}

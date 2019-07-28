@@ -62,7 +62,7 @@
 		
 			<tr>
 				<td style="background: #dddddd">Incident category:</td>
-				<td>${incidentSelected.incidentCategory}</td>
+				<td>${incidentSelected.incidentCategory.toString()}</td>
 			</tr>
 		
 			<tr>
@@ -82,7 +82,7 @@
 		
 			<tr>
 				<td style="background: #dddddd">Position of staff who reported this incident:</td>
-				<td>${incidentSelected.userReportedIncident.position}</td>
+				<td>${incidentSelected.userReportedIncident.position.toString()}</td>
 			</tr>
 		
 			<tr>
@@ -93,11 +93,24 @@
 			<tr>
 				<td style="background: #dddddd">Incident keywords:</td>
 				<td>
-				<c:forEach var="temp" items="${incidentSelected.incidentKeywords}">
-				${temp}
+				<c:forEach var="keyword" items="${incidentSelected.incidentKeywords}">
+				${keyword}
 				<br>
 				</c:forEach>
 				</td>
+			</tr>
+			
+			<tr>
+			<td style="background: #dddddd">Staff Assigned:</td>
+			<td>
+			<!-- 
+			<c:forEach var="assigned" items="${incidentSelected.assignedStaffNameAndPosition}">
+			${assigned}
+			<br>
+			</c:forEach>
+			-->
+			${incidentSelected.assignedStaffNameAndPosition}
+			</td>
 			</tr>
 		
 			<tr>
@@ -114,6 +127,8 @@
 				<td style="background: #dddddd">Possible solutions:</td>
 				<td>${incidentSelected.postIncident.possibleSolutionsOfIncident}</td>
 			</tr>
+			
+			
 		
 		</table>
 		
@@ -128,10 +143,15 @@
 		
 		
 		<c:if test="${not checkDuplicate}">
-		<form action="PerformAnalysis.jsp" method="post">
-		<input type="submit" value="Analysis">
-
-		</form>
+			<c:if test="${logAuth.authenticationLevel==1}">
+				<form action="AssignStaffToIncident.jsp" method="post">
+					<input type="submit" value="Assign Staff">
+				</form>
+				<br>
+			</c:if>
+			<form action="PerformAnalysis.jsp" method="post">
+				<input type="submit" value="Analysis">
+			</form>
 		</c:if>
 	</div>
 	

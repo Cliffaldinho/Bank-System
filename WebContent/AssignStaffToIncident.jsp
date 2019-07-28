@@ -10,6 +10,7 @@
     prefix="c"
     uri="http://java.sun.com/jsp/jstl/core" 
 %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <jsp:useBean id="logAuth" class="data.StaffBean" scope="session" />
 
 <!DOCTYPE html>
@@ -74,24 +75,24 @@ ${incidentSelected.userReportedIncident.name}
 <th>Staff Roles</th>
 <th>Assign this staff to Incident</th>
 </tr>
+
+
 <c:forEach items="${listOfStaff}" var="user">
 <tr>
 <td><c:out value="${user.staffID}"/></td>
 <td><c:out value="${user.name}"/></td>
 <td><c:out value="${user.position}"/></td>
 <td><c:out value="${user.rolesToDo}"/></td>
-<td><input type="submit" value="Assign Staff"  onClick="staffClicked('${user.staffID}')"></td>
+<td>
+<input type="checkbox"  name="staff" value="${user.staffID}" <c:if test="${fn:containsIgnoreCase(incidentSelected.assignedStaffIDInString,user.staffID)}">checked</c:if>>
+</td>
 </tr>
 </c:forEach>
+
+
 </table>
-<input type="hidden" name="clicked" id="storeStaffClicked" value="three"  > 
+<input type="submit" value="Assign Staff">
 </form>
-<script>
-//alert("one");
-function staffClicked(id) {
-	var staff=id;
-	document.getElementById("storeStaffClicked").value=staff;
-}
-</script>
+
 </body>
 </html>

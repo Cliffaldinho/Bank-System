@@ -116,11 +116,8 @@ List to have
 		</form>
 		</div>
 
-<!--  action="displayIncidentReport"-->
-<!--  <form  id="list"  method="post">-->
 <form name="list" action="displayIncidentReport" method="post">
 
-<!--  <input type="hidden" name="optionChosen" id="storeOptionChosen"  > -->
 	<div>
 		<table>
 			<tr>
@@ -135,8 +132,6 @@ List to have
 				<th>Keywords</th>
 				<th>Details</th>
 				<c:if test="${logAuth.authenticationLevel==1}">
-					<th>Staff Assigned</th>
-					<th>Handle Incident</th>
 					<th>Close Incident</th>
 				</c:if>
 			</tr>
@@ -153,8 +148,6 @@ List to have
 				<td><c:out value="${report.incidentKeywordsInString}"/></td>
 				<td><input type="submit" value="View Incident" id="View" onClick="incidentClicked(${report.incidentID},this.id)"></td>
 				<c:if test="${logAuth.authenticationLevel==1}">
-					<td><c:out value="${report.assignedStaffName}"/></td>
-					<td><input type="submit" value="Handle Incident" id="Handle" onClick="incidentClicked(${report.incidentID},this.id)"></td>
 					<td><input type="submit" value="Close Incident" id="Close" onClick="incidentClicked(${report.incidentID},this.id)"></td>
 				</c:if>
 			</tr>

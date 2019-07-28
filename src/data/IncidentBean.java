@@ -48,8 +48,9 @@ public class IncidentBean implements Serializable {
 
 	//---------------------------------------
 	//Assigned phase
-	private String idOfStaffAssigned;
+	//private String idOfStaffAssigned;
 	private String incidentLog;
+	private String[] staffAssigned;
 	
 	
 	
@@ -156,8 +157,9 @@ public class IncidentBean implements Serializable {
 		setIncidentDateOfMonth();
 		setIncidentMonth();
 		setIncidentYear();
+		staffAssigned= new String[0];
 		
-		idOfStaffAssigned="None";
+		//idOfStaffAssigned="None";
 		
 		
 		
@@ -363,28 +365,56 @@ public class IncidentBean implements Serializable {
 	//----------------------------------------------------------------------------------------------------------------------------------------
 	//End Methods for New phase
 	
-	
-	//get id of staff assigned
-	public String getAssignedStaffID() {
-		return idOfStaffAssigned;
-	}
-
-	public void setAssignedStaffID(String id) {
-		this.idOfStaffAssigned = id;
-	}
-	
-	//get name of staff assigned
-	public String getAssignedStaffName() {
-		String staffName;
-		
-		if(idOfStaffAssigned.equalsIgnoreCase("None")) {
-			staffName="No staff assigned.";
-		} else {
-			staffName=UserDAO.getUserByStaffID(idOfStaffAssigned).getName();
+	public String getAssignedStaffIDInString() {
+		String total="";
+		String append="";
+		for(int i=0;i<staffAssigned.length;i++) {
+			append=staffAssigned[i];
+			total=total+append+". ";
 		}
 		
-		return staffName;
+		return total;
 	}
+	public String[] getAssignedStaffID() {
+		
+		return staffAssigned;
+	}
+	
+	public void setAssignedStaffID(String[] staff) {
+		staffAssigned=staff;
+	}
+	
+	public String getAssignedStaffNameAndPosition() {
+		String total="";
+		String staff;
+		String name;
+		String position;
+		
+		if(staffAssigned.length==0) {
+			total="No staff assigned";
+		} else {
+			for(int i=0;i<staffAssigned.length;i++) {
+				String userId = staffAssigned[i];
+				UserBean user = UserDAO.getUserByStaffID(userId);
+				name=user.getName();
+				position = user.getPosition().toString();
+				
+				if(i==0) {
+				staff = name+" ("+position+")";
+				} else {
+					staff = "<br>"+ name+" ("+position+")";
+				}
+				total = total+staff;
+				
+			}
+		}
+		
+		return total;
+		
+	}
+	
+	
+	
 	
 	public PostIncidentBean getPostIncident() {
 		PostIncidentBean postIncident = new PostIncidentBean();

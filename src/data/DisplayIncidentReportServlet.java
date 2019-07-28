@@ -25,17 +25,13 @@ public class DisplayIncidentReportServlet extends HttpServlet{
 	int id=Integer.parseInt(incidentID);
 	IncidentBean incident=IncidentDAO.getIncidentByIncidentID(id);
 	
-	boolean viewIncident,handleIncident,closeIncident;
+	boolean viewIncident,closeIncident;
 	viewIncident=false;
-	handleIncident=false;
 	closeIncident=false;
 	
 	switch(optionChosen) {
 		case "View":
 			viewIncident=true;
-			break;
-		case "Handle":
-			handleIncident=true;
 			break;
 		case "Close":
 			closeIncident=true;
@@ -47,17 +43,12 @@ public class DisplayIncidentReportServlet extends HttpServlet{
 	
 	HttpSession aSession = req.getSession();
 	
-	if(viewIncident==true||handleIncident==true) {
-	aSession.setAttribute("incidentID", id);
-	aSession.setAttribute("incidentSelected", incident);
-	}
 	
 	if(viewIncident==true) {
+		aSession.setAttribute("incidentID", id);
+		aSession.setAttribute("incidentSelected", incident);
 		req.getRequestDispatcher("DisplayIncidentReport.jsp").forward(req, res);
-	} else if (handleIncident==true) {
-
-		req.getRequestDispatcher("AssignStaffToIncident.jsp").forward(req, res);
-	} else if (closeIncident==true) {
+	}  else if (closeIncident==true) {
 		IncidentDAO.deleteIncidentByIncidentID(id);
 		req.getRequestDispatcher("prepareList").forward(req, res);
 	}
