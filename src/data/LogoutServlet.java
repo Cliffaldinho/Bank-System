@@ -24,17 +24,39 @@ public class LogoutServlet extends HttpServlet {
 		logAuth.setUsername(null); 
 		req.setAttribute("loginError",null); //is String
 		
+		//removes all the session attributes
+		
+		//this was to filter search or sort in the searchServlet,sortServlet, and prepareListServlet
 		aSession.removeAttribute("isSearch");
 		aSession.removeAttribute("isSort");
-		aSession.removeAttribute("listOfIncidents");
-		aSession.removeAttribute("listOfStaff");
+		//initialized at the start
 		
+		//this was to store a list of incidents (could be searched list, or sort list, or full list)
+		//the view is changed by prepareListServlet. Then ListOfIncidents.jsp only prints out the list attribute
+		aSession.removeAttribute("listOfIncidents");
+		
+		//this was to store the list of staff 
+		//(was used in all the user servlets/jsps where needed to view full list of users)
+		//i.e. RolesForStaff.jsp etc, and their servlets
+		aSession.removeAttribute("listOfStaff");
+		//initialized at the start
+		
+		//this was to store the incident ID, and the IncidentBean object.
+		//so that can getIncidentTitle, (i.e. ${incidentSelected.incidentTitle}) etc
+		//or can set stuff based on IncidentDAO.getIncidentByID(incidentID)
 		aSession.removeAttribute("incidentID");
 		aSession.removeAttribute("incidentSelected");
+		//was initialized in DisplayIncidentReportServet
+		//then used throughout the Display, Analysis, and Strategy, of that incident
 		
+		//this was to store the user ID and UserBean 
+		//for use in ocassions when want to select a user to perform an action
+		//i.e. modify user etc
 		aSession.removeAttribute("userID");
 		aSession.removeAttribute("userSelected");
 		
+		//this was to store the logged in user name, address, and contact
+		//in the rounds of ModifyPersonalDetailsServlet, PersonalDetails.jsp, FinishModifyPersonalDetailsServlet
 		aSession.removeAttribute("staffName");
 		aSession.removeAttribute("staffAddress");
 		aSession.removeAttribute("staffContact");

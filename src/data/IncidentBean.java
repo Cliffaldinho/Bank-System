@@ -11,17 +11,6 @@ import java.time.format.DateTimeFormatter;
 //is now a JavaBean
 public class IncidentBean implements Serializable {
 
-	/**
-	 database normalization reference:
-	 reduce data redundancy and improve data integrity
-	 
-	 database dependency:
-	 when information in the same table uniquely determines other information stored in same table.
-	 is a functional dependency between those attributes.
-	 i.e. name is dependent upon Social Security Number
-	 a relationship where knowing the value of one attribute is enough to tell you the value of another attribute in the same table
-	 
-	 */
 	
 	
 	//JOIN of IncidentBean and PostIncidentBean
@@ -48,17 +37,15 @@ public class IncidentBean implements Serializable {
 
 	//---------------------------------------
 	//Assigned phase
-	//private String idOfStaffAssigned;
 	private String incidentLog;
 	private String[] staffAssigned;
 	
 	
+	//----------------------------------------
+	//Fixed phase
 	
 	//---------------------------------------
 	//Verified phase
-	private PostIncidentBean postIncident;
-	
-	
 
 	
 	
@@ -151,17 +138,11 @@ public class IncidentBean implements Serializable {
 
 	public IncidentBean() {
 		
-		
-		//New/Assigned/Fixed/Verified phase
 		setTimeStamp();
 		setIncidentDateOfMonth();
 		setIncidentMonth();
 		setIncidentYear();
 		staffAssigned= new String[0];
-		
-		//idOfStaffAssigned="None";
-		
-		
 		
 	}
 	
@@ -182,7 +163,6 @@ public class IncidentBean implements Serializable {
 	
 	
 	public int detectDuplicate() {
-		//boolean possibleDuplicate=false;
 		int duplicateID=-1;
 		
 		//traverse through Incident Database
@@ -249,9 +229,19 @@ public class IncidentBean implements Serializable {
 		
 	}
 	
+	//sets the incident ID
 	public void setIncidentID() {
+		//at the start of history, incidentCounter is 0
+		//incidentCounter is static variable
+		
+		//For first incident, incident id is 1. For second incident, incident id is 2. etc etc.
 		incidentID=IncidentDAO.getIncidentCounter()+1;
+		
+		//Increment the counter by 1
 		IncidentDAO.setIncidentCounter(IncidentDAO.getIncidentCounter()+1);
+		
+		//creates a PostIncidentBean object, sets it's incidentID to be same as this IncidentBean's incidentID
+		//and stores that PostIncidentBean in PostIncidentDAO
 		setPostIncident();
 	}
 	
@@ -270,10 +260,16 @@ public class IncidentBean implements Serializable {
 		return ts;
 	}
 	
+	//get the date and time as a string from the timestamp
 	public String getDateTimeFromTimeStamp() {
+		
+		//initializes a LocalDateTime object
 		LocalDateTime dateTime=	ts.toLocalDateTime();
 		
+		//set the format want the LocalDateTime object to be
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		
+		//gets the date and time in that format
 		String printDateTime=dateTime.format(formatter);
 		
 		return printDateTime;
@@ -299,16 +295,24 @@ public class IncidentBean implements Serializable {
 		return incidentKeywords;
 	}
 	
+	//gets the incident keywords in a string
 	public String getIncidentKeywordsInString() {
 		String keywords="";
 	
 			int i=0;
+			
+			//as long as the keyword is not the last keyword in the incidentKeywords array
 			while(i!=(incidentKeywords.length-1)) {
+				
+				//append incidentKeywords to the String keywords and add comma
 				keywords=keywords+incidentKeywords[i]+", ";
 				i++;
 			}
+			//if it is the last keyword
+			//append without adding commas
 			keywords=keywords+incidentKeywords[i];
 			
+			//return String of keywords
 		return keywords;
 	}
 	
@@ -326,10 +330,16 @@ public class IncidentBean implements Serializable {
 	public String getIncidentMonth() {
 		return incidentMonth;
 	}
+	
 	public void setIncidentMonth() {
-		
+	
+		//get the LocalDateTime through Timestamp
 		LocalDateTime datetime =ts.toLocalDateTime();
+		
+		//get the LocalDate through LocalDateTime
 		LocalDate date = datetime.toLocalDate();
+		
+		//set the incident Month
 		incidentMonth=date.getMonth().toString();
 		
 	}
@@ -338,6 +348,8 @@ public class IncidentBean implements Serializable {
 	public int getIncidentYear() {
 		return incidentYear;
 	}
+	
+	//as above in setIncidentMonth
 	public void setIncidentYear() {
 		
 		LocalDateTime datetime =ts.toLocalDateTime();
@@ -365,6 +377,7 @@ public class IncidentBean implements Serializable {
 	//----------------------------------------------------------------------------------------------------------------------------------------
 	//End Methods for New phase
 	
+	//returns a String of the assigned staff IDs
 	public String getAssignedStaffIDInString() {
 		String total="";
 		String append="";
@@ -384,47 +397,83 @@ public class IncidentBean implements Serializable {
 		staffAssigned=staff;
 	}
 	
+	//gets the assigned staff name and position
+	//like this
+	//Bob Smith (Financial Analyst) 
+	//Alice Diaz (Internal Auditor)
 	public String getAssignedStaffNameAndPosition() {
+		
+		//to be printed out
 		String total="";
+		
+		//to store name and position
 		String staff;
+		
+		//to receive name and position from database
 		String name;
 		String position;
 		
+		//if assigned staff id array has nothing, then no staff assigned
 		if(staffAssigned.length==0) {
 			total="No staff assigned";
+		
+			//else
 		} else {
+			
+			//traverse through staffAssigned array
 			for(int i=0;i<staffAssigned.length;i++) {
+				
+				//get the assigned staff id in the array element
 				String userId = staffAssigned[i];
+				
+				//get the UserBean from that staff id
 				UserBean user = UserDAO.getUserByStaffID(userId);
+				
+				//get the User's name and position from that UserBean
 				name=user.getName();
 				position = user.getPosition().toString();
 				
+				//if it is the first cycle
 				if(i==0) {
+				//no need to go next line then append
 				staff = name+" ("+position+")";
+				//else if it's not first cycle
 				} else {
+					//go next line then append
 					staff = "<br>"+ name+" ("+position+")";
 				}
+				
+				//keep combining the assigned staff  
 				total = total+staff;
 				
 			}
 		}
 		
+		//print out assigned staff
 		return total;
 		
 	}
 	
 	
 	
-	
+	//returns a PostIncidentBean through using this IncidentBean's id
+	//because an IncidentBean's incidentID is same as it's corresponding PostIncidentBean's incidentID
 	public PostIncidentBean getPostIncident() {
 		PostIncidentBean postIncident = new PostIncidentBean();
 		postIncident=PostIncidentDAO.getPostIncidentByIncidentID(incidentID);
 		return postIncident;
 	}
 	
+	//adds the PostIncidentBean for this incident. Method called upon creation of this incident.
 	public void setPostIncident() {
+		
+		//create new PostIncidentBean
 		PostIncidentBean postIncident = new PostIncidentBean();
+		
+		//set the new PostIncidentBean's incidentID to be this IncidentBean's incidentID
 		postIncident.setIncidentID(incidentID);
+		
+		//add this new PostIncidentBean to the database
 		PostIncidentDAO.addPostIncident(postIncident);
 		
 	}

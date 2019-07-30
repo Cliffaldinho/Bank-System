@@ -8,6 +8,9 @@ import java.io.PrintWriter;
 import java.io.IOException;
 import java.util.*;
 
+//this filters list of incident reports according to user sort
+//receives from ListOfIncidents.jsp
+//goes to prepareListServlet
 @WebServlet(urlPatterns={"/sortIncidentReports"})
 public class SortIncidentReportsServlet extends HttpServlet{
 

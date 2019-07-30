@@ -8,6 +8,9 @@ import java.io.PrintWriter;
 import java.io.IOException;
 import java.util.*;
 
+//this filters list of incident reports according to user search
+//receives from ListOfIncidents.jsp
+//goes to prepareListServlet
 @WebServlet(urlPatterns={"/searchIncidentReports"})
 public class SearchIncidentReportsServlet extends HttpServlet{
 
@@ -50,7 +53,7 @@ public class SearchIncidentReportsServlet extends HttpServlet{
 			case "RootCause":
 												for(IncidentBean i : incidentReports)
 												{
-													//if(i.getPossibleCausesOfIncident().contains(search))
+													
 													if(i.getPostIncident().getPossibleCausesOfIncident().contains(search))
 													{
 														searchReturn.add(i.getIncidentID());

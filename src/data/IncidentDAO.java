@@ -2,7 +2,7 @@ package data;
 import java.util.*;
 
 public class IncidentDAO {
-
+	
 	private static int incidentCounter;
 	
 
@@ -32,8 +32,6 @@ public class IncidentDAO {
 	}
 	
 	public static void addIncident(IncidentBean in) {
-		
-
 		
 		//add the incidentBean to Incident database
 		incidentsList.add(in);

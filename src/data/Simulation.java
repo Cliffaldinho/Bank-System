@@ -7,9 +7,9 @@ import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.time.format.DateTimeFormatter;
 
+//simulation class to store simulation data
 public class Simulation {
 
-	//private String date;
 	private String rootCauseTargeted;
 	private String actionsTaken;
 	private String resultsFound;

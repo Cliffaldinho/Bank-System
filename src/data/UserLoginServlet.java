@@ -22,11 +22,17 @@ public class UserLoginServlet extends HttpServlet {
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		
+		//starts a session
 		HttpSession aSession = req.getSession(true);
+		
+		//stores the session attribute logAuth for authorization and identification throughout the session
 		StaffBean logAuth = (StaffBean) aSession.getAttribute("logAuth");
+		
+		//gets the user id and password from logged in
 		String userid = req.getParameter("userid");
 		String password = req.getParameter("password");
 		boolean found = false;
+		
 		if (UserDAO.getUsersList().isEmpty()) {
 			File file = new File(getServletContext().getRealPath("./saves/users.dat"));
 			if (!file.exists()) {

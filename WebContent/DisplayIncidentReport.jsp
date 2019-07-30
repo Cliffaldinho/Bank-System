@@ -100,22 +100,16 @@
 				</td>
 			</tr>
 			
-			<tr>
-			<td style="background: #dddddd">Staff Assigned:</td>
-			<td>
-			<!-- 
-			<c:forEach var="assigned" items="${incidentSelected.assignedStaffNameAndPosition}">
-			${assigned}
-			<br>
-			</c:forEach>
-			-->
-			${incidentSelected.assignedStaffNameAndPosition}
-			</td>
-			</tr>
+	
 		
 			<tr>
 				<td style="background: #dddddd">Priority rating:</td>
 				<td>${incidentSelected.priorityRating}</td>
+			</tr>
+			
+			<tr>
+			<td style="background: #dddddd">Staff Assigned:</td>
+			<td>${incidentSelected.assignedStaffNameAndPosition}</td>
 			</tr>
 		
 			<tr>
@@ -126,6 +120,21 @@
 			<tr>
 				<td style="background: #dddddd">Possible solutions:</td>
 				<td>${incidentSelected.postIncident.possibleSolutionsOfIncident}</td>
+			</tr>
+			
+			<tr>
+				<td style="background: #dddddd">Future risk foreseen</td>
+				<td>${incidentSelected.postIncident.riskForeseen}</td>
+			</tr>
+			
+			<tr>
+				<td style="background: #dddddd">Evaluation of risk</td>
+				<td>${incidentSelected.postIncident.riskEvaluationAsString}</td>
+			</tr>
+			
+			<tr>
+				<td style="background: #dddddd">Strategy Implemented</td>
+				<td>${incidentSelected.postIncident.strategyImplemented}</td>
 			</tr>
 			
 			
@@ -151,6 +160,11 @@
 			</c:if>
 			<form action="PerformAnalysis.jsp" method="post">
 				<input type="submit" value="Analysis">
+			</form>
+			<br>
+			<form action="ImplementStrategy.jsp" method="post">
+			<input type="submit" value="Strategy"> 
+			<!--  <input type="button" value="Strategy" onclick="window.open('ImplementStrategy.jsp')">-->
 			</form>
 		</c:if>
 	</div>

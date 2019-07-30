@@ -11,6 +11,18 @@ public class UserBean implements java.io.Serializable{
 	
 	private String staffID;
 	private String rolesToDo;
+	
+	/**
+	private boolean ratedStrategy;
+
+	public boolean isRatedStrategy() {
+		return ratedStrategy;
+	}
+
+	public void setRatedStrategy() {
+		ratedStrategy = true;
+	}
+	*/
 
 	public String getRolesToDo() {
 		String roles;
@@ -48,6 +60,7 @@ public class UserBean implements java.io.Serializable{
 	
 	public UserBean() {
 		rolesToDo="";
+		//ratedStrategy=false;
 		//password="password";
 		
 	}

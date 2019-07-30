@@ -151,6 +151,11 @@ Incident analyzing
 	<form action="DisplayIncidentReport.jsp" method="post">
 	<input type="submit" value="View Report">
 	</form>
+	<br>
+	<form action="ImplementStrategy.jsp" method="post">
+	<input type="submit" value="Strategy"> 
+	<!--  <input type="button" value="Strategy" onclick="window.open('ImplementStrategy.jsp')">-->
+	</form>
 </div>
 </body>
 </html>

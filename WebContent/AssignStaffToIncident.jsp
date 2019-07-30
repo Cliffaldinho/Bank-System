@@ -53,7 +53,7 @@ Incident title:
 ${incidentSelected.incidentTitle}
 <br>
 Incident category:
-${incidentSelected.incidentCategory}
+${incidentSelected.incidentCategory.toString()}
 <br>
 Incident date:
 ${incidentSelected.dateTimeFromTimeStamp}
