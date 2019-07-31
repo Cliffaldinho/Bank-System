@@ -26,32 +26,26 @@ public class SetStrategyRatingsServlet extends HttpServlet {
 		IncidentDAO.getIncidentByIncidentID(id).getPostIncident().setAmountOfRatingsReceived();
 		//so that when individual ratings are set, they can be averaged accordingly
 		
-		//set overall rating
 		String overallValue = req.getParameter("Overall");
 		double overall=Double.parseDouble(overallValue) + 1;
 		IncidentDAO.getIncidentByIncidentID(id).getPostIncident().setRatingOverall(overall);
 		
-		//set effectiveness rating
 		String effectivenessValue = req.getParameter("Effectiveness");
 		double effectiveness = Double.parseDouble(effectivenessValue)+1;
 		IncidentDAO.getIncidentByIncidentID(id).getPostIncident().setRatingEffectiveness(effectiveness);
 		
-		//set improvement rating
 		String improvementValue=req.getParameter("Improvement");
 		double improvement = Double.parseDouble(improvementValue)+1;
 		IncidentDAO.getIncidentByIncidentID(id).getPostIncident().setRatingImprovementFromSituationBefore(improvement);
 		
-		//set practical rating
 		String practicalValue= req.getParameter("Practical");
 		double practical = Double.parseDouble(practicalValue) +1;
 		IncidentDAO.getIncidentByIncidentID(id).getPostIncident().setRatingPractical(practical);
 		
-		//set relevance rating
 		String relevanceValue = req.getParameter("Relevance");
 		double relevance = Double.parseDouble(relevanceValue)+1;
 		IncidentDAO.getIncidentByIncidentID(id).getPostIncident().setRatingRelevanceToIncident(relevance);
 		
-		//set satisfaction rating
 		String satisfactionValue = req.getParameter("Satisfaction");
 		double satisfaction = Double.parseDouble(satisfactionValue)+1;
 		IncidentDAO.getIncidentByIncidentID(id).getPostIncident().setRatingSatisfactionOfStrategy(satisfaction);

@@ -19,14 +19,11 @@ public class FinishSetStaffRoleServlet extends HttpServlet {
 		
 		HttpSession aSession = req.getSession();
 		
-		//get the user selected by branch manager
 		UserBean user = (UserBean) aSession.getAttribute("userSelected");
 		String userID = (String) aSession.getAttribute("userID");
 		
 		//get the array of roles checked
 		String[] receivedRoles =  req.getParameterValues("roles");
-		//if 0 roles checked, array will be null
-		//if 1 role checked, array length will be 1 
 		
 		String total="";
 		String append="";
@@ -41,20 +38,16 @@ public class FinishSetStaffRoleServlet extends HttpServlet {
 			}
 		}
 		
-		//set the roles checked
 		UserDAO.getUserByStaffID(userID).setRolesToDo(total);
 		
 
 		//get the position parameter
 		String positionValue =req.getParameter("position");
 		
-		//set it as type of UserBean.Position
 		UserBean.Position staffPosition=UserBean.Position.valueOf(positionValue);
 		
-		//enter it for user
 		UserDAO.getUserByStaffID(userID).setPosition(staffPosition);
 		
-		//forward to RolesForStaff.jsp
 		req.getRequestDispatcher("RolesForStaff.jsp").forward(req, res);
 		
 		

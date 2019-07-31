@@ -19,19 +19,14 @@ public class DefineStaffRolesServlet extends HttpServlet {
 		
 		PrintWriter out = res.getWriter();
 		
-		//obtain the user id of the staff that branch manager clicked
 		String userID = req.getParameter("userChosen");
 		
-		//get a UserBean from that user id
 		UserBean user = UserDAO.getUserByStaffID(userID);
 		
-		//obtain the selected action that branch manager want to do to that user (Modify,Delete)
 		String action = req.getParameter("actionChosen");
 		
-		//cases for action
 		switch(action) {
 		
-		//if branch manager selected modify
 		case "Modify":
 			
 			HttpSession aSession = req.getSession();
@@ -41,24 +36,23 @@ public class DefineStaffRolesServlet extends HttpServlet {
 			aSession.setAttribute("userID", userID);
 			aSession.setAttribute("userSelected", user);
 			
-			//forward to SetStaffRole.jsp
 			req.getRequestDispatcher("SetStaffRole.jsp").forward(req, res);
 			break;
 			
-		//if branch manager selected delete
+		
 		case "Delete":
 			
-			//delete the user 
+		 
 			UserDAO.deleteUserByUserID(userID);
 			
-			//forward to RolesForStaff.jsp
+			
 			req.getRequestDispatcher("RolesForStaff.jsp").forward(req, res);
 			break;
 			
 			
 			
 			
-			//error message if none of choices were selected
+			
 		default:
 			System.out.println("Error: No action received for DefineStaffRoleServlet, from RolesForStaff.jsp");
 			break;

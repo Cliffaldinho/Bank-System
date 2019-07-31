@@ -13,26 +13,19 @@ import java.util.*;
 public class FinishAssignStaffServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest req,HttpServletResponse res) throws IOException,ServletException {
-		/**in database
-		decide store one colomn per piece of information
-		and avoid parsing strings to get staffid
-		hence store in String[] instead of a long String*/
-		
+
 		PrintWriter out = res.getWriter();
 		
-		//get the array of checkboxes checked
-		//for staff assigned
+		//get the array of checkboxes checked for staff assigned
 		String[] staffAssigned = req.getParameterValues("staff");
 		//if no checkboxes checked, then array is null
 		
-		//get the incidentID for that incident
+		
 		int incidentID;
 		HttpSession aSession = req.getSession();
 		incidentID = (int) aSession.getAttribute("incidentID");
 		
-		/**if no checkboxes are checked,
-		then set staffAssigned array to be length of 0 (previously was null)
-		when it's printed out, 0 will show it's empty, but null will show nullpointer exception*/
+		
 		if(staffAssigned==null) {
 			staffAssigned= new String[0];
 		}
@@ -47,7 +40,6 @@ public class FinishAssignStaffServlet extends HttpServlet {
 		IncidentDAO.getIncidentByIncidentID(incidentID).setAssignedStaffID(staffAssigned);
 		
 		
-		//forward to DisplayIncidentReport.jsp
 		req.getRequestDispatcher("DisplayIncidentReport.jsp").forward(req, res);
 		
 	

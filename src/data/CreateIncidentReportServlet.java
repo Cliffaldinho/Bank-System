@@ -124,30 +124,28 @@ public class CreateIncidentReportServlet extends HttpServlet {
 			//get the incident id of the original incident
 			IncidentBean originalIncident= IncidentDAO.getIncidentByIncidentID(duplicateID);
 			
-			//set a checkDuplicate checker for the DisplayIncidentReport page, to be true
 			boolean checkDuplicate=true;
 			
-			//set session attributes for incident, so that DisplayIncidentReport and DetectDuplicateServlet can utilize it
+			//set session attributes for incident, so that DisplayIncidentReport and DetectDuplicateServlet can utilize it			
 			
-			aSession.setAttribute("incidentID",duplicateID);	//this is id of original incident, to be utilized in DisplayIncidentReport
+			//set for original incident
+			aSession.setAttribute("incidentID",duplicateID);
 			
-			aSession.setAttribute("incidentSelected", originalIncident);	//this is incident object of original incident, to be utilized in DisplayIncidentReport 
+			aSession.setAttribute("incidentSelected", originalIncident);	
 			
-			aSession.setAttribute("currentIncident", anIncident);	//this is incident object of the newly entered incident, to be utilized in DetectDuplicateServlet
+			//set for newly entered incident
+			aSession.setAttribute("currentIncident", anIncident);	
 			
-			//set the checkDuplicate as a request scope variable, coz only the DisplayIncidentReport page needs it
 			req.setAttribute("checkDuplicate", checkDuplicate);	
 
-			//forward to DisplayIncidentReport.jsp
+			
 			req.getRequestDispatcher("DisplayIncidentReport.jsp").forward(req,res);
 			
 			//if it's not a possible duplicate
 		} else {
-
-			//add it to incidents list
+			
 			IncidentDAO.getIncidentsList().add(anIncident);
 			
-			//forward to the prepareList controller 
 			req.getRequestDispatcher("prepareList").forward(req,res);
 			
 		}

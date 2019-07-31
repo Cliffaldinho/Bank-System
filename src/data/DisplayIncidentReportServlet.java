@@ -18,10 +18,8 @@ public class DisplayIncidentReportServlet extends HttpServlet{
 		
 		PrintWriter out = res.getWriter();
 	
-	//get the incident ID of the incident clicked
 	String incidentID = req.getParameter("clicked");
 	
-	//get the option chosen for that incident
 	String optionChosen = req.getParameter("chosen");
 	
 
@@ -49,7 +47,6 @@ public class DisplayIncidentReportServlet extends HttpServlet{
 	HttpSession aSession = req.getSession();
 	
 	
-	//if it is view incident
 	if(viewIncident==true) {
 		
 		//set the session attribute incidentID and IncidentBean, for that incident.
@@ -57,16 +54,12 @@ public class DisplayIncidentReportServlet extends HttpServlet{
 		aSession.setAttribute("incidentID", id);
 		aSession.setAttribute("incidentSelected", incident);
 		
-		//forward to DisplayIncidentReport.jsp
 		req.getRequestDispatcher("DisplayIncidentReport.jsp").forward(req, res);
 		
-		//if it is close incident
 	}  else if (closeIncident==true) {
 		
-		//delete incident
 		IncidentDAO.deleteIncidentByIncidentID(id);
 		
-		//forward to prepareList controller
 		req.getRequestDispatcher("prepareList").forward(req, res);
 	}
 	

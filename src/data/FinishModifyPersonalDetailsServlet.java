@@ -23,30 +23,24 @@ public class FinishModifyPersonalDetailsServlet extends HttpServlet {
 		
 		HttpSession aSession = req.getSession();
 		
-		//get the StaffBean of user currently logged in
 		StaffBean staffLoggedIn = (StaffBean) aSession.getAttribute("logAuth");
 		String staffID=staffLoggedIn.getUsername();
 		
-		//get the name parameter
 		String staffNewName=req.getParameter("modifyName");
 		
-		//set it if it's not null or not empty
 		if(!staffNewName.isBlank()) {
 		
 		UserDAO.getUserByStaffID(staffID).setName(staffNewName);
 		}
 		
-		//get the address parameter
 		String staffNewAddress=req.getParameter("modifyAddress");
 		
-		//set it if it's not null or not empty
 		if(!staffNewAddress.isBlank()) {
 		UserDAO.getUserByStaffID(staffID).setAddress(staffNewAddress);
 		}
 		
 		String staffNewContact=req.getParameter("modifyContact");
 		
-		//set it if it's not null or not empty
 		if(!staffNewContact.isBlank()) {
 			UserDAO.getUserByStaffID(staffID).setContactNumber(staffNewContact);
 		}
@@ -86,8 +80,6 @@ public class FinishModifyPersonalDetailsServlet extends HttpServlet {
 			
 			}
 		
-		
-		//forward to ModifyPersonalDetailsServlet (which will then go to the PersonalDetails.jsp page, and print updated info)
 		req.getRequestDispatcher("personalDetails").forward(req, res);
 		
 		
