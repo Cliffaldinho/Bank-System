@@ -260,16 +260,12 @@ public class IncidentBean implements Serializable {
 		return ts;
 	}
 	
-	//get the date and time as a string from the timestamp
 	public String getDateTimeFromTimeStamp() {
 		
-		//initializes a LocalDateTime object
 		LocalDateTime dateTime=	ts.toLocalDateTime();
 		
-		//set the format want the LocalDateTime object to be
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 		
-		//gets the date and time in that format
 		String printDateTime=dateTime.format(formatter);
 		
 		return printDateTime;
@@ -333,13 +329,10 @@ public class IncidentBean implements Serializable {
 	
 	public void setIncidentMonth() {
 	
-		//get the LocalDateTime through Timestamp
 		LocalDateTime datetime =ts.toLocalDateTime();
 		
-		//get the LocalDate through LocalDateTime
 		LocalDate date = datetime.toLocalDate();
 		
-		//set the incident Month
 		incidentMonth=date.getMonth().toString();
 		
 	}
@@ -349,7 +342,6 @@ public class IncidentBean implements Serializable {
 		return incidentYear;
 	}
 	
-	//as above in setIncidentMonth
 	public void setIncidentYear() {
 		
 		LocalDateTime datetime =ts.toLocalDateTime();
@@ -377,7 +369,6 @@ public class IncidentBean implements Serializable {
 	//----------------------------------------------------------------------------------------------------------------------------------------
 	//End Methods for New phase
 	
-	//returns a String of the assigned staff IDs
 	public String getAssignedStaffIDInString() {
 		String total="";
 		String append="";
@@ -403,13 +394,10 @@ public class IncidentBean implements Serializable {
 	//Alice Diaz (Internal Auditor)
 	public String getAssignedStaffNameAndPosition() {
 		
-		//to be printed out
 		String total="";
 		
-		//to store name and position
 		String staff;
 		
-		//to receive name and position from database
 		String name;
 		String position;
 		
@@ -426,20 +414,17 @@ public class IncidentBean implements Serializable {
 				//get the assigned staff id in the array element
 				String userId = staffAssigned[i];
 				
-				//get the UserBean from that staff id
+				//get that staff's name and position
+				
 				UserBean user = UserDAO.getUserByStaffID(userId);
 				
-				//get the User's name and position from that UserBean
 				name=user.getName();
 				position = user.getPosition().toString();
 				
-				//if it is the first cycle
+				//append staff name and position
 				if(i==0) {
-				//no need to go next line then append
 				staff = name+" ("+position+")";
-				//else if it's not first cycle
 				} else {
-					//go next line then append
 					staff = "<br>"+ name+" ("+position+")";
 				}
 				
@@ -467,22 +452,16 @@ public class IncidentBean implements Serializable {
 	//adds the PostIncidentBean for this incident. Method called upon creation of this incident.
 	public void setPostIncident() {
 		
-		//create new PostIncidentBean
 		PostIncidentBean postIncident = new PostIncidentBean();
 		
 		//set the new PostIncidentBean's incidentID to be this IncidentBean's incidentID
 		postIncident.setIncidentID(incidentID);
 		
-		//add this new PostIncidentBean to the database
+		//add this new PostIncidentBean to the PostIncidentDAO database
 		PostIncidentDAO.addPostIncident(postIncident);
 		
 	}
 	
-	
-	
-	
-
-
 	
 	
 	public Priority getPriorityRating() {
