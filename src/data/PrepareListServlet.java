@@ -30,7 +30,7 @@ public class PrepareListServlet extends HttpServlet {
 		//set attribute
 		aSession.setAttribute("listOfIncidents", printList);
 		
-		//forward to list
+		
 		req.getRequestDispatcher("ListOfIncidents.jsp").forward(req, res);
 		
 	}
@@ -70,7 +70,6 @@ public class PrepareListServlet extends HttpServlet {
 		//reset search attribute as false
 		aSession.setAttribute("isSearch", false);
 		
-		//remove listOfSearchIndexes attribute
 		aSession.removeAttribute("listOfSearchIndexes");
 		
 		//if sort is true
@@ -92,7 +91,7 @@ public class PrepareListServlet extends HttpServlet {
 		//reset sort attributes as false
 		aSession.setAttribute("isSort", false);
 		
-		//remove sortReportsIndexes
+		
 		aSession.removeAttribute("sortReportsIndexes");
 		
 		//if search and sort are not true

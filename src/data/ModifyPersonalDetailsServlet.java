@@ -20,11 +20,9 @@ public class ModifyPersonalDetailsServlet extends HttpServlet {
 		
 		PrintWriter out = res.getWriter();
 		
-		//get the StaffBean of the staff from this session
 		HttpSession aSession = req.getSession();
 		StaffBean staffLoggedIn = (StaffBean) aSession.getAttribute("logAuth");
 		
-		//get the corresponding UserBean
 		UserBean user = staffLoggedIn.getUserByUsername();
 		
 		//set session attributes name, address, contact, to be used in PersonalDetails.jsp, and FinishModifyStaffServlet
@@ -32,7 +30,6 @@ public class ModifyPersonalDetailsServlet extends HttpServlet {
 		aSession.setAttribute("staffAddress", user.getAddress());
 		aSession.setAttribute("staffContact", user.getContactNumber());
 
-		//forward to PersonalDetails.jsp
 		req.getRequestDispatcher("PersonalDetails.jsp").forward(req, res);
 		
 	}

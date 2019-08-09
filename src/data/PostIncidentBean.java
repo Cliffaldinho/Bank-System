@@ -6,45 +6,6 @@ import java.util.List;
 
 public class PostIncidentBean {
 	
-	/**
-	 Removed Analysis object.
-	 
-	 Analysis class contained 
-	 analysis ID, which is same as incidentID,
-	 rootCause in IncidentBean, which is same as rootCause in Analysis,
-	 lessonsLearnt in IncidentBean, whch is same as lessonsLeart in Analysis
-	 
-	 Hence choose to store a particular colomn of data in one location, 
-	 so that fewer places to update and less risk of having different data in different places
-	 */
-	
-	
-	/**
-	 Removed RiskManagement object
-	 Risk class contained attributes
-	 
-	 String riskStrategyWriter. which is equal to branch manager.
-	 String delegatedStaff. which is equal to everybody (for ratings), Simulation class (for possible solutions/test strategy)
-	 String riskTitle: which is equal to IncidentBean title
-	 Category riskCategory: which is equal to IncidentBean category
-	 (of which all overlap with IncidentBean or are already defined)
-	 
-	 And:
-	 String risk: merged into IncidentBean as String riskForeseen
-	 String managementStrategy: merged into IncidentBean as String strategyImplemented
-	 
-	 Chose to join it all into this class, as they are linked to attributes in this class.
-	 i.e. 
-	 riskCategory linked to IncidentBean category
-	 riskTitle linked to IncidentBean title 
-	 String riskForeseen is deduced off IncidentBean possibleCausesOfIncident
-	 String strategyImplemented is deduced off IncidentBean possibleSolutionsOfIncident, and Simulations done
-	 
-	 thus linked it here to prevent adding/updating in multiple database tables for each entry
-	 as they all go in a linear timeline of New->...->Analysis->Strategy->Archive
-	 
-	 */
-	
 	private int incidentID;//same as incidentID
 	
 	public int getIncidentID() {
@@ -67,10 +28,19 @@ public class PostIncidentBean {
 	
 	private boolean isStrategyImplementedAlready;//used to check if branch manager has already entered a strategy
 	
+	private String staffWhoRatedStrategy;	//used to make sure that each staff only rate an incident's strategy once
 
 
 
 	
+	public String getStaffWhoRatedStrategy() {
+		return staffWhoRatedStrategy;
+	}
+
+	public void setStaffWhoRatedStrategy(String staff) {
+		staffWhoRatedStrategy=staffWhoRatedStrategy+staff+". ";
+	}
+
 	//this is to count the number of ratings received, so that for each of the ratings, can get the average each time someone adds a rating to it
 	private int amountOfRatingsReceived;
 
@@ -119,6 +89,8 @@ public class PostIncidentBean {
 		
 		
 		isStrategyImplementedAlready=false;
+		
+		staffWhoRatedStrategy="";
 		
 		//Archive phase
 		//is once rating feedback of strategy have been received

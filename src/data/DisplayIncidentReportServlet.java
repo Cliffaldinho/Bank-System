@@ -27,7 +27,6 @@ public class DisplayIncidentReportServlet extends HttpServlet{
 	IncidentBean incident=IncidentDAO.getIncidentByIncidentID(id);
 	
 	
-	//see which option was chosen for that incident
 	boolean viewIncident,closeIncident;
 	viewIncident=false;
 	closeIncident=false;
@@ -49,7 +48,6 @@ public class DisplayIncidentReportServlet extends HttpServlet{
 	
 	if(viewIncident==true) {
 		
-		//set the session attribute incidentID and IncidentBean, for that incident.
 		//For use in Display Report, Analysis, and Strategy jsps and servlets
 		aSession.setAttribute("incidentID", id);
 		aSession.setAttribute("incidentSelected", incident);

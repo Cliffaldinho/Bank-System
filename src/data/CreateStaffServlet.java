@@ -38,9 +38,7 @@ public class CreateStaffServlet extends HttpServlet {
 			
 			tempUser.setPosition(staffPosition);
 			
-			//Set roles for new staff
-			
-			//get the array of roles checked from CreateUser.jsp
+			//Set Roles of new staff
 			String[] receivedRoles =  req.getParameterValues("roles");
 			
 			String total="";
@@ -49,10 +47,8 @@ public class CreateStaffServlet extends HttpServlet {
 			//see if checkbox checked, so that won't get index out of bounds error
 			if(receivedRoles!=null) {
 				
-				//traverse through the array of roles received. 
 				for(int i=0;i<receivedRoles.length;i++) {
 					
-					//append each role received to the total string
 					append=receivedRoles[i];
 					total=total+append+". ";
 				}

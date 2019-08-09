@@ -29,12 +29,9 @@ public class FinishAssignStaffServlet extends HttpServlet {
 		if(staffAssigned==null) {
 			staffAssigned= new String[0];
 		}
-		/**note form validation of assign staff (check if form is empty) takes place server side
-		this is because if we stop branch manager from submitting form in AssignStaff.jsp client side when condition is no checkbox ticked
-		that would mean that if branch manager has already assigned staff previously
-		and wants to reallocate the human resources to another high priority incident, due to this incident being low priority,
-		they wouldn't be able to due to client side form validation preventing no checkbox ticked
-		hence validate form server side*/
+		//note form validation of assign staff (check if form is empty) takes place server side
+		//so that branch manager can reallocate staff from an incident to a higher priority one
+
 		
 		//pass the array of assigned staff IDs for that incident, into it
 		IncidentDAO.getIncidentByIncidentID(incidentID).setAssignedStaffID(staffAssigned);

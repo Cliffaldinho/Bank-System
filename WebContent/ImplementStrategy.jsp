@@ -4,6 +4,8 @@
     prefix="c"
     uri="http://java.sun.com/jsp/jstl/core" 
 %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" 
+    prefix="fn" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,6 +47,9 @@ Satisfaction:
 ${incidentSelected.postIncident.ratingSatisfactionOfStrategy}
 <br>
 <br>
+
+
+
 
 
 
@@ -99,10 +104,14 @@ Strategy implemented
 
 
 
+
+
 <!-- Each user can only rate the strategy once -->
 <!-- Below if is to test that -->
-<!-- @Naneth would you be able to space out the horizontal radio buttons for this form more clearly please? So that they won't be confusing to user -->
+<c:set var="thisUser" value="${logAuth.username}."/>
+<c:if test = "${!fn:contains(incidentSelected.postIncident.staffWhoRatedStrategy,thisUser)}">
 
+<!-- @Naneth would you be able to space out the horizontal radio buttons for this form more clearly please? So that they won't be confusing to user -->
 <form action="setRatings" method="post" onSubmit="return validateRatingForm()">
 Please rate the strategy that was implemented for feedback:
 <br>
@@ -156,6 +165,7 @@ ${satisfaction}
 <input type="submit" name="Ratings" value="Rate Strategy">
 </form>
 
+</c:if>
 <br>
 <br>
 <form action="DisplayIncidentReport.jsp" method="post">

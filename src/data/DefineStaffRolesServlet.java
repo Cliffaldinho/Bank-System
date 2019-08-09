@@ -31,7 +31,6 @@ public class DefineStaffRolesServlet extends HttpServlet {
 			
 			HttpSession aSession = req.getSession();
 			
-			//set the selected staff's userID and UserBean object, as session attributes
 			//for use in SetStaffRole.jsp, and FinishSetStaffRoleServlet
 			aSession.setAttribute("userID", userID);
 			aSession.setAttribute("userSelected", user);

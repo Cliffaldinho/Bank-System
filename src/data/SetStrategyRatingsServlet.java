@@ -18,7 +18,7 @@ public class SetStrategyRatingsServlet extends HttpServlet {
 		
 		HttpSession aSession = req.getSession();
 		
-		//gets the IncidentBean and incidentID of that incident
+		
 		IncidentBean incident = (IncidentBean) aSession.getAttribute("incidentSelected");
 		int id = (int) aSession.getAttribute("incidentID");
 		
@@ -50,13 +50,12 @@ public class SetStrategyRatingsServlet extends HttpServlet {
 		double satisfaction = Double.parseDouble(satisfactionValue)+1;
 		IncidentDAO.getIncidentByIncidentID(id).getPostIncident().setRatingSatisfactionOfStrategy(satisfaction);
 		
-		//get the staff who is logged in to this session
+		
 		StaffBean user = (StaffBean) aSession.getAttribute("logAuth");
 		String userID = user.getUsername();
 		
-		//set the attribute that they have rated
-		//UserDAO.getUserByStaffID(userID).setRatedStrategy();
-		
+		IncidentDAO.getIncidentByIncidentID(id).getPostIncident().setStaffWhoRatedStrategy(userID);
+
 		req.getRequestDispatcher("DisplayIncidentReport.jsp").forward(req,res);
 
 		

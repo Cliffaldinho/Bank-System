@@ -45,7 +45,6 @@ public class FinishModifyPersonalDetailsServlet extends HttpServlet {
 			UserDAO.getUserByStaffID(staffID).setContactNumber(staffNewContact);
 		}
 		
-		//get the password parameter
 		String staffNewPassword=req.getParameter("modifyPassword");
 		
 		//if pass client side password validation: All three password fields entered, New password and reentered new password same
