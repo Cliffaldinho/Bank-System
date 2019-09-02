@@ -7,11 +7,12 @@ import java.sql.Timestamp;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.time.format.DateTimeFormatter;
+import java.util.Collection;
+import java.util.Comparator;
 
 //is now a JavaBean
-public class IncidentBean implements Serializable {
+public class IncidentBean implements Serializable{
 
-	
 	
 	//JOIN of IncidentBean and PostIncidentBean
 	//incidentID same
@@ -369,6 +370,174 @@ public class IncidentBean implements Serializable {
 	//----------------------------------------------------------------------------------------------------------------------------------------
 	//End Methods for New phase
 	
+	
+	public void autoAssignStaff() {
+		
+		//set certain priority for certain keywords
+		String totalKeywords="";
+		for(int i=0;i<incidentKeywords.length;i++) {
+			totalKeywords = totalKeywords+incidentKeywords[i]+". ";			
+		}
+		
+		//keywords for high priority
+		if(totalKeywords.contains("data")||
+				totalKeywords.contains("security")) {
+			priorityRating = IncidentBean.Priority.High;
+		} 
+		
+		//keywords for medium priority
+		else if 
+			(totalKeywords.contains("algorithm")||
+					totalKeywords.contains("law"))
+			{
+				priorityRating = IncidentBean.Priority.Medium;
+			}
+		
+		//keywords for low priority
+		else if (totalKeywords.contains("equipment")||
+					totalKeywords.contains("upgrade")) 
+			{
+				priorityRating = IncidentBean.Priority.Low;
+			}
+		
+		
+
+		ArrayList<UserBean> staffList = UserDAO.getUsersList();
+		ArrayList<UserBean> qualifiedForIncident = new ArrayList<>();
+		
+		//find all the staff who are qualified for the job
+		//add them to the qualifiedForIncident list
+		switch(incidentCategory) {
+		
+		case Regulatory_Law:
+		
+			for(int i=0;i<staffList.size();i++) {
+				
+				if(staffList.get(i).getRolesToDo().contains("Regulatory Law")) {
+				
+					qualifiedForIncident.add(staffList.get(i));
+				
+				}
+			
+			}
+			break;
+			
+		case Cyber_Security: 
+			
+			for(int i=0;i<staffList.size();i++) {
+				
+				if(staffList.get(i).getRolesToDo().contains("Cyber Security")) {
+				
+					qualifiedForIncident.add(staffList.get(i));
+				
+				}
+			
+			}
+			break;
+			
+		case Human_Issues:
+			
+			for(int i=0;i<staffList.size();i++) {
+				
+				if(staffList.get(i).getRolesToDo().contains("Human Issues")) {
+				
+					qualifiedForIncident.add(staffList.get(i));
+				
+				}
+			
+			}
+			break;
+		
+		case Bank_Equipment:
+			
+			for(int i=0;i<staffList.size();i++) {
+				
+				if(staffList.get(i).getRolesToDo().contains("Bank Equipment")) {
+				
+					qualifiedForIncident.add(staffList.get(i));
+				
+				}
+			
+			}
+			break;
+			
+		
+		case Bank_Algorithms:
+			
+			for(int i=0;i<staffList.size();i++) {
+				
+				if(staffList.get(i).getRolesToDo().contains("Bank Algorithms")) {
+				
+					qualifiedForIncident.add(staffList.get(i));
+				
+				}
+			
+			}
+			break;
+		
+		case Other: 
+		
+			for(int i=0;i<staffList.size();i++) {
+				
+				if(staffList.get(i).getRolesToDo().contains("Other")) {
+				
+					qualifiedForIncident.add(staffList.get(i));
+				
+				}
+			
+			}
+			break;
+		
+		default:
+			break;
+		
+		}
+		
+		//if there are qualified staff with roles assigned corresponding to the incident's category
+		if(qualifiedForIncident.size()>0) {
+			
+		//sort qualified staff list according to their workload
+		Collections.sort(qualifiedForIncident, new UserBean.WorkloadComparator());
+		
+		String assignToStaff="";
+		
+		
+		//from the qualified staff list
+		switch(priorityRating) {
+		
+		//allocate low priority to staff with high workload
+		case Low:
+			assignToStaff=qualifiedForIncident.get(qualifiedForIncident.size()-1).getStaffID();
+			break;
+		
+		//allocate medium priority to staff with medium workload
+		case Medium:
+		
+			int median;
+			median=qualifiedForIncident.size()/2;
+			assignToStaff=qualifiedForIncident.get(median).getStaffID();
+			break;
+		
+		//allocate high priority to staff with low workload
+		case High:
+			assignToStaff=qualifiedForIncident.get(0).getStaffID();
+			break;
+		
+		default:
+			break;
+			
+		}
+		
+		String[] assignArray = new String[] {assignToStaff};
+		
+		//set assigned staff
+		setAssignedStaffID(assignArray);
+		
+		}
+		
+	}
+	
+	
 	public String getAssignedStaffIDInString() {
 		String total="";
 		String append="";
@@ -385,6 +554,52 @@ public class IncidentBean implements Serializable {
 	}
 	
 	public void setAssignedStaffID(String[] staff) {
+		
+		List<String> staffAssignedList = new ArrayList<>();
+		List<String> staffList = new ArrayList<>();
+		List<String> overlapList = new ArrayList<>();
+		
+		//make an arraylist copy of previous staff assigned to incident
+		for(int i=0;i<staffAssigned.length;i++) {
+			staffAssignedList.add(staffAssigned[i]);
+		}
+		
+		//make an arraylist copy of updated staff assigned to incident
+		for(int i=0;i<staff.length;i++) {
+			staffList.add(staff[i]);
+		}
+		
+		//find which are the staff that overlap in both lists
+		//because this means their assignedIncidents don't have to be changed
+		for(int i=0;i<staffAssignedList.size();i++) {
+			for(int j=0;j<staffList.size();j++) {
+				if(staffList.get(j).equals(staffAssignedList.get(i))) {
+					overlapList.add(staffAssignedList.get(i));
+				}
+			}
+		}
+		
+		//remove overlapping staff from both previous and updated lists
+		staffAssignedList.removeAll(overlapList);
+		staffList.removeAll(overlapList);
+		
+		//the remaining staff in previous list
+		//have assigned incidents removed
+		for(int i=0;i<staffAssignedList.size();i++) {
+			String userID=staffAssignedList.get(i);
+			UserDAO.getUserByStaffID(userID).removeAssignedIncidentsID(incidentID);
+		}
+		
+		//the remaining staff in updated list
+		//have assigned incidents added
+		for(int i=0;i<staffList.size();i++) {
+			String userID=staffList.get(i);
+			UserDAO.getUserByStaffID(userID).addAssignedIncidentsID(incidentID);
+		}
+		
+		
+		
+		//store the user ids of staff assigned, in the IncidentBean
 		staffAssigned=staff;
 	}
 	

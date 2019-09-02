@@ -146,7 +146,12 @@ public class CreateIncidentReportServlet extends HttpServlet {
 			
 			IncidentDAO.getIncidentsList().add(anIncident);
 			
-			req.getRequestDispatcher("prepareList").forward(req,res);
+			aSession.setAttribute("incidentSelected",anIncident);
+			aSession.setAttribute("incidentID", anIncident.getIncidentID());
+			
+			req.getRequestDispatcher("autoAssign").forward(req, res);
+			
+			//req.getRequestDispatcher("prepareList").forward(req,res);
 			
 		}
 	

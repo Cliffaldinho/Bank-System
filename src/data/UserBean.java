@@ -1,7 +1,26 @@
 package data;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.*;
+
 public class UserBean implements java.io.Serializable{
 
+	static class WorkloadComparator implements Comparator<UserBean> {
+		
+		public int compare(UserBean staffA,UserBean staffB) {
+			if(staffA.getWorkloadBasedOnPriority()<staffB.getWorkloadBasedOnPriority()) {
+				return -1;
+			} else if (staffA.getWorkloadBasedOnPriority()>staffB.getWorkloadBasedOnPriority()) {
+				return 1;
+			} else {
+				return 0;
+			}
+		}
+	}
 
 
 	private String name;
@@ -11,6 +30,92 @@ public class UserBean implements java.io.Serializable{
 	
 	private String staffID;
 	private String rolesToDo;
+	
+	private Integer[] assignedIncidentsID;
+	
+	
+	
+	public void addAssignedIncidentsID(int id) {
+		
+		//convert array to linked list
+		List<Integer> storeAssignedIncidentsID = new LinkedList<Integer>(Arrays.asList(assignedIncidentsID));
+		
+		//add new incident assigned
+		storeAssignedIncidentsID.add(id);
+		
+		//convert linked list to array
+		assignedIncidentsID = storeAssignedIncidentsID.toArray(new Integer[storeAssignedIncidentsID.size()]);
+		
+	}
+	
+	public void removeAssignedIncidentsID(int id) {
+		
+		//initialize new linked list
+		List<Integer> assignedListAfterRemoved = new LinkedList<Integer>();
+		
+		//put all currently assigned incidents into the linked list, except for the one to be removed
+		for(int i=0;i<assignedIncidentsID.length;i++) {
+			
+			if(!assignedIncidentsID[i].equals(id)) {
+				assignedListAfterRemoved.add(assignedIncidentsID[i]);
+			}
+		}
+		
+		//convert linked list to array 
+		assignedIncidentsID=assignedListAfterRemoved.toArray(new Integer[assignedListAfterRemoved.size()]);
+	}
+	
+	public int getAmountOfIncidentsAssigned() {
+		
+		return assignedIncidentsID.length;
+	}
+	
+	public int[] getAssignedIncidentsID() {
+		
+		int[] printAssignedIncidents = new int[assignedIncidentsID.length];
+		
+		for(int i=0;i<assignedIncidentsID.length;i++) {
+			printAssignedIncidents[i]=assignedIncidentsID[i];
+		}
+		
+		return printAssignedIncidents;
+	}
+	
+	public int getWorkloadBasedOnPriority() {
+		int lowPriorityIncidents,mediumPriorityIncidents,highPriorityIncidents,workload;
+		
+		lowPriorityIncidents=0;
+		mediumPriorityIncidents=0;
+		highPriorityIncidents=0;
+		
+		IncidentBean.Priority incidentPriority;
+		
+		int[] assignedIncidents=getAssignedIncidentsID();
+		
+		for(int i=0;i<assignedIncidents.length;i++) {
+			incidentPriority = IncidentDAO.getIncidentByIncidentID(assignedIncidents[i]).getPriorityRating();
+			
+			innerloop:
+			switch(incidentPriority) {
+			case Low:
+				lowPriorityIncidents++;
+				break innerloop;
+			
+			case Medium:
+				mediumPriorityIncidents++;
+				break innerloop;
+				
+			case High:
+				highPriorityIncidents++;
+				break innerloop;
+			}
+		}
+		
+		workload = lowPriorityIncidents*1 + mediumPriorityIncidents*3 + highPriorityIncidents*5;
+		
+		return workload;
+	}
+	
 	
 	/**
 	private boolean ratedStrategy;
@@ -62,6 +167,7 @@ public class UserBean implements java.io.Serializable{
 		rolesToDo="";
 		//ratedStrategy=false;
 		//password="password";
+		assignedIncidentsID = new Integer[0];
 		
 	}
 

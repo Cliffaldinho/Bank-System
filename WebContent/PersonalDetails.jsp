@@ -33,6 +33,8 @@ visibility:visible;
 </head>
 <body>
 
+
+
 <p>
 ID:${userid}
 </p>
@@ -81,6 +83,28 @@ Please reenter new password:
 </p>
 <p><input type="submit" value="Modify personal details" style="visibility: hidden" id="submitButton" ></p>
 </form>
+<div>
+Incidents assigned:
+
+<table>
+<tr>
+<th>Incident ID</th>
+<th>Incident Title</th>
+</tr>
+
+<c:forEach items="${logAuth.assignedIncidents}" var = "assigned">
+<tr>
+<td>${assigned.incidentID}</td>
+<td>${assigned.incidentTitle}</td>
+</tr>
+</c:forEach>
+
+
+</table>
+
+</div>
+
+
 <form action="prepareList" method="post">
 <input type="submit" value="List">
 </form>

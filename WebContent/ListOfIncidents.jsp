@@ -9,6 +9,7 @@
     prefix="c"
     uri="http://java.sun.com/jsp/jstl/core" 
 %>
+
 <jsp:useBean id="logAuth" class="data.StaffBean" scope="session" />
 <!DOCTYPE html>
 <html>
@@ -161,13 +162,13 @@ List to have
 </form>
 <br>
 
+<br>
 <form action="CreateIncidentReport.jsp" method="post">
 	<label for="addIncident">Add an Incident</label>
 	<input type="submit" name="addIncident" value="Add">
 </form>
 <br>
 </div>
-
 <form action="personalDetails" method="post">
 <input type="submit" name = "details" value="Personal details">
 </form>

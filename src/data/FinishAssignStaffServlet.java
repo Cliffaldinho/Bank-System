@@ -25,7 +25,6 @@ public class FinishAssignStaffServlet extends HttpServlet {
 		HttpSession aSession = req.getSession();
 		incidentID = (int) aSession.getAttribute("incidentID");
 		
-		
 		if(staffAssigned==null) {
 			staffAssigned= new String[0];
 		}
@@ -35,6 +34,8 @@ public class FinishAssignStaffServlet extends HttpServlet {
 		
 		//pass the array of assigned staff IDs for that incident, into it
 		IncidentDAO.getIncidentByIncidentID(incidentID).setAssignedStaffID(staffAssigned);
+		
+		
 		
 		
 		req.getRequestDispatcher("DisplayIncidentReport.jsp").forward(req, res);

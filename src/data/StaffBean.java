@@ -47,6 +47,19 @@ public class StaffBean implements Serializable {
 		return name;
 	}
 	
+	public IncidentBean[] getAssignedIncidents() {
+		UserBean user = UserDAO.getUserByStaffID(username);
+		
+		int[] assignedIncidentsID = user.getAssignedIncidentsID();
+		
+		IncidentBean[] assignedIncidents = new IncidentBean[assignedIncidentsID.length];
+		
+		for(int i=0;i<assignedIncidents.length;i++) {
+			assignedIncidents[i]=IncidentDAO.getIncidentByIncidentID(assignedIncidentsID[i]);
+		}
+		
+		return assignedIncidents;
+	}
 	
 
 
