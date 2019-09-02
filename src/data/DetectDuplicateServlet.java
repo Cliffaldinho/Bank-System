@@ -85,9 +85,12 @@ public class DetectDuplicateServlet extends HttpServlet {
 			IncidentBean currentIncident = (IncidentBean) aSession.getAttribute("currentIncident");
 			IncidentDAO.getIncidentsList().add(currentIncident);
 			
+			aSession.setAttribute("incidentSelected",currentIncident);
+			aSession.setAttribute("incidentID", currentIncident.getIncidentID());
+			
 			aSession.removeAttribute("currentIncident");
 			
-			req.getRequestDispatcher("prepareList").forward(req,res);
+			req.getRequestDispatcher("autoAssign").forward(req, res);
 			}
 		}
 
