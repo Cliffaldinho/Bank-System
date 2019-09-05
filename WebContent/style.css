@@ -1,0 +1,449 @@
+/*
+*	File name:	style.css
+*/
+
+body		
+{			
+	background-attachment: fixed;
+	background-color: #ededed;
+	margin-left: 0cm; 
+	margin-right: 0cm;
+	margin-bottom: 0cm; 
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+			
+aside		
+{			
+	margin-left: 1cm; 
+	margin-right: 1cm;
+}
+
+.floatR
+{
+	float:right; 
+}
+
+h1 			
+{
+	color: white; 
+	text-transform: uppercase;
+	font-size: 2em;
+	text-align: center;
+	height: 100px;
+	line-height: 100px;
+}
+
+h2 			
+{
+	color: #3d3d3d; 
+	text-decoration: none; 
+	text-transform: uppercase;
+	text-align: left;
+	font-size: 1.6em;
+}
+
+h3 			
+{
+	color: #f4653d; 
+	clear:left;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.logo{
+	height: 85px;
+	padding-left: 10mm;
+	padding-top: 5mm;
+}
+
+.likeH4 			
+{
+	color: #f4653d; 
+}
+
+
+footer 		
+{
+	font-style: italic; 
+	font-size: smaller; 
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+a:link 		
+{
+	color: #ff492d;
+	padding: 0mm;
+	text-decoration: none;  
+}
+
+.top-banner
+{
+	width: 100%;
+	background-color: #3d3d3d;
+	overflow: auto;
+	width: expression(this.width > 400 ? "400px" : true);
+	height: expression(this.height > 400 ? "400px" : true)
+}
+
+.horizonta_nav {
+  width: 100%;
+  background-color: #555;
+  overflow: auto;
+}
+
+.horizonta_nav a {
+  float: left;
+  text-transform: uppercase;
+  padding: 0px;
+  color: white;
+  text-decoration: none;
+  font-size: 17px;
+  width: 25%;
+  text-align: center;
+}
+
+.horizonta_nav a:hover {
+  background-color: #000;
+}
+
+.horizonta_nav a.active {
+  background-color: #a58f21;
+}
+
+
+nav			
+{
+	background-color: #ffb19b;
+	border-style: none; 
+	border-width: none; 
+	padding: 0mm;
+  	width: 100%;
+  	overflow: hidden;
+	border-color: #fcc9ba;
+}
+
+nav a:link 		
+{
+	color: black;
+	text-transform: uppercase;
+	border-style: none; 
+}
+
+a:active 	
+{
+	color: white;
+	background-color: #17c68f;
+}
+
+
+a:hover
+{
+	text-decoration: underline; 
+}
+
+nav a:hover 	
+{
+	color: white;
+	text-decoration: underline; 
+}
+
+.floatL 	
+{
+	clear:left; 
+	float: left; 
+	border-style: solid; 
+	border-width: thick; 
+	padding: 5mm; 
+	margin-right: 3mm;
+	border-color: #fcc9ba;
+}
+
+.floatL2 	
+{
+	clear:left; 
+	float: left;
+}
+
+div
+{
+	overflow: auto;
+}
+
+#container
+{
+	border-radius: 5px;
+	background-color: #f2f2f2;
+	display: table;
+	border-style: solid; 
+	border-width: thin; 
+	margin: auto;
+	border-color: #fcc9ba;
+  	border-radius: 5px;
+	padding: 20px;
+}
+
+.container
+{
+	border-radius: 5px;
+	background-color: #f2f2f2;
+	padding: 20px;
+	border-style: solid; 
+	border-width: thin; 
+	margin: 20px;
+	border-color: #fcc9ba;
+	width: expression(this.width > 400 ? "400px" : true);
+	height: expression(this.height > 400 ? "400px" : true)
+}
+
+
+label {
+	padding: 12px 12px 12px 0;
+	display: inline-block;
+}
+
+
+.col-25 {
+	float: left;
+	width: 25%;
+	margin-top: 6px;
+}
+
+.col-75 {
+	float: left;
+	width: 75%;
+	margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.row2{
+	border-radius: 5px;
+	background-color: #f2f2f2;
+	padding-left: 20px;
+	border-style: solid; 
+	border-width: thin; 
+	margin: 2px;
+	border-color: #fcc9ba;
+	width: expression(this.width > 400 ? "400px" : true);
+	height: expression(this.height > 400 ? "400px" : true)
+}
+
+/* Clear floats after the columns */
+.row2:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .col-25, .col-75, input[type=submit] {
+    width: 100%;
+    margin-top: 0;
+  }
+}
+
+.innerDivinationPadding
+{
+	padding: 2mm;
+}
+
+.innerDivMargin
+{
+	margin: 2mm;
+}
+
+select
+{
+	font-size: .9em;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	padding-left: 2mm;
+}
+
+input[type='text'], input[type='password'], select, textarea {
+  	font-size: .9em;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	padding-left: 2mm;
+	margin: 8px 0;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 12px;
+	border: 2px solid #d15714;
+	border-radius: 4px;
+	resize: vertical;
+}
+
+input[type='number']
+{
+	font-size: .9em;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	padding-left: 2mm;
+	width: 30mm;
+}
+
+input[type='checkbox']
+{
+	zoom: 1.5;
+}
+
+input[type='radio']
+{
+	zoom: 1.5;
+}
+
+button
+{
+	font-size: 0.9em;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	padding: 12px 20px;
+	margin: 8px 0;
+	box-sizing: border-box;
+	background-color: #a58f21;
+	color: white;
+  	border: none;
+	border-radius: 4px;
+  	cursor: pointer;
+  	white-space: normal;
+  	max-width: 100%;
+}
+
+button:hover
+{
+	text-decoration: underline;
+}
+
+input[type='submit'], [type='button']
+{
+	font-size: 1.2em;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	padding: 12px 20px;
+	margin: 8px 0;
+	box-sizing: border-box;
+	background-color: #a58f21;
+	color: white;
+  	border: none;
+	border-radius: 4px;
+  	cursor: pointer;
+  	white-space: normal;
+  	max-width: 100%;
+}
+
+input[type=submit]:hover {
+  background-color: #b24010;
+}
+
+input[type='reset']
+{
+	font-size: 1.5em;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	padding: 0px;
+}
+
+#copyright 	
+{
+	float: right; 
+	margin: 5mm;
+	border-style: solid; 
+	border-width: thin; 
+	padding: 2mm;
+	border-color: #fcc9ba;
+}
+
+em 			
+{
+	color: #06896f;
+}
+
+span
+{
+	border-style: solid; 
+	border-width: thin; 
+	margin: 2mm;
+	border-color: #fcc9ba
+}
+
+#req
+{
+	color: #ff6032;
+	border-style: none; 
+	border-width: none; 
+	margin: 2mm;
+	border-color: none;
+}
+
+#req1
+{
+	color: #ff6032;
+	border-style: none; 
+	border-width: none; 
+	margin: 2mm;
+	border-color: none;
+}
+
+table
+{
+	table-layout: auto;
+	width: 100%;
+	border-collapse: collapse;
+	border-style: solid; 
+	margin: 3px;
+	border-color: #3d3d3d;
+	width: expression(this.width > 400 ? "400px" : true);
+	height: expression(this.height > 400 ? "400px" : true)
+	
+}
+
+th
+{
+	padding: 0px;
+	border-radius: 5px;
+	background-color: #3d3d3d;
+	color: white;
+	padding: 20px;
+	border-style: solid; 
+	border-width: thin; 
+	margin: 20px;
+	border-color: #555;
+	width: expression(this.width > 400 ? "400px" : true);
+	height: expression(this.height > 400 ? "400px" : true)
+}
+
+td
+{
+	border-style: solid; 
+	border-width: thin; 
+	margin: 20px;
+	border-color: #555;
+	border-radius: 5px;
+	text-align: center;
+	padding: 0px;
+	width: expression(this.width > 400 ? "400px" : true);
+	height: expression(this.height > 400 ? "400px" : true)
+}
+
+.available
+{
+	background-color: #fff8d6;
+	width: 100%;
+	height: 90px;
+	border: none;
+	font-size: 1.2em;
+}
+
+.notAvailable
+{
+	background-color: #ffdfd6;
+	width: 100%;
+	height: 90px;
+	border: none;
+	font-size: 1.2em;
+}
+
