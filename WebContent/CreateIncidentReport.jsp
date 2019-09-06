@@ -57,12 +57,17 @@
 	<div class="horizonta_nav">
 	  <a href="ListOfIncidents.jsp">Incidents</a>
 	  <a href="CreateIncidentReport.jsp" class="active">Report</a>
-	  <a href="RolesForStaff.jsp">Roles</a>
-	  <a href="index.jsp">Logout</a>
+	  <c:if test="${logAuth.authenticationLevel==1}">
+	  	<a href="RolesForStaff.jsp">Roles</a>
+	  </c:if>
+	   <form>
+	  	<a href="#" onclick="document.getElementById('account').submit();"> Account </a>
+	  </form>	
+	  <form>
+	  	<a href="#" onclick="document.getElementById('logOut').submit();"> Logout </a>
+	  </form>	  
 	</div>
-	<br>
-	<br>
-
+	
 	<div class="container">	
 		
 		<h2>Report Incident</h2>
@@ -183,6 +188,11 @@
 		<input type="submit">
 		</form>
 	</div>
+	
+	
+	<form id="logOut" action="userLogout" method="post"></form>
+	<form id="account" action="personalDetails" method="post"></form>
+	
 	<script>
 
 function validateForm() {
