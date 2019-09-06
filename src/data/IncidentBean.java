@@ -33,6 +33,7 @@ public class IncidentBean implements Serializable{
 	private String[] incidentKeywords;//can be converted to String?
 	private Timestamp ts;
 	private Status incidentStatus;
+	private boolean read;
 	
 	
 
@@ -686,5 +687,13 @@ public class IncidentBean implements Serializable{
 		this.priorityRating = p;
 	}
 	
+	
+	public boolean getRead() {
+		return read;
+	}
+	
+	public void setRead() {
+		this.read = true;
+	}
 
 }

@@ -17,34 +17,31 @@
 <meta charset="ISO-8859-1">
 <link rel="stylesheet" type="text/css" href="style.css" />
 <title>Create Incident Report</title>
-<script>
-
-function validateForm() {
-	
-	if(document.getElementById("theIncidentTitle").value=="") {
-		window.alert("Please enter a title."); 
-		return false;
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script type="text/javascript">
+	function checkNotifications(){
+		setInterval(checkForNotifications, 10000);
 	}
 	
-	if(document.getElementById("theIncidentDescription").value=="") {
-		window.alert("Please enter a description."); 
-		return false;
+	function checkForNotifications(){
+		$.ajax({
+			url: "notifications",
+			type: "post",
+			data: "<c:out value="${logAuth.username}"/>",
+			success: function(results) {
+				
+				if(results!="") {
+				alert(results); 
+				}
+			}
+	});
 	}
-	
-	if(document.getElementById("theIncidentKeywords").value=="") {
-		window.alert("Please enter keywords for the incident.");
-		return false;
-	}
-	
-	return true;
-}
-
-
 </script>
+
 
 </head>
 
-<body>
+<body onload="checkNotifications();">
 	<div class="top-banner">
 	  <div class="row">
 	    <div class="col-75">
@@ -186,5 +183,29 @@ function validateForm() {
 		<input type="submit">
 		</form>
 	</div>
+	<script>
+
+function validateForm() {
+	
+	if(document.getElementById("theIncidentTitle").value=="") {
+		window.alert("Please enter a title."); 
+		return false;
+	}
+	
+	if(document.getElementById("theIncidentDescription").value=="") {
+		window.alert("Please enter a description."); 
+		return false;
+	}
+	
+	if(document.getElementById("theIncidentKeywords").value=="") {
+		window.alert("Please enter keywords for the incident.");
+		return false;
+	}
+	
+	return true;
+}
+
+
+</script>
 </body>
 </html>
