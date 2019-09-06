@@ -40,12 +40,21 @@
 	</div>
 
 	<!-- if user is branch manager, show this  -->
+
 	<div class="horizonta_nav">
-	  <a href="prepareList">Incidents</a>
+	  <a href="ListOfIncidents.jsp">Incidents</a>
 	  <a href="CreateIncidentReport.jsp">Report</a>
-	  <a href="RolesForStaff.jsp">Roles</a>
-	  <a href="index.jsp">Logout</a>
+	  <c:if test="${logAuth.authenticationLevel==1}">
+	  	<a href="RolesForStaff.jsp">Roles</a>
+	  </c:if>
+	   <form>
+	  	<a href="#" onclick="document.getElementById('account').submit();"> Account </a>
+	  </form>	
+	  <form>
+	  	<a href="#" onclick="document.getElementById('logOut').submit();"> Logout </a>
+	  </form>	  
 	</div>
+	
 	
 </body>
 </html>
