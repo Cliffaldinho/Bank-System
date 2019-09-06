@@ -52,15 +52,21 @@
 	</div>
 	
 	<!-- if user is branch manager, show this  -->
+	
 	<div class="horizonta_nav">
-	  <a href="prepareList">Incidents</a>
+	  <a href="ListOfIncidents.jsp" class="active">Incidents</a>
 	  <a href="CreateIncidentReport.jsp">Report</a>
-	  <a href="RolesForStaff.jsp">Roles</a>
-	  <a href="index.jsp">Logout</a>
+	  <c:if test="${logAuth.authenticationLevel==1}">
+	  	<a href="RolesForStaff.jsp">Roles</a>
+	  </c:if>
+	   <form>
+	  	<a href="#" onclick="document.getElementById('account').submit();"> Account </a>
+	  </form>	
+	  <form>
+	  	<a href="#" onclick="document.getElementById('logOut').submit();"> Logout </a>
+	  </form>	  
 	</div>
-	<br>
-	<br>
-
+	
 <!-- 
 Name of staff performing analysis
 Incident analyzing
@@ -168,14 +174,26 @@ Incident analyzing
 		<input type="submit" name="lessonsLearnt" value="submit">
 		</form>
 	</div>
-	<form action="DisplayIncidentReport.jsp" method="post">
-	<input type="submit" value="View Report">
-	</form>
-	<br>
-	<form action="ImplementStrategy.jsp" method="post">
-	<input type="submit" value="Strategy"> 
-	<!--  <input type="button" value="Strategy" onclick="window.open('ImplementStrategy.jsp')">-->
-	</form>
+	 
+	<div class="container">
+		<div class="row">
+			<div class="col-25">
+				<form action="DisplayIncidentReport.jsp" method="post">
+					<input type="submit" value="View Report">
+				</form>
+			</div>
+
+			<div class="col-25">
+				<form action="ImplementStrategy.jsp" method="post">
+					<input type="submit" value="Strategy"> 
+					<!--  <input type="button" value="Strategy" onclick="window.open('ImplementStrategy.jsp')">-->
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<form id="logOut" action="userLogout" method="post"></form>
+	<form id="account" action="personalDetails" method="post"></form>
 </div>
 </body>
 </html>
