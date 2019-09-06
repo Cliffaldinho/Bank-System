@@ -86,7 +86,7 @@ color:black
 		 <form name="UserCreate" action="createUser" method="post" onSubmit="return validateForm()">
 		<table>
 				<tr>
-					<td style="background: #dddddd">
+					<td class="td2">
 						Staff Name:
 					</td>
 					<td>
@@ -94,7 +94,7 @@ color:black
 					</td>
 				</tr>
 				<tr>
-					<td style="background: #dddddd">
+					<td class="td2">
 						Contact Number:
 					</td>
 					<td>
@@ -102,7 +102,7 @@ color:black
 					</td>
 				</tr>
 				<tr>
-					<td style="background: #dddddd">
+					<td class="td2">
 						Address:
 					</td>
 					<td>
@@ -110,7 +110,7 @@ color:black
 					</td>
 				</tr>
 				<tr>
-					<td style="background: #dddddd">
+					<td class="td2">
 						Staff Position:
 					</td>
 					<td>
