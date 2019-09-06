@@ -18,7 +18,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <link rel="stylesheet" type="text/css" href="style.css" />
-<title>Insert title here</title>
+<title>Roles for Staff</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script type="text/javascript">
 	function checkNotifications(){
@@ -55,12 +55,17 @@
 	<div class="horizonta_nav">
 	  <a href="ListOfIncidents.jsp">Incidents</a>
 	  <a href="CreateIncidentReport.jsp">Report</a>
-	  <a href="RolesForStaff.jsp" class="active">Roles</a>
-	  <a href="index.jsp">Logout</a>
+	  <c:if test="${logAuth.authenticationLevel==1}">
+	  	<a href="RolesForStaff.jsp" class="active">Roles</a>
+	  </c:if>
+	   <form>
+	  	<a href="#" onclick="document.getElementById('account').submit();"> Account </a>
+	  </form>	
+	  <form>
+	  	<a href="#" onclick="document.getElementById('logOut').submit();"> Logout </a>
+	  </form>	  
 	</div>
-	<br>
-	<br>
-
+	
 	<div class="container">	
 		<h2>View Staff</h2>
 		
@@ -121,11 +126,21 @@
 		<form action="CreateUser.jsp">
 			<input type="submit" name="newUser" value="Create New User">
 		</form>
-		
-		<form action="ListOfIncidents.jsp">
-			<input type="submit" name="theIncidentsList" value="List">
-		</form>
+				
+		<!-- 
+			Naneth: I removed the button to go to the incident list coz we already
+					have it in the horizontal navigation at the top of the page. 
+													
+					<form action="ListOfIncidents.jsp">
+						<input type="submit" name="theIncidentsList" value="List">
+					</form>
+		-->
 	</div>
+	
+	
+	<form id="logOut" action="userLogout" method="post"></form>
+	<form id="account" action="personalDetails" method="post"></form>
+	
 <script>
 function userClicked(staff,action) {
 	var staffID=staff;
