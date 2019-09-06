@@ -1,98 +1,115 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-        <%@ page import="data.UserDAO" %>
-    <%@ page import="data.IncidentDAO" %>
-
+<%@ page import="data.UserDAO" %>
+<%@ page import="data.IncidentDAO" %>
 <%
 	HttpSession aSession = request.getSession();
 %>
-         <%@taglib
-    prefix="c"
-    uri="http://java.sun.com/jsp/jstl/core" 
-%>
+<%@taglib	prefix="c"
+    		uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <jsp:useBean id="logAuth" class="data.StaffBean" scope="session" />
 
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="ISO-8859-1">
-<link rel="stylesheet" type="text/css" href="style.css" />
-<title>Assign Staff to Incident</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-</head>
-<body>
-	<div class="top-banner">
-	  <div class="row">
-	    <div class="col-75">
-	      <h1 id="attBuff">SaiYan Bank Incident Management</h1>
-	    </div>
-	    <div>
-	      <img src="images/logo.png" alt="logo" class="logo"/>
-	    </div>
-	  </div>
+	<head>
+		<meta charset="ISO-8859-1">
+		<link rel="stylesheet" type="text/css" href="style.css" />
+		<title>Assign Staff to Incident</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	</head>
+		
+	<body>
+		<div class="top-banner">
+		  <div class="row">
+		    <div class="col-75">
+		      <h1 id="attBuff">SaiYan Bank Incident Management</h1>
+		    </div>
+		    <div>
+		      <img src="images/logo.png" alt="logo" class="logo"/>
+		    </div>
+		  </div>
+		</div>
+		
+		
+		<!-- if user is branch manager, show this  -->		
+		<div class="horizonta_nav">
+		  <a href="ListOfIncidents.jsp">Incidents</a>
+		  <a href="CreateIncidentReport.jsp">Report</a>
+		  <c:if test="${logAuth.authenticationLevel==1}">
+		  	<a href="RolesForStaff.jsp">Roles</a>
+		  </c:if>
+		   <form>
+		  	<a href="#" onclick="document.getElementById('account').submit();"> Account </a>
+		  </form>	
+		  <form>
+		  	<a href="#" onclick="document.getElementById('logOut').submit();"> Logout </a>
+		  </form>	  
+		</div>
+
+	<div class="container">
+		<h2>Assign Staff to Incident</h2>
+		
+		<table style="table-layout:fixed">
+			<tr>
+				<td class="td2">Incident id:</td>
+				<td>${incidentID}</td>
+			</tr>
+			<tr>
+				<td class="td2">Incident title:</td>
+				<td>${incidentSelected.incidentTitle}</td>
+			</tr>
+			<tr>
+				<td class="td2">Incident category:</td>
+				<td>${incidentSelected.incidentCategory.toString()}</td>
+			</tr>
+			<tr>
+				<td class="td2">Incident date:</td>
+				<td>${incidentSelected.dateTimeFromTimeStamp}</td>
+			</tr>
+			<tr>
+				<td class="td2">Incident description:</td>
+				<td>${incidentSelected.descriptionOfIncident}</td>
+			</tr>
+			<tr>
+				<td class="td2">Reporter:</td>
+				<td>${incidentSelected.userReportedIncident.name}</td>
+			</tr>
+		</table>
+		
+		<br />
+		
+		<form action="finishAssignStaff" method="post">
+		<table>
+		<tr>
+		<th>Staff ID</th>
+		<th>Staff Name</th>
+		<th>Staff Position</th>
+		<th>Staff Roles</th>
+		<th>Assign this staff to Incident</th>
+		</tr>
+		
+		
+		<c:forEach items="${listOfStaff}" var="user">
+		<tr>
+		<td><c:out value="${user.staffID}"/></td>
+		<td><c:out value="${user.name}"/></td>
+		<td><c:out value="${user.position}"/></td>
+		<td><c:out value="${user.rolesToDo}"/></td>
+		<td>
+		<input type="checkbox"  name="staff" value="${user.staffID}" <c:if test="${fn:containsIgnoreCase(incidentSelected.assignedStaffIDInString,user.staffID)}">checked</c:if>>
+		</td>
+		</tr>
+		</c:forEach>
+		
+		
+		</table>
+		<input type="submit" value="Assign Staff">
+		</form>
+		
+		<form id="logOut" action="userLogout" method="post"></form>
+		<form id="account" action="personalDetails" method="post"></form>
 	</div>
-	
-	<!-- if user is branch manager, show this  -->
-	<div class="horizonta_nav">
-	  <a href="prepareList">Incidents</a>
-	  <a href="CreateIncidentReport.jsp">Report</a>
-	  <a href="RolesForStaff.jsp">Roles</a>
-	  <a href="index.jsp">Logout</a>
-	</div>
-	<br>
-	<br>
-	
-Assign Staff to Incident
-<br>
+	</body>
 
-Incident id:
-${incidentID}
-<br>
-Incident title:
-${incidentSelected.incidentTitle}
-<br>
-Incident category:
-${incidentSelected.incidentCategory.toString()}
-<br>
-Incident date:
-${incidentSelected.dateTimeFromTimeStamp}
-<br>
-Incident description:
-${incidentSelected.descriptionOfIncident}
-<br>
-Staff who reported it:
-${incidentSelected.userReportedIncident.name}
-<br>
-<br>
-<br>
-<form action="finishAssignStaff" method="post">
-<table>
-<tr>
-<th>Staff ID</th>
-<th>Staff Name</th>
-<th>Staff Position</th>
-<th>Staff Roles</th>
-<th>Assign this staff to Incident</th>
-</tr>
-
-
-<c:forEach items="${listOfStaff}" var="user">
-<tr>
-<td><c:out value="${user.staffID}"/></td>
-<td><c:out value="${user.name}"/></td>
-<td><c:out value="${user.position}"/></td>
-<td><c:out value="${user.rolesToDo}"/></td>
-<td>
-<input type="checkbox"  name="staff" value="${user.staffID}" <c:if test="${fn:containsIgnoreCase(incidentSelected.assignedStaffIDInString,user.staffID)}">checked</c:if>>
-</td>
-</tr>
-</c:forEach>
-
-
-</table>
-<input type="submit" value="Assign Staff">
-</form>
-
-</body>
 </html>

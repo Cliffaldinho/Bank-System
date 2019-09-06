@@ -49,12 +49,17 @@ color:black
 	<div class="horizonta_nav">
 	  <a href="ListOfIncidents.jsp">Incidents</a>
 	  <a href="CreateIncidentReport.jsp">Report</a>
-	  <a href="RolesForStaff.jsp">Roles</a>
-	  <a href="index.jsp">Logout</a>
+	  <c:if test="${logAuth.authenticationLevel==1}">
+	  	<a href="RolesForStaff.jsp">Roles</a>
+	  </c:if>
+	   <form>
+	  	<a href="#" onclick="document.getElementById('account').submit();"> Account </a>
+	  </form>	
+	  <form>
+	  	<a href="#" onclick="document.getElementById('logOut').submit();"> Logout </a>
+	  </form>	  
 	</div>
-	<br>
-	<br>
-
+	
 	<div class="container">	
 		<h2>Set Staff Role</h2>
 
@@ -127,28 +132,29 @@ color:black
 		
 	
 	</div>
-<script>
-
-function validateForm() {
 	
-	if(document.getElementById("staffName").value=="") {
-		window.alert("Please enter a name."); 
-		return false;
+	<form id="logOut" action="userLogout" method="post"></form>
+	<form id="account" action="personalDetails" method="post"></form>
+	
+	<script>
+	
+	function validateForm() {
+		
+		if(document.getElementById("staffName").value=="") {
+			window.alert("Please enter a name."); 
+			return false;
+		}
+		
+		if(document.getElementById("staffAddress").value=="") {
+			window.alert("Please enter an address."); 
+			return false;
+		}
+		
+		if(document.getElementById("staffContactNumber").value=="") {
+			window.alert("Please enter a contact number."); 
+			return false;
+		}
 	}
-	
-	if(document.getElementById("staffAddress").value=="") {
-		window.alert("Please enter an address."); 
-		return false;
-	}
-	
-	if(document.getElementById("staffContactNumber").value=="") {
-		window.alert("Please enter a contact number."); 
-		return false;
-	}
-	
-
-
-}
-</script>
+	</script>
 </body>
 </html>

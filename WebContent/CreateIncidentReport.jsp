@@ -60,12 +60,17 @@ function validateForm() {
 	<div class="horizonta_nav">
 	  <a href="ListOfIncidents.jsp">Incidents</a>
 	  <a href="CreateIncidentReport.jsp" class="active">Report</a>
-	  <a href="RolesForStaff.jsp">Roles</a>
-	  <a href="index.jsp">Logout</a>
+	  <c:if test="${logAuth.authenticationLevel==1}">
+	  	<a href="RolesForStaff.jsp">Roles</a>
+	  </c:if>
+	   <form>
+	  	<a href="#" onclick="document.getElementById('account').submit();"> Account </a>
+	  </form>	
+	  <form>
+	  	<a href="#" onclick="document.getElementById('logOut').submit();"> Logout </a>
+	  </form>	  
 	</div>
-	<br>
-	<br>
-
+	
 	<div class="container">	
 		
 		<h2>Report Incident</h2>
@@ -87,20 +92,19 @@ function validateForm() {
 			<div class="container">
 				<div class="row">
 				    <div class="col-25">			    
-				      <label for="incidentCategory">Incident category</label>
+				    	<label for="incidentCategory">Incident category</label>
 				    </div>
-				    <div class="col-75">
-			    
-			    <c:forEach var="category" items="${reportCategory}">
-				<div class="row2">
-				<div class="col-75">			    
-				<label for="incidentCategory">${category.toString()}</label>
-				</div>
-				<div class="col-25">
-				<input type="radio" name="incidentCategory" value="${category}" ${category.toString()=="Regulatory Law"? "checked" : "" } >
-				</div>
-				</div>	
-			    </c:forEach>
+				    <div class="col-75">			    
+					    <c:forEach var="category" items="${reportCategory}">
+						<div class="row2">
+							<div class="col-75">			    
+								<label for="incidentCategory">${category.toString()}</label>
+							</div>
+							<div class="col-25">
+								<input type="radio" name="incidentCategory" value="${category}" ${category.toString()=="Regulatory Law"? "checked" : "" } >
+							</div>
+						</div>	
+					    </c:forEach>
 				    </div>
 				</div>	
 			</div>	
@@ -178,13 +182,12 @@ function validateForm() {
 			    </div>
 			</div>
 		</div>
-		
-		
-		
-		<br>
-		
+			
 		<input type="submit">
 		</form>
 	</div>
+	
+	<form id="logOut" action="userLogout" method="post"></form>
+	<form id="account" action="personalDetails" method="post"></form>
 </body>
 </html>
