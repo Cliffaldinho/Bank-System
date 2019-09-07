@@ -122,6 +122,7 @@ public class UserLoginServlet extends HttpServlet {
 			
 			if (userid.equals(id)){
 				if (password.equals(pw)){
+					if(UserDAO.getUserByStaffID(userid).isLocked()!=true) {
 					found = true;
 					
 					//username in staffBean = userID
@@ -142,10 +143,21 @@ public class UserLoginServlet extends HttpServlet {
 					
 					
 					req.getRequestDispatcher("prepareList").forward(req,res);
+					}
 				}
 			}
 		}	
 		if (!found){
+			
+			UserDAO.getUserByStaffID(userid).addFailedLoginCounter();
+			
+			out.println(UserDAO.getUserByStaffID(userid).getFailedLoginCounter());
+			boolean locked=UserDAO.getUserByStaffID(userid).isLocked();
+			
+			req.setAttribute("accountLocked", locked);
+			
+			
+			
 			req.setAttribute("loginError","Incorrect user ID or password.");
 			req.getRequestDispatcher("FailedUserLogin.jsp").forward(req,res);
 		}

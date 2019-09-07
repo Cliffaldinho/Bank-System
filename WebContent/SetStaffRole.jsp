@@ -169,6 +169,14 @@ text-align-last:center;
 				
 		</form>	
 		
+		<br>
+		<c:if test="${userSelected.locked}">
+		<form action="unlockAccount" method="post">
+		Account is locked
+		<br>
+		<input type="submit" value="Unlock Account">
+		</form>
+		</c:if>
 	
 	</div>
 	<script>
