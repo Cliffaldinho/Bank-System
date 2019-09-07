@@ -53,20 +53,24 @@
 	</div>
 	
 	<!-- if user is branch manager, show this  -->
+	
 	<div class="horizonta_nav">
-	  <a href="ListOfIncidents.jsp"">Incidents</a>
+	  <a href="ListOfIncidents.jsp">Incidents</a>
 	  <a href="CreateIncidentReport.jsp">Report</a>
 	  <c:if test="${logAuth.authenticationLevel==1}">
 	  	<a href="RolesForStaff.jsp">Roles</a>
 	  </c:if>
-	   <form>
+	  <form>
+	  	<a href="#" onclick="document.getElementById('statistics').submit();"> Statistics </a>
+	  </form>	
+	  <form>
 	  	<a href="#" onclick="document.getElementById('account').submit();"> Account </a>
 	  </form>	
 	  <form>
 	  	<a href="#" onclick="document.getElementById('logOut').submit();"> Logout </a>
 	  </form>	  
 	</div>
-										 
+	
 	<div class="container">
 	
 	<c:if test="${checkDuplicate}">
@@ -195,6 +199,7 @@
 	
 	<form id="logOut" action="userLogout" method="post"></form>
 	<form id="account" action="personalDetails" method="post"></form>
+	<form id="statistics" action="showStatistics" method="post"></form>
 	
 </body>
 </html>
