@@ -52,6 +52,7 @@
 	    </div>
 	  </div>
 	</div>
+
 	
 	<div class="horizonta_nav">
 	  <a href="ListOfIncidents.jsp" class="active">Incidents</a>
@@ -59,7 +60,10 @@
 	  <c:if test="${logAuth.authenticationLevel==1}">
 	  	<a href="RolesForStaff.jsp">Roles</a>
 	  </c:if>
-	   <form>
+	  <form>
+	  	<a href="#" onclick="document.getElementById('statistics').submit();"> Statistics </a>
+	  </form>	
+	  <form>
 	  	<a href="#" onclick="document.getElementById('account').submit();"> Account </a>
 	  </form>	
 	  <form>
@@ -146,6 +150,7 @@ List to have
 				<th>Day</th>
 				<th>Month</th>
 				<th>Year</th>
+				<th>Incident Status</th>
 				<th>Reporter</th>
 				<th>Staff Position</th>
 				<th>Keywords</th>
@@ -162,6 +167,7 @@ List to have
 				<td><c:out value="${report.incidentDateOfMonth}"/></td>
 				<td><c:out value="${report.incidentMonth}"/></td>
 				<td><c:out value="${report.incidentYear}"/></td>
+				<td><c:out value="${report.incidentStatus}"/></td>
 				<td><c:out value="${report.userReportedIncident.name}"/></td>
 				<td><c:out value="${report.userReportedIncident.position}"/></td>
 				<td><c:out value="${report.incidentKeywordsInString}"/></td>
@@ -184,17 +190,17 @@ List to have
 <form action="CreateIncidentReport.jsp" method="post">
 	<input type="submit" name="addIncident" value="Add Incident">
 </form>
-		
 <br>
-		
-</div>
+
 <!-- 
 	Naneth: replaced buttons from bottom of the page to horizontal navigation at the top of the page
 			but still need the forms for onclick event
 -->
 <form id="logOut" action="userLogout" method="post"></form>
 <form id="account" action="personalDetails" method="post"></form>
-	
+<form id="statistics" action="showStatistics" method="post"></form>
+
+
 <script>
 function incidentClicked(id,option) {
 var incidentID=id;
