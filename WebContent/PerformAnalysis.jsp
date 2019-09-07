@@ -100,10 +100,6 @@ Incident analyzing
 		</tr>
 	
 	</table>
-	
-	<br/>
-	<br/>
-	
 	<div class="container">
 	<h3>Simulations done for this incident</h3>
 	<c:choose>
@@ -113,14 +109,12 @@ Incident analyzing
 	<c:otherwise>
 	<c:forEach var="temp" items="${incidentSelected.postIncident.simulations}">
 	${temp}
-	<br>
-	<br>
+
 	</c:forEach>
 	</c:otherwise>
 	</c:choose>
 	</div>
-	<br>
-	<br>
+
 	<div class="container">
 		<h3>Root Cause Analysis</h3>
 		<form action="postAnalysis" method="post">
@@ -133,14 +127,11 @@ Incident analyzing
 	    			<textarea name="causes" placeholder="Please write the root cause.." style="height:200px"></textarea>
 			    </div>
 			</div>
-		
-		<br>
+
 		<input type="submit" name="finishAnalysis" value="Submit">
 		</form>
 	</div>
-	<br>
-	<br>
-	
+
 	<div class="container">
 	
 		<h3>Simulate incident with Root Cause changed</h3>		
