@@ -105,7 +105,6 @@ public class PrepareListServlet extends HttpServlet {
 		
 		aSession.setAttribute("listOfIncidents", printList);
 		req.getRequestDispatcher("ListOfIncidents.jsp").forward(req, res);
-		
 
 		
 	}
