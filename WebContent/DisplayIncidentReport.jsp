@@ -213,14 +213,22 @@
 			
 			<br>
 			
+			<c:if test="${incidentSelected.incidentStatus.toString()!='Strategy implemented'}">
 			<form action="PerformAnalysis.jsp" method="post">
 				<input type="submit" value="Analysis">
 			</form>
+			</c:if>
 			<br>
-			<form action="ImplementStrategy.jsp" method="post">
-			<input type="submit" value="Strategy"> 
+			
+			
+			<c:if test="${incidentSelected.incidentStatus.toString()=='Undergoing analysis'||
+			incidentSelected.incidentStatus.toString()=='Strategy implemented'}">
+				<form action="ImplementStrategy.jsp" method="post">
+					<input type="submit" value="Strategy"> 
 			<!--  <input type="button" value="Strategy" onclick="window.open('ImplementStrategy.jsp')">-->
 			</form>
+			</c:if>
+			
 		</c:if>
 	</div>
 	

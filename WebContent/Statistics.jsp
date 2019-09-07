@@ -54,7 +54,26 @@
 </tr>
 </c:forEach>
 </table>
+<br>
+<br>
 
+<table>
+<tr>
+<th>Incident ID</th>
+<th>Incident Title</th>
+<th>Incident Category</th>
+<th>Incident Causes</th>
+<th>Incident Solutions</th>
+<th>Risk Prevention Strategy</th>
+<th>Strategy Rating (Overall)</th>
+<th>Strategy Effectiveness</th>
+<th>Situation Improvement from Strategy</th>
+<th>Strategy Practicality</th>
+<th>Strategy Relevance to Incident</th>
+<th>Satisfaction of Strategy</th>
+
+</tr>
+</table>
 
 
 </body>

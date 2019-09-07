@@ -91,7 +91,7 @@ public class IncidentBean implements Serializable{
 		
 		Strategy {
 			public String toString() {
-				return "Strategy implementation";
+				return "Strategy implemented";
 			}
 		},
 		
