@@ -1,5 +1,7 @@
 package data;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -31,6 +33,7 @@ public class PostIncidentBean {
 	private String staffWhoRatedStrategy;	//used to make sure that each staff only rate an incident's strategy once
 
 
+	private Timestamp strategyTimestamp;
 
 	
 	public String getStaffWhoRatedStrategy() {
@@ -138,6 +141,11 @@ public class PostIncidentBean {
 
 	
 	public void setPossibleCausesOfIncident(String possibleCauses) {
+		
+		if(IncidentDAO.getIncidentByIncidentID(incidentID).getIncidentStatus().equals(IncidentBean.Status.Verified) ) {
+		IncidentDAO.getIncidentByIncidentID(incidentID).setIncidentStatus(IncidentBean.Status.Analysis);
+		}
+		
 		this.possibleCausesOfIncident = possibleCauses;
 	}
 	public String getPossibleSolutionsOfIncident() {
@@ -173,6 +181,27 @@ public class PostIncidentBean {
 	//counter to count the amount of ratings received. So as to get the average
 	public void setAmountOfRatingsReceived() {
 		amountOfRatingsReceived=amountOfRatingsReceived+1;
+		
+		
+		//If >= 50% of users in the user database have rated,
+		//Or if the incident status has been at strategy for more than two weeks, then it goes into archived
+		double amountOfUsers = UserDAO.getUsersListSize();
+		
+		double minRatingsNeeded=(amountOfUsers/2)/amountOfUsers; //need to be 50% to be archived
+		
+		double ratingsReceived = (double) amountOfRatingsReceived;
+		
+		double userVotePercentage=ratingsReceived/amountOfUsers;
+		
+		Timestamp currentTs = new Timestamp(System.currentTimeMillis());
+		
+		IncidentBean temp = new IncidentBean();
+		
+		int daysDifference =  temp.getDifferenceInDaysBetweenTwoTimeStamps(strategyTimestamp, currentTs);
+		
+		if(userVotePercentage>=minRatingsNeeded||daysDifference>14) {
+			IncidentDAO.getIncidentByIncidentID(incidentID).setIncidentStatus(IncidentBean.Status.Archived);
+		}
 	}
 	
 	public String getRiskForeseen() {
@@ -240,7 +269,10 @@ public class PostIncidentBean {
 	}
 
 	public void setStrategyImplemented(String implemented) {
+		
+		
 		this.strategyImplemented = implemented;
+		setStrategyTimeStamp();
 	}
 	
 	
@@ -358,7 +390,18 @@ public class PostIncidentBean {
 		ratingSatisfactionOfStrategy = satisfactionOneDecimal;
 	}
 	
+	//is setted in setStrategyImplemented() method
+	public void setStrategyTimeStamp() {
+		strategyTimestamp = new Timestamp(System.currentTimeMillis());
+	}
+	
+	public Timestamp getStrategyTimeStamp() {
+		return strategyTimestamp;
+	}
+	
 	//----------------------------------------------------------------------------------------------------------------------------------------
 	//End Methods for Strategy phase
+	
+
 
 }

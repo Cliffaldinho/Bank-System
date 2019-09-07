@@ -56,6 +56,7 @@ public class SetStrategyRatingsServlet extends HttpServlet {
 		
 		IncidentDAO.getIncidentByIncidentID(id).getPostIncident().setStaffWhoRatedStrategy(userID);
 
+		
 		req.getRequestDispatcher("DisplayIncidentReport.jsp").forward(req,res);
 
 		

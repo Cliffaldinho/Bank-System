@@ -34,6 +34,7 @@ public class LogoutServlet extends HttpServlet {
 		//this was to store a list of incidents (could be searched list, or sort list, or full list)
 		//the view is changed by prepareListServlet. Then ListOfIncidents.jsp only prints out the list attribute
 		aSession.removeAttribute("listOfIncidents");
+		aSession.removeAttribute("archivedList");
 		
 		//this was to store the list of staff 
 		//(was used in all the user servlets/jsps where needed to view full list of users)
@@ -60,6 +61,9 @@ public class LogoutServlet extends HttpServlet {
 		aSession.removeAttribute("staffName");
 		aSession.removeAttribute("staffAddress");
 		aSession.removeAttribute("staffContact");
+		
+		//this was used to store statistics stuff
+		aSession.removeAttribute("stats");
 		
 		req.getRequestDispatcher("index.jsp").forward(req,res);
 	}

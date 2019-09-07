@@ -20,7 +20,12 @@ public class StaffBean implements Serializable {
 	}
 	
 
+	public boolean isLocked() {
+		
+	boolean locked=getUserByUsername().isLocked();
 	
+	return locked;
+	}
 	public int getAuthenticationLevel() {
 		int authenticationLevel = -1;
 		for (int i = 0; i < UserDAO.getUsersList().size(); i++){

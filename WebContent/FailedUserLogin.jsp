@@ -1,9 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <%@ page import="data.IncidentBean" %>
-
-
-<%HttpSession aSession = request.getSession();%>
+    <%@ page import="data.UserDAO" %>
+    <%@ page import="data.IncidentDAO" %>
+    <%@ page import="data.*" %>
+     <%@ taglib
+    prefix="c"
+    uri="http://java.sun.com/jsp/jstl/core" 
+%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%
+	HttpSession aSession = request.getSession();
+%>
 <jsp:useBean id="logAuth" class="data.StaffBean" scope="session" />
      
 <!DOCTYPE html>
@@ -30,6 +37,14 @@
 
 <div class="container">		
 	<h2>User Login</h2>
+	
+	<c:if test="${accountLocked}">
+	<p style="color:red">
+	Oops. You have entered the incorrect password 3 times. Your account is now locked. Please contact administrator.
+	</p>
+	</c:if>
+	
+	<c:if test="${not accountLocked}">
 	<p style="color:red">
 	The username and password combination you have entered is incorrect. Please try again.
 	</p>
@@ -48,6 +63,7 @@
 		<input type="submit" name= "login" value="Login" />  
 		
 	</form>
+	</c:if>
 </div>
 
 

@@ -25,7 +25,7 @@ public class PrepareListServlet extends HttpServlet {
 		ArrayList<IncidentBean> printList = new ArrayList<IncidentBean>();
 		
 		//the list to be printed is gotten from database
-		printList=IncidentDAO.getIncidentsList();
+		printList=IncidentDAO.getNonArchivedList();
 		
 		//set attribute
 		aSession.setAttribute("listOfIncidents", printList);
@@ -98,14 +98,13 @@ public class PrepareListServlet extends HttpServlet {
 		} else {
 			
 			//the printed list is the original list
-			printList=IncidentDAO.getIncidentsList();
+			printList=IncidentDAO.getNonArchivedList();
 			
 			
 		}
 		
 		aSession.setAttribute("listOfIncidents", printList);
 		req.getRequestDispatcher("ListOfIncidents.jsp").forward(req, res);
-		
 
 		
 	}

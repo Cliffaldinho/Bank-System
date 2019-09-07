@@ -122,6 +122,7 @@ public class UserLoginServlet extends HttpServlet {
 			
 			if (userid.equals(id)){
 				if (password.equals(pw)){
+					if(UserDAO.getUserByStaffID(userid).isLocked()!=true) {
 					found = true;
 					
 					//username in staffBean = userID
@@ -134,18 +135,32 @@ public class UserLoginServlet extends HttpServlet {
 					aSession.setAttribute("isSearch", isSearch);
 					aSession.setAttribute("isSort", isSort);
 					
-					ArrayList<IncidentBean> incidentsList = IncidentDAO.getIncidentsList();
+					ArrayList<IncidentBean> incidentsList = IncidentDAO.getNonArchivedList();
 					aSession.setAttribute("listOfIncidents", incidentsList);
+					
+					ArrayList<IncidentBean> archivedList = IncidentDAO.getArchivedList();
+					aSession.setAttribute("archivedList",archivedList);
 					
 					ArrayList<UserBean> staffList = UserDAO.getUsersList();
 					aSession.setAttribute("listOfStaff", staffList);
 					
 					
 					req.getRequestDispatcher("prepareList").forward(req,res);
+					}
 				}
 			}
 		}	
 		if (!found){
+			
+			UserDAO.getUserByStaffID(userid).addFailedLoginCounter();
+			
+			out.println(UserDAO.getUserByStaffID(userid).getFailedLoginCounter());
+			boolean locked=UserDAO.getUserByStaffID(userid).isLocked();
+			
+			req.setAttribute("accountLocked", locked);
+			
+			
+			
 			req.setAttribute("loginError","Incorrect user ID or password.");
 			req.getRequestDispatcher("FailedUserLogin.jsp").forward(req,res);
 		}

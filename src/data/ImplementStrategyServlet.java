@@ -44,6 +44,9 @@ public class ImplementStrategyServlet extends HttpServlet {
 		//Set the strategy as has been entered = true
 		//So that the branch manager can only implement the strategy once
 		IncidentDAO.getIncidentByIncidentID(id).getPostIncident().setStrategyImplementedAlready();
+		
+		//Once strategy entered, Incident status updated
+		IncidentDAO.getIncidentByIncidentID(id).setIncidentStatus(IncidentBean.Status.Strategy);
 	
 		req.getRequestDispatcher("DisplayIncidentReport.jsp").forward(req,res);
 		

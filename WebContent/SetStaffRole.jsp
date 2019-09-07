@@ -21,27 +21,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <link rel="stylesheet" type="text/css" href="style.css" />
-<title>Set Staff Role</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script type="text/javascript">
-	function checkNotifications(){
-		setInterval(checkForNotifications, 10000);
-	}
-	
-	function checkForNotifications(){
-		$.ajax({
-			url: "notifications",
-			type: "post",
-			data: "<c:out value="${logAuth.username}"/>",
-			success: function(results) {
-				
-				if(results!="") {
-				alert(results); 
-				}
-			}
-	});
-	}
-</script>
+<title>Insert title here</title>
 <style>
 #staffPosition {
 text-align-last:center;
@@ -50,7 +30,7 @@ text-align-last:center;
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
 </head>
-<body onload="checkNotifications();">
+<body>
 	<div class="top-banner">
 	  <div class="row">
 	    <div class="col-75">
@@ -80,7 +60,7 @@ text-align-last:center;
 	  	<a href="#" onclick="document.getElementById('logOut').submit();"> Logout </a>
 	  </form>	  
 	</div>
-	
+
 	<div class="container">	
 		<h2>Set Staff Role</h2>
 	
@@ -114,14 +94,13 @@ text-align-last:center;
 					</td>
 					<td>
 					<!-- id used to align dropdown menu contents to center in css in head -->
-						<select name="position" id="staffPosition" >
-						<!-- userPosition is a list declared at the top -->
-						<c:forEach  var="element" items="${userPosition}">
-						<option value="${element}"  ${element==userSelected.position? 'selected="selected"' : "" }>
-						${element.toString()}
-						</option>
-						</c:forEach>
-							
+						<select class="selectInsideTable" name="position" id="staffPosition" >
+							<!-- userPosition is a list declared at the top -->
+							<c:forEach  var="element" items="${userPosition}">
+							<option value="${element}"  ${element==userSelected.position? 'selected="selected"' : "" }>
+								${element.toString()}
+							</option>
+							</c:forEach>
 						</select>
 					</td>
 				</tr>
@@ -175,14 +154,12 @@ text-align-last:center;
 					
 			</table>	
 			<input type="submit" name="setTheRole" value="Modify User/Role"><br>
-				
 		</form>	
 	</div>
-
-	<form id="logOut" action="userLogout" method="post"></form>
-	<form id="account" action="personalDetails" method="post"></form>
-	<form id="statistics" action="showStatistics" method="post"></form>
-
+	
+<form id="logOut" action="userLogout" method="post"></form>
+<form id="account" action="personalDetails" method="post"></form>
+<form id="statistics" action="showStatistics" method="post"></form>
 	<script>
 	</script>
 </body>

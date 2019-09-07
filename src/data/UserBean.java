@@ -33,7 +33,43 @@ public class UserBean implements java.io.Serializable{
 	
 	private Integer[] assignedIncidentsID;
 	
+	private int failedLoginCounter;
+	boolean locked;
 	
+	
+	public boolean isLocked() {
+		return locked;
+	}
+
+	public void setLocked(boolean lock) {
+		locked=lock;
+	}
+
+	public int getFailedLoginCounter() {
+		return failedLoginCounter;
+	}
+
+	public void setFailedLoginCounter(int failedLogin) {
+		this.failedLoginCounter = failedLogin;
+	}
+	
+	public void resetFailedLoginCounter() {
+		failedLoginCounter=0;
+	}
+	
+	public void addFailedLoginCounter() {
+		failedLoginCounter++;
+		
+		if(failedLoginCounter==3) {
+			lockAccount();
+			
+		}
+	}
+
+	public void lockAccount() {
+		locked=true;
+		failedLoginCounter=0;
+	}
 	
 	public void addAssignedIncidentsID(int id) {
 		
@@ -168,6 +204,9 @@ public class UserBean implements java.io.Serializable{
 		//ratedStrategy=false;
 		//password="password";
 		assignedIncidentsID = new Integer[0];
+		
+		failedLoginCounter=0;
+		locked=false;
 		
 	}
 
