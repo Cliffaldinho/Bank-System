@@ -72,7 +72,10 @@ color:black
 	  <c:if test="${logAuth.authenticationLevel==1}">
 	  	<a href="RolesForStaff.jsp">Roles</a>
 	  </c:if>
-	   <form>
+	  <form>
+	  	<a href="#" onclick="document.getElementById('statistics').submit();"> Statistics </a>
+	  </form>	
+	  <form>
 	  	<a href="#" onclick="document.getElementById('account').submit();"> Account </a>
 	  </form>	
 	  <form>
@@ -154,6 +157,7 @@ color:black
 	</div>
 	<form id="logOut" action="userLogout" method="post"></form>
 	<form id="account" action="personalDetails" method="post"></form>
+	<form id="statistics" action="showStatistics" method="post"></form>
 	
 <script>
 
