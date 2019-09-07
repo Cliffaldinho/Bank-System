@@ -44,7 +44,7 @@ h2
 
 h3 			
 {
-	color: #f4653d; 
+	color: #524723; 
 	clear:left;
 }
 
@@ -61,7 +61,7 @@ img {
 
 .likeH4 			
 {
-	color: #f4653d; 
+	color: #9c8841; 
 }
 
 
@@ -88,28 +88,37 @@ a:link
 	height: expression(this.height > 400 ? "400px" : true)
 }
 
-.horizonta_nav {
+.td2
+{
+	background: #dddddd;
+}
+
+.horizonta_nav 
+{
   width: 100%;
   background-color: #555;
   overflow: auto;
 }
 
-.horizonta_nav a {
+.horizonta_nav a 
+{
   float: left;
   text-transform: uppercase;
   padding: 0px;
   color: white;
   text-decoration: none;
   font-size: 17px;
-  width: 25%;
+  width: 16.6%;
   text-align: center;
 }
 
-.horizonta_nav a:hover {
+.horizonta_nav a:hover 
+{
   background-color: #000;
 }
 
-.horizonta_nav a.active {
+.horizonta_nav a.active 
+{
   background-color: #a58f21;
 }
 
@@ -158,7 +167,7 @@ nav a:hover
 	border-width: thick; 
 	padding: 5mm; 
 	margin-right: 3mm;
-	border-color: #fcc9ba;
+	border-color: #9c8841;
 }
 
 .floatL2 	
@@ -180,7 +189,7 @@ div
 	border-style: solid; 
 	border-width: thin; 
 	margin: auto;
-	border-color: #fcc9ba;
+	border-color: #9c8841;
   	border-radius: 5px;
 	padding: 20px;
 }
@@ -193,7 +202,7 @@ div
 	border-style: solid; 
 	border-width: thin; 
 	margin: 20px;
-	border-color: #fcc9ba;
+	border-color: #9c8841;
 	width: expression(this.width > 400 ? "400px" : true);
 	height: expression(this.height > 400 ? "400px" : true)
 }
@@ -211,10 +220,23 @@ label {
 	margin-top: 6px;
 }
 
+.col-50 {
+	float: left;
+	width: 50%;
+	margin-top: 6px;
+}
+
 .col-75 {
 	float: left;
 	width: 75%;
 	margin-top: 6px;
+}
+	
+.col-center {
+	text-align: center;
+	width: 100%;
+	margin-top: auto;
+	background-color: #f9bab0;
 }
 
 /* Clear floats after the columns */
@@ -231,7 +253,7 @@ label {
 	border-style: solid; 
 	border-width: thin; 
 	margin: 2px;
-	border-color: #fcc9ba;
+	border-color: #9c8841;
 	width: expression(this.width > 400 ? "400px" : true);
 	height: expression(this.height > 400 ? "400px" : true)
 }
@@ -261,22 +283,36 @@ label {
 	margin: 2mm;
 }
 
+.selectInsideTable
+{
+	margin: 0px 0;
+	padding: 0px;
+	width: 50%;
+}
+
 select
 {
 	font-size: .9em;
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 	padding-left: 2mm;
+	margin: 8px 0;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 9.5px;
+	border: 2px solid #9c8841;
+	border-radius: 4px;
+	resize: vertical;
 }
 
-input[type='text'], input[type='password'], select, textarea {
+input[type='text'], input[type='password'], textarea {
   	font-size: .9em;
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 	padding-left: 2mm;
 	margin: 8px 0;
 	box-sizing: border-box;
 	width: 100%;
-	padding: 12px;
-	border: 2px solid #d15714;
+	padding: 10.5px;
+	border: 2px solid #9c8841;
 	border-radius: 4px;
 	resize: vertical;
 }
@@ -320,6 +356,19 @@ button:hover
 	text-decoration: underline;
 }
 
+.makeButtonLookLikeLink 
+{
+	background: none!important;
+	border: none;
+	padding: 0!important;
+	/*optional*/
+	font-family: arial, sans-serif;
+	/*input has OS specific font-family*/
+	color: #069;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
 input[type='submit'], [type='button']
 {
 	font-size: 1.2em;
@@ -354,7 +403,7 @@ input[type='reset']
 	border-style: solid; 
 	border-width: thin; 
 	padding: 2mm;
-	border-color: #fcc9ba;
+	border-color: #9c8841;
 }
 
 em 			
@@ -367,7 +416,7 @@ span
 	border-style: solid; 
 	border-width: thin; 
 	margin: 2mm;
-	border-color: #fcc9ba
+	border-color: #9c8841
 }
 
 #req
