@@ -61,6 +61,9 @@ public class LogoutServlet extends HttpServlet {
 		aSession.removeAttribute("staffAddress");
 		aSession.removeAttribute("staffContact");
 		
+		//this was used to store statistics stuff
+		aSession.removeAttribute("stats");
+		
 		req.getRequestDispatcher("index.jsp").forward(req,res);
 	}
 	

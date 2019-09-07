@@ -7,7 +7,7 @@
     prefix="c"
     uri="http://java.sun.com/jsp/jstl/core" 
 %>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
 	HttpSession aSession = request.getSession();
 %>
@@ -89,6 +89,11 @@
 				<td style="background: #dddddd">Incident date:</td>
 				<td>${incidentSelected.dateTimeFromTimeStamp}</td>
 			</tr>
+			
+			<tr>
+			<td style="background: #dddddd">Incident Status</td>
+			<td>${incidentSelected.incidentStatus.toString()}</td>
+			</tr>
 		
 			<tr>
 				<td style="background: #dddddd">Description of incident:</td>
@@ -132,6 +137,11 @@
 			<td>${incidentSelected.assignedStaffNameAndPosition}</td>
 			</tr>
 		
+			<tr>
+			<td style="background: #dddddd">Solution implemented:</td>
+			<td>${incidentSelected.solutionImplemented}</td>
+			</tr>
+			
 			<tr>
 				<td style="background: #dddddd">Possible causes:</td>
 				<td>${incidentSelected.postIncident.possibleCausesOfIncident}</td>
@@ -178,6 +188,31 @@
 				</form>
 				<br>
 			</c:if>
+			
+			<form action="updateIncidentStatus" method="post">
+			
+			<!-- Test if Incident has been assigned to a staff -->
+			<c:if test="${incidentSelected.incidentStatus.toString()=='Staff Assigned'}">
+			<!-- Test if the user viewing this report is one of the staff assigned, or is the branch manager -->
+				<c:if test="${(fn:containsIgnoreCase(incidentSelected.assignedStaffNameAndPosition,logAuth.staffName))||
+				(logAuth.authenticationLevel==1)}">
+					Solution implemented:
+					<input type="text" name="solution">
+					<br>
+					<input type="submit" name="status" value="Incident fixed">
+				</c:if>
+			</c:if>
+			
+			<c:if test="${incidentSelected.incidentStatus.toString()=='Incident fixed'&&
+			logAuth.authenticationLevel==1}">
+				<input type="submit" name="status" value="Solution verified">
+				<input type="submit" name="status" value="Solution not verified">
+			</c:if>
+			
+			</form>
+			
+			<br>
+			
 			<form action="PerformAnalysis.jsp" method="post">
 				<input type="submit" value="Analysis">
 			</form>

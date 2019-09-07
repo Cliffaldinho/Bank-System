@@ -1,5 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    	<%@ page import="java.util.*" %>
+    <%@ page import="data.UserDAO" %>
+    <%@ page import="data.IncidentDAO" %>
+    <%@ page import = "data.UserBean" %>
+    <%@ page import = "data.*" %>
+         <%@taglib
+    prefix="c"
+    uri="http://java.sun.com/jsp/jstl/core" 
+%>
+<%    pageContext.setAttribute("incidentCategoriesStatistics", data.IncidentBean.Category.values()); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,6 +37,25 @@
 </script>
 </head>
 <body onload="checkNotifications();">
+
+<table>
+<tr>
+<th>Category</th>
+<th>Amount of Incidents</th>
+<th>Percentage among all Incidents</th>
+</tr>
+<c:set var="categoryAmount" value="${stats.categoryAmount}"/>
+<c:set var="categoryPercentage" value="${stats.categoryPercentage}"/>
+<c:forEach begin="0" end="5" varStatus="loop">
+<tr>
+<td>${incidentCategoriesStatistics[loop.index].toString()}</td>
+<td>${stats.categoryAmount[loop.index]}</td>
+<td>${stats.categoryPercentage[loop.index]}</td>
+</tr>
+</c:forEach>
+</table>
+
+
 
 </body>
 </html>

@@ -138,6 +138,11 @@ public class PostIncidentBean {
 
 	
 	public void setPossibleCausesOfIncident(String possibleCauses) {
+		
+		if(IncidentDAO.getIncidentByIncidentID(incidentID).getIncidentStatus().equals(IncidentBean.Status.Verified) ) {
+		IncidentDAO.getIncidentByIncidentID(incidentID).setIncidentStatus(IncidentBean.Status.Analysis);
+		}
+		
 		this.possibleCausesOfIncident = possibleCauses;
 	}
 	public String getPossibleSolutionsOfIncident() {

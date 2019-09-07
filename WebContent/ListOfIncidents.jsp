@@ -148,6 +148,7 @@ List to have
 				<th>Day</th>
 				<th>Month</th>
 				<th>Year</th>
+				<th>Incident Status</th>
 				<th>Reporter</th>
 				<th>Staff Position</th>
 				<th>Keywords</th>
@@ -164,6 +165,7 @@ List to have
 				<td><c:out value="${report.incidentDateOfMonth}"/></td>
 				<td><c:out value="${report.incidentMonth}"/></td>
 				<td><c:out value="${report.incidentYear}"/></td>
+				<td><c:out value="${report.incidentStatus}"/></td>
 				<td><c:out value="${report.userReportedIncident.name}"/></td>
 				<td><c:out value="${report.userReportedIncident.position}"/></td>
 				<td><c:out value="${report.incidentKeywordsInString}"/></td>
@@ -193,7 +195,10 @@ List to have
 <input type="submit" name = "details" value="Personal details">
 </form>
 <br>
-
+<form action="showStatistics" method="post">
+<input type="submit" name = "stats" value="Statistics">
+</form>
+<br>
 <form action="userLogout" method="post">
 	<input type="submit" value="Log Out">
 </form>

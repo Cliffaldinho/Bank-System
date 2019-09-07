@@ -34,8 +34,11 @@ public class IncidentBean implements Serializable{
 	private Timestamp ts;
 	private Status incidentStatus;
 	private boolean read;
+	private String solutionImplemented;
 	
 	
+
+
 
 	//---------------------------------------
 	//Assigned phase
@@ -145,6 +148,7 @@ public class IncidentBean implements Serializable{
 		setIncidentMonth();
 		setIncidentYear();
 		staffAssigned= new String[0];
+		solutionImplemented="";
 		
 	}
 	
@@ -602,6 +606,10 @@ public class IncidentBean implements Serializable{
 		
 		//store the user ids of staff assigned, in the IncidentBean
 		staffAssigned=staff;
+		
+		if(staffAssigned.length!=0) {
+			setIncidentStatus(Status.Assigned);
+		}
 	}
 	
 	//gets the assigned staff name and position
@@ -695,5 +703,15 @@ public class IncidentBean implements Serializable{
 	public void setRead() {
 		this.read = true;
 	}
+	
+	public String getSolutionImplemented() {
+		return solutionImplemented;
+	}
+
+
+	public void setSolutionImplemented(String solution) {
+		solutionImplemented = solution;
+	}
+
 
 }

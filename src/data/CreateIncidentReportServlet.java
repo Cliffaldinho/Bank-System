@@ -1,6 +1,9 @@
 package data;
 
 import javax.servlet.http.*;
+
+import data.IncidentBean.Status;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.*;
@@ -108,6 +111,8 @@ public class CreateIncidentReportServlet extends HttpServlet {
 		IncidentBean.Priority priority=IncidentBean.Priority.valueOf(tempPriority);
 		anIncident.setPriorityRating(priority);
 		
+		//Set Status for Incident
+		anIncident.setIncidentStatus(Status.New);
 	
 		
 		//Detect Duplicates
