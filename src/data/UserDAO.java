@@ -31,7 +31,7 @@ public class UserDAO{
 	public static int getUserCounter() {
 		return userCounter;
 	}
-	
+
 	public static void setUserCounter(int counter) {
 		userCounter=counter;
 	}

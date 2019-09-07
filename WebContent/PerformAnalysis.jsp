@@ -172,10 +172,19 @@ Incident analyzing
 	<input type="submit" value="View Report">
 	</form>
 	<br>
-	<form action="ImplementStrategy.jsp" method="post">
-	<input type="submit" value="Strategy"> 
-	<!--  <input type="button" value="Strategy" onclick="window.open('ImplementStrategy.jsp')">-->
-	</form>
+		<!-- Test if person logged in is general staff during period when strategy is implemented, or if person is branch manager -->
+		<c:if test="${(logAuth.authenticationLevel!=1&&incidentSelected.postIncident.strategyImplementedAlready==true)||
+		logAuth.authenticationLevel==1}">
+			<!-- Test if incident is in Analysis phase or Strategy phase or Archived phase -->
+			<c:if test="${incidentSelected.incidentStatus.toString()=='Undergoing analysis'||
+			incidentSelected.incidentStatus.toString()=='Strategy implemented'||
+			incidentSelected.incidentStatus.toString()=='Archived'}">
+				<form action="ImplementStrategy.jsp" method="post">
+					<input type="submit" value="Strategy"> 
+					<!--  <input type="button" value="Strategy" onclick="window.open('ImplementStrategy.jsp')">-->
+				</form>
+			</c:if>
+		</c:if>
 </div>
 </body>
 </html>

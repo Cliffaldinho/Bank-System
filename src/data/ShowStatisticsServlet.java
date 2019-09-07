@@ -21,6 +21,7 @@ public class ShowStatisticsServlet extends HttpServlet {
 		
 		aSession.setAttribute("stats", stats);
 		
+		
 		req.getRequestDispatcher("Statistics.jsp").forward(req, res);
 	}
 }

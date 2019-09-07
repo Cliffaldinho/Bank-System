@@ -183,13 +183,17 @@
 		
 		<c:if test="${not checkDuplicate}">
 			<c:if test="${logAuth.authenticationLevel==1}">
-				<form action="AssignStaffToIncident.jsp" method="post">
-					<input type="submit" value="Assign Staff">
-				</form>
+				<c:if test="${incidentSelected.incidentStatus.toString()=='New Incident'||
+				incidentSelected.incidentStatus.toString()=='Staff Assigned'||
+				incidentSelected.incidentStatus.toString()=='Incident fixed'}">
+					<form action="AssignStaffToIncident.jsp" method="post">
+						<input type="submit" value="Assign Staff">
+					</form>
+				</c:if>
 				<br>
 			</c:if>
 			
-			<form action="updateIncidentStatus" method="post">
+			<form action="updateIncidentStatus" method="post" onSubmit="return validateForm()">
 			
 			<!-- Test if Incident has been assigned to a staff -->
 			<c:if test="${incidentSelected.incidentStatus.toString()=='Staff Assigned'}">
@@ -197,9 +201,9 @@
 				<c:if test="${(fn:containsIgnoreCase(incidentSelected.assignedStaffNameAndPosition,logAuth.staffName))||
 				(logAuth.authenticationLevel==1)}">
 					Solution implemented:
-					<input type="text" name="solution">
+					<input type="text" name="solution" id="solutionProvided">
 					<br>
-					<input type="submit" name="status" value="Incident fixed">
+					<input type="submit" name="status" id="fixedIncident" value="Incident fixed">
 				</c:if>
 			</c:if>
 			
@@ -213,25 +217,42 @@
 			
 			<br>
 			
-			<c:if test="${incidentSelected.incidentStatus.toString()!='Strategy implemented'}">
+			<c:if test="${incidentSelected.incidentStatus.toString()!='Strategy implemented'&&
+			incidentSelected.incidentStatus.toString()!='Archived'}">
 			<form action="PerformAnalysis.jsp" method="post">
 				<input type="submit" value="Analysis">
 			</form>
 			</c:if>
 			<br>
 			
-			
-			<c:if test="${incidentSelected.incidentStatus.toString()=='Undergoing analysis'||
-			incidentSelected.incidentStatus.toString()=='Strategy implemented'}">
-				<form action="ImplementStrategy.jsp" method="post">
-					<input type="submit" value="Strategy"> 
-			<!--  <input type="button" value="Strategy" onclick="window.open('ImplementStrategy.jsp')">-->
-			</form>
+			<!-- Test if person logged in is general staff during period when strategy is implemented, or if person is branch manager -->
+			<c:if test="${(logAuth.authenticationLevel!=1&&incidentSelected.postIncident.strategyImplementedAlready==true)||
+			logAuth.authenticationLevel==1}">
+				<!-- Test if incident is in Analysis phase or Strategy phase or Archived phase -->
+				<c:if test="${incidentSelected.incidentStatus.toString()=='Undergoing analysis'||
+				incidentSelected.incidentStatus.toString()=='Strategy implemented'||
+				incidentSelected.incidentStatus.toString()=='Archived'}">
+					<form action="ImplementStrategy.jsp" method="post">
+						<input type="submit" value="Strategy"> 
+						<!--  <input type="button" value="Strategy" onclick="window.open('ImplementStrategy.jsp')">-->
+					</form>
 			</c:if>
-			
+			</c:if>
 		</c:if>
 	</div>
 	
+<script>
+function validateForm() {
+	if(document.activeElement.getAttribute('value')=="Incident fixed") {
+		var solved = document.getElementById('solutionProvided').value;
+			if(solved=="") {
+			alert("Please enter the solution.");
+			return false;
+			}
+	}
 	
+	return true;
+}
+</script>
 </body>
 </html>

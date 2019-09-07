@@ -22,7 +22,11 @@ public class IncidentBean implements Serializable{
 	//------------------------------------
 	//New phase
 	private int incidentID;
-	private UserBean userReportedIncident;//can be converted to String
+	private String userReportedID;//user who reported the incident
+
+
+
+	//private UserBean userReportedIncident;//can be converted to String
 	private String incidentTitle;
 	private Category incidentCategory;
 	private int incidentDateOfMonth;
@@ -35,6 +39,8 @@ public class IncidentBean implements Serializable{
 	private Status incidentStatus;
 	private boolean read;
 	private String solutionImplemented;
+	
+	
 	
 	
 
@@ -158,6 +164,17 @@ public class IncidentBean implements Serializable{
 	//Methods for New phase
 	//-----------------------------------------------------------------------------------------------------------------------------------------
 	
+	public String getUserReportedID() {
+		return userReportedID;
+	}
+
+
+
+
+	public void setUserReportedID(String id) {
+		this.userReportedID = id;
+	}
+	
 	
 	public Status getIncidentStatus() {
 		return incidentStatus;
@@ -256,6 +273,20 @@ public class IncidentBean implements Serializable{
 	}
 	
 	
+
+	
+	/**public String getDateTimeFromInputtedTimeStamp(Timestamp timestamp) {
+		
+		LocalDateTime dateTime=	timestamp.toLocalDateTime();
+		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		
+		String printDateTime=dateTime.format(formatter);
+		
+		return printDateTime;
+	}*/
+	
+	
 	public void setTimeStamp() {
 		
 		ts = new Timestamp(System.currentTimeMillis());
@@ -266,6 +297,17 @@ public class IncidentBean implements Serializable{
 		return ts;
 	}
 	
+	public int getDifferenceInDaysBetweenTwoTimeStamps(Timestamp tsOne,Timestamp tsTwo) {
+		LocalDateTime dateTimeOne = tsOne.toLocalDateTime();
+		LocalDateTime dateTimeTwo = tsTwo.toLocalDateTime();
+		
+		long diff = ChronoUnit.DAYS.between(dateTimeOne, dateTimeTwo);
+		
+		int difference= (int) diff;
+		
+		return difference;
+		
+	}
 	public String getDateTimeFromTimeStamp() {
 		
 		LocalDateTime dateTime=	ts.toLocalDateTime();
@@ -286,11 +328,13 @@ public class IncidentBean implements Serializable{
 	}
 	
 	public UserBean getUserReportedIncident() {
-		return userReportedIncident;
+		UserBean user = UserDAO.getUserByStaffID(userReportedID);
+		return user;
 	}
 
 	public void setUserReportedIncident(UserBean u) {
-		this.userReportedIncident=u;
+		String userID = u.getStaffID();
+		userReportedID=userID;
 	}
 	
 	public String[] getIncidentKeywords() {

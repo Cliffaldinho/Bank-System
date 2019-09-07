@@ -81,6 +81,8 @@
 
 	<div class="container">
 		<h2>People ratings of Strategy</h2>
+		<br>
+		Amount of People who have rated:${incidentSelected.postIncident.amountOfRatingsReceived}
 		<table style="table-layout:fixed">
 			<tr>
 				<td class="td2">Overall:</td>

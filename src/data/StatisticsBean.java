@@ -152,4 +152,20 @@ public class StatisticsBean implements Serializable{
 		
 	}
 	
+	public ArrayList<IncidentBean> getArchivedList() {
+		
+		ArrayList<IncidentBean> archivedList = new ArrayList<>();
+		ArrayList<IncidentBean> allIncidentsList = IncidentDAO.getIncidentsList();
+		
+		for(int i=0;i<allIncidentsList.size();i++) {
+			
+		if(allIncidentsList.get(i).getIncidentStatus().equals(IncidentBean.Status.Archived)) {
+			IncidentBean incident = allIncidentsList.get(i);
+			archivedList.add(incident);
+		}
+		
+		}
+		return archivedList;
+	}
+	
 }

@@ -57,24 +57,55 @@
 <br>
 <br>
 
+<form name="list" action="displayIncidentReport" method="post">
 <table>
 <tr>
-<th>Incident ID</th>
-<th>Incident Title</th>
-<th>Incident Category</th>
-<th>Incident Causes</th>
-<th>Incident Solutions</th>
-<th>Risk Prevention Strategy</th>
-<th>Strategy Rating (Overall)</th>
-<th>Strategy Effectiveness</th>
-<th>Situation Improvement from Strategy</th>
-<th>Strategy Practicality</th>
-<th>Strategy Relevance to Incident</th>
-<th>Satisfaction of Strategy</th>
-
+	<th>Incident ID</th>
+	<th>Incident Title</th>
+	<th>Incident Category</th>
+	<th>Incident Causes</th>
+	<th>Incident Solutions</th>
+	<th>Risk Prevention Strategy</th>
+	<th>Strategy Rating (Overall)</th>
+	<th>Strategy Effectiveness</th>
+	<th>Situation Improvement from Strategy</th>
+	<th>Strategy Practicality</th>
+	<th>Strategy Relevance to Incident</th>
+	<th>Satisfaction of Strategy</th>
+	<th>Incident Details</th>
 </tr>
+<c:forEach items="${stats.archivedList}" var="report" varStatus="loop">
+	<td><c:out value="${report.incidentID}"/></td>
+	<td><c:out value="${report.incidentTitle}"/></td>
+	<td><c:out value="${report.incidentCategory}"/></td>
+	<td><c:out value="${report.postIncident.possibleCausesOfIncident}"/></td>
+	<td><c:out value="${report.postIncident.possibleSolutionsOfIncident}"/></td>
+	<td><c:out value="${report.postIncident.strategyImplemented}"/></td>
+	<td><c:out value="${report.postIncident.ratingOverall}"/></td>
+	<td><c:out value="${report.postIncident.ratingEffectiveness}"/></td>
+	<td><c:out value="${report.postIncident.ratingImprovementFromSituationBefore}"/></td>
+	<td><c:out value="${report.postIncident.ratingPractical}"/></td>
+	<td><c:out value="${report.postIncident.ratingRelevanceToIncident}"/></td>
+	<td><c:out value="${report.postIncident.ratingSatisfactionOfStrategy}"/></td>
+	<td><input type="submit" value="View Incident" id="View" onClick="incidentClicked(${report.incidentID},this.id)"></td>
+</c:forEach>
 </table>
+<input type="hidden" name="chosen" id="storeOptionChosen" value="three"  > 
+<input type="hidden" name="clicked" id="storeIncidentClicked" value="five">
+</form>
+<br>
 
+<form action="prepareList" method="post">
+<input type="submit" name="incidentsList" value="Incidents List">
+</form>
 
+<script>
+function incidentClicked(id,option) {
+var incidentID=id;
+var optionChosen=option;
+document.getElementById("storeIncidentClicked").value=incidentID;
+document.getElementById("storeOptionChosen").value=optionChosen;
+}
+</script>
 </body>
 </html>
