@@ -155,7 +155,9 @@ List to have
 				<th>Staff Position</th>
 				<th>Keywords</th>
 				<th>Details</th>
-
+				<c:if test="${logAuth.authenticationLevel==1}">
+					<th>Close Incident</th>
+				</c:if>
 			</tr>
 			<c:forEach items="${listOfIncidents}" var="report" varStatus="loop">
 			<tr>
@@ -170,7 +172,9 @@ List to have
 				<td><c:out value="${report.userReportedIncident.position}"/></td>
 				<td><c:out value="${report.incidentKeywordsInString}"/></td>
 				<td><input type="submit" value="View Incident" id="View" onClick="incidentClicked(${report.incidentID},this.id)"></td>
-
+				<c:if test="${logAuth.authenticationLevel==1}">
+					<td><input type="submit" value="Close Incident" id="Close" onClick="incidentClicked(${report.incidentID},this.id)"></td>
+				</c:if>
 			</tr>
 			</c:forEach>
 			
@@ -180,13 +184,9 @@ List to have
 	</div>
 
 </form>
-<br>
-
-<br>
 <form action="CreateIncidentReport.jsp" method="post">
 	<input type="submit" name="addIncident" value="Add Incident">
 </form>
-<br>
 
 <!-- 
 	Naneth: replaced buttons from bottom of the page to horizontal navigation at the top of the page
