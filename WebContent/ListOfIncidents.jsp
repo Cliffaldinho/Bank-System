@@ -184,13 +184,9 @@ List to have
 	</div>
 
 </form>
-<br>
-
-<br>
 <form action="CreateIncidentReport.jsp" method="post">
 	<input type="submit" name="addIncident" value="Add Incident">
 </form>
-<br>
 
 <!-- 
 	Naneth: replaced buttons from bottom of the page to horizontal navigation at the top of the page
