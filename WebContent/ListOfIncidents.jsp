@@ -198,7 +198,7 @@ List to have
 -->
 <form id="logOut" action="userLogout" method="post"></form>
 <form id="account" action="personalDetails" method="post"></form>
-<form action="showStatistics" method="post"></form>
+<form id="statistics" action="showStatistics" method="post"></form>
 
 
 <script>
