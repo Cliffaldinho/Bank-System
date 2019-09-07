@@ -54,7 +54,7 @@
 	</div>
 	
 	<!-- if user is branch manager, show this  -->
-	<div class="horizonta_nav">
+		<div class="horizonta_nav">
 	  <a href="ListOfIncidents.jsp">Incidents</a>
 	  <a href="CreateIncidentReport.jsp" class="active">Report</a>
 	  <c:if test="${logAuth.authenticationLevel==1}">
@@ -191,11 +191,6 @@
 		<input type="submit">
 		</form>
 	</div>
-	
-	<form id="logOut" action="userLogout" method="post"></form>
-	<form id="account" action="personalDetails" method="post"></form>
-	<form id="statistics" action="showStatistics" method="post"></form>
-	
 	<script>
 
 function validateForm() {
