@@ -1,24 +1,34 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@ page import="data.UserDAO" %>
-    <%@ page import="data.IncidentDAO" %>   
-             <%@taglib
+    <%@ page import="data.*" %>
+    <%@page import="data.UserBean.Position"%>
+    <%@taglib
     prefix="c"
     uri="http://java.sun.com/jsp/jstl/core" 
 %>
-    
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%    pageContext.setAttribute("userPosition", data.UserBean.Position.values()); %>
+<%    pageContext.setAttribute("userRoles", data.IncidentBean.Category.values()); %>
+
 <%
-       	HttpSession aSession = request.getSession();
-       %>
-<jsp:useBean id="logAuth" class="data.StaffBean" scope="session" /> 
-
-
+	HttpSession aSession = request.getSession();
+%>
+<jsp:useBean id="logAuth" class="data.StaffBean" scope="session" />
+    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
 <link rel="stylesheet" type="text/css" href="style.css" />
-<title>Roles for Staff</title>
+<title>Insert title here</title>
+<style>
+#staffPosition {
+text-align-last:center;
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
 </head>
 <body>
 	<div class="top-banner">
@@ -32,11 +42,13 @@
 	  </div>
 	</div>
 	
+	<!-- if user is branch manager, show this  -->
+	
 	<div class="horizonta_nav">
 	  <a href="ListOfIncidents.jsp">Incidents</a>
 	  <a href="CreateIncidentReport.jsp">Report</a>
 	  <c:if test="${logAuth.authenticationLevel==1}">
-	  	<a href="RolesForStaff.jsp" class="active">Roles</a>
+	  	<a href="RolesForStaff.jsp">Roles</a>
 	  </c:if>
 	  <form>
 	  	<a href="#" onclick="document.getElementById('statistics').submit();"> Statistics </a>
@@ -48,91 +60,107 @@
 	  	<a href="#" onclick="document.getElementById('logOut').submit();"> Logout </a>
 	  </form>	  
 	</div>
-	
-	<div class="container">	
-		<h2>View Staff</h2>
-		
-		<!-- Staff name, Staff position, Staff id -->
 
-		<form name="staffRole" action="defineRolesForStaff" method="post">
-			<table>
+	<div class="container">	
+		<h2>Set Staff Role</h2>
+	
+		 <form action="finishDefineStaffRole" method="post">
+		<!--   <input type="hidden" name="index" value="<%//out.println(staff);%>">-->
+		<table>
 				<tr>
-					
-					<th>
-						Staff ID
-					</th>
-					<th>
-						Staff name
-					</th>
-					<th>
-						Staff position
-					</th>
-					<th>
-						Current roles
-					</th>
-					<th>
-						Modify staff/role
-					</th>
-					<th>
-						Delete staff
-					</th>
+					<td style="background: #dddddd">
+						Staff ID:
+					</td>
+					<td>
+						${userSelected.staffID }
+						<!--  <input type="text" name="id" value="<%//out.println(staffID);%>">"-->
+						<!-- input with value being what is wanted to be shown -->
+					</td>
+				</tr>
+				<tr>
+					<td style="background: #dddddd">
+						Staff Name:
+					</td>
+					<td>
+						${userSelected.name}
+						<!--  <input type="text" name="name" value="<%//out.println(staffName);%>">-->
+					</td>
 				</tr>
 				
-				<c:forEach items="${listOfStaff }" var="user">
+				
 				<tr>
-					<td>
-						<c:out value="${user.staffID}"/>
+					<td style="background: #dddddd">
+						Staff Position:
 					</td>
 					<td>
-						<c:out value="${user.name}"/>
-					</td>
-
-					<td>
-						<c:out value="${user.position}"/>
-					</td>
-					<td>
-						<c:out value="${user.rolesToDo}"/>
-					</td>
-					<td>
-					<input type="submit" value="Modify Staff Role" id="Modify" onClick="userClicked('${user.staffID}',this.id)">
-					</td>
-					<td>
-					<input type="submit" value="Delete User" id="Delete" onClick="userClicked('${user.staffID}',this.id)">
+					<!-- id used to align dropdown menu contents to center in css in head -->
+						<select class="selectInsideTable" name="position" id="staffPosition" >
+							<!-- userPosition is a list declared at the top -->
+							<c:forEach  var="element" items="${userPosition}">
+							<option value="${element}"  ${element==userSelected.position? 'selected="selected"' : "" }>
+								${element.toString()}
+							</option>
+							</c:forEach>
+						</select>
 					</td>
 				</tr>
-				</c:forEach>
-			</table>
-		<input type="hidden" name="userChosen" id="storeUser" value="three"  > 
-		<input type="hidden" name="actionChosen" id="storeAction" value="five">
-		</form>
-		
-		<form action="CreateUser.jsp">
-			<input type="submit" name="newUser" value="Create New User">
-		</form>
-		
-		<!-- 
-			Naneth: I removed the button to go to the incident list coz we already
-					have it in the horizontal navigation at the top of the page. 
-													
-					<form action="ListOfIncidents.jsp">
-						<input type="submit" name="theIncidentsList" value="List">
-					</form>
-		-->
+				
+				<tr>
+					<td style="background: #dddddd">
+						Contact Number:
+					</td>
+					<td>
+					${userSelected.contactNumber}
+					</td>
+				</tr>
+				
+				<tr>
+					<td style="background: #dddddd">
+						Address:
+					</td>
+					<td>
+						${userSelected.address}
+					</td>
+				</tr>
+				
+				<tr>
+					<td style="background: #dddddd">
+						Current Role:
+					</td>
+					<td>
+					${userSelected.rolesToDo}
+					</td>
+				</tr>				
+		</table> 
+		<br>
+			<table>
+				
+					<tr>
+						<th colspan="2">
+							Set New Role:
+						</th>
+					</tr>
+					
+					<c:forEach var="options" items="${userRoles}">
+					<tr>
+					<td>
+					${options.toString()}
+					</td>
+					<td>
+					<input type="checkbox" name="roles" value="${options.toString()}" <c:if test="${fn:containsIgnoreCase(userSelected.rolesToDo,options.toString())}">checked</c:if> >
+					</td>
+					</tr>
+					</c:forEach>
+					
+			</table>	
+			<input type="submit" name="setTheRole" value="Modify User/Role"><br>
+		</form>	
 	</div>
-	
 	
 <form id="logOut" action="userLogout" method="post"></form>
 <form id="account" action="personalDetails" method="post"></form>
 <form id="statistics" action="showStatistics" method="post"></form>
-
 	<script>
-	function userClicked(staff,action) {
-		var staffID=staff;
-		var actionOnStaff=action;
-		
-		document.getElementById("storeUser").value= staffID;
-		document.getElementById("storeAction").value= actionOnStaff;
-	}
 	</script>
 </body>
 </html>
