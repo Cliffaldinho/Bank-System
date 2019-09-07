@@ -69,19 +69,27 @@ color:black
 	<div class="horizonta_nav">
 	  <a href="ListOfIncidents.jsp">Incidents</a>
 	  <a href="CreateIncidentReport.jsp">Report</a>
-	  <a href="RolesForStaff.jsp">Roles</a>
-	  <a href="index.jsp">Logout</a>
+	  <c:if test="${logAuth.authenticationLevel==1}">
+	  	<a href="RolesForStaff.jsp">Roles</a>
+	  </c:if>
+	  <form>
+	  	<a href="#" onclick="document.getElementById('statistics').submit();"> Statistics </a>
+	  </form>	
+	  <form>
+	  	<a href="#" onclick="document.getElementById('account').submit();"> Account </a>
+	  </form>	
+	  <form>
+	  	<a href="#" onclick="document.getElementById('logOut').submit();"> Logout </a>
+	  </form>	  
 	</div>
-	<br>
-	<br>
-
+	
 	<div class="container">	
 		<h2>Set Staff Role</h2>
 
 		 <form name="UserCreate" action="createUser" method="post" onSubmit="return validateForm()">
 		<table>
 				<tr>
-					<td style="background: #dddddd">
+					<td class="td2">
 						Staff Name:
 					</td>
 					<td>
@@ -89,7 +97,7 @@ color:black
 					</td>
 				</tr>
 				<tr>
-					<td style="background: #dddddd">
+					<td class="td2">
 						Contact Number:
 					</td>
 					<td>
@@ -97,7 +105,7 @@ color:black
 					</td>
 				</tr>
 				<tr>
-					<td style="background: #dddddd">
+					<td class="td2">
 						Address:
 					</td>
 					<td>
@@ -105,7 +113,7 @@ color:black
 					</td>
 				</tr>
 				<tr>
-					<td style="background: #dddddd">
+					<td class="td2">
 						Staff Position:
 					</td>
 					<td>
@@ -147,6 +155,10 @@ color:black
 		
 	
 	</div>
+	<form id="logOut" action="userLogout" method="post"></form>
+	<form id="account" action="personalDetails" method="post"></form>
+	<form id="statistics" action="showStatistics" method="post"></form>
+	
 <script>
 
 function validateForm() {
