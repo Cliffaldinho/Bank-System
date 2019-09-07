@@ -20,46 +20,22 @@ public class DisplayIncidentReportServlet extends HttpServlet{
 	
 	String incidentID = req.getParameter("clicked");
 	
-	String optionChosen = req.getParameter("chosen");
 	
 
 	int id=Integer.parseInt(incidentID);
 	IncidentBean incident=IncidentDAO.getIncidentByIncidentID(id);
 	
 	
-	boolean viewIncident,closeIncident;
-	viewIncident=false;
-	closeIncident=false;
-	
-	switch(optionChosen) {
-		case "View":
-			viewIncident=true;
-			break;
-		case "Close":
-			closeIncident=true;
-			break;
-		default:
-			System.out.println("Error: No user choice received for DisplayIncidentReportServlet.");
-			break;
-	}
-	
 	HttpSession aSession = req.getSession();
 	
-	
-	if(viewIncident==true) {
+
 		
 		//For use in Display Report, Analysis, and Strategy jsps and servlets
 		aSession.setAttribute("incidentID", id);
 		aSession.setAttribute("incidentSelected", incident);
 		
 		req.getRequestDispatcher("DisplayIncidentReport.jsp").forward(req, res);
-		
-	}  else if (closeIncident==true) {
-		
-		IncidentDAO.deleteIncidentByIncidentID(id);
-		
-		req.getRequestDispatcher("prepareList").forward(req, res);
-	}
+		 
 	
 	
 

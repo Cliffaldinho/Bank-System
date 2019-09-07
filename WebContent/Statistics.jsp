@@ -74,7 +74,7 @@
 	<th>Satisfaction of Strategy</th>
 	<th>Incident Details</th>
 </tr>
-<c:forEach items="${stats.archivedList}" var="report" varStatus="loop">
+<c:forEach items="${archivedList}" var="report" varStatus="loop">
 	<td><c:out value="${report.incidentID}"/></td>
 	<td><c:out value="${report.incidentTitle}"/></td>
 	<td><c:out value="${report.incidentCategory}"/></td>

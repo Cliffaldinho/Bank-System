@@ -135,8 +135,11 @@ public class UserLoginServlet extends HttpServlet {
 					aSession.setAttribute("isSearch", isSearch);
 					aSession.setAttribute("isSort", isSort);
 					
-					ArrayList<IncidentBean> incidentsList = IncidentDAO.getIncidentsList();
+					ArrayList<IncidentBean> incidentsList = IncidentDAO.getNonArchivedList();
 					aSession.setAttribute("listOfIncidents", incidentsList);
+					
+					ArrayList<IncidentBean> archivedList = IncidentDAO.getArchivedList();
+					aSession.setAttribute("archivedList",archivedList);
 					
 					ArrayList<UserBean> staffList = UserDAO.getUsersList();
 					aSession.setAttribute("listOfStaff", staffList);

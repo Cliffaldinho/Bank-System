@@ -31,6 +31,7 @@ public class IncidentDAO {
 		return incidentsList;
 	}
 	
+
 	public static void addIncident(IncidentBean in) {
 		
 		//add the incidentBean to Incident database
@@ -62,6 +63,29 @@ public class IncidentDAO {
 	}
 	public static void setIncidents(ArrayList<IncidentBean> in) {
 		incidentsList = in;
+	}
+	
+	public static ArrayList<IncidentBean> getArchivedList() {
+		ArrayList<IncidentBean> archivedList= new ArrayList<>();
+		for(int i=0;i<incidentsList.size();i++) {
+			if(incidentsList.get(i).getIncidentStatus().equals(IncidentBean.Status.Archived)) {
+				archivedList.add(incidentsList.get(i));
+			}
+		}
+		
+		return archivedList;
+	}
+	
+	public static ArrayList<IncidentBean> getNonArchivedList() {
+		ArrayList<IncidentBean> nonArchivedList = new ArrayList<>();
+		
+		for(int i=0;i<incidentsList.size();i++) {
+			if(!incidentsList.get(i).getIncidentStatus().equals(IncidentBean.Status.Archived)) {
+				nonArchivedList.add(incidentsList.get(i));
+			}
+		}
+		
+		return nonArchivedList;
 	}
 
 }

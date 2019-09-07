@@ -73,28 +73,29 @@ public class StatisticsBean implements Serializable{
 		
 		int[] storeCount = new int[6];
 		
-		for(int i=0;i<IncidentDAO.getIncidentsList().size();i++) {
-			if(IncidentDAO.getIncidentsList().get(i).getIncidentCategory().equals(IncidentBean.Category.Regulatory_Law)) {
+		
+		for(int i=0;i<IncidentDAO.getNonArchivedList().size();i++) {
+			if(IncidentDAO.getNonArchivedList().get(i).getIncidentCategory().equals(IncidentBean.Category.Regulatory_Law)) {
 				
 				regulatoryLawCounter++;
 				
-			} else if (IncidentDAO.getIncidentsList().get(i).getIncidentCategory().equals(IncidentBean.Category.Cyber_Security) ) {
+			} else if (IncidentDAO.getNonArchivedList().get(i).getIncidentCategory().equals(IncidentBean.Category.Cyber_Security) ) {
 				
 				cyberSecurityCounter++;
 				
-			} else if (IncidentDAO.getIncidentsList().get(i).getIncidentCategory().equals(IncidentBean.Category.Human_Issues) ) {
+			} else if (IncidentDAO.getNonArchivedList().get(i).getIncidentCategory().equals(IncidentBean.Category.Human_Issues) ) {
 				
 				humanIssuesCounter++;
 				
-			} else if (IncidentDAO.getIncidentsList().get(i).getIncidentCategory().equals(IncidentBean.Category.Bank_Equipment) ) {
+			} else if (IncidentDAO.getNonArchivedList().get(i).getIncidentCategory().equals(IncidentBean.Category.Bank_Equipment) ) {
 				
 				bankEquipmentCounter++;
 				
-			} else if (IncidentDAO.getIncidentsList().get(i).getIncidentCategory().equals(IncidentBean.Category.Bank_Algorithms) ) {
+			} else if (IncidentDAO.getNonArchivedList().get(i).getIncidentCategory().equals(IncidentBean.Category.Bank_Algorithms) ) {
 				
 				bankAlgorithmsCounter++;
 				
-			} else if (IncidentDAO.getIncidentsList().get(i).getIncidentCategory().equals(IncidentBean.Category.Other) ) {
+			} else if (IncidentDAO.getNonArchivedList().get(i).getIncidentCategory().equals(IncidentBean.Category.Other) ) {
 				
 				otherCounter++;
 			}
@@ -116,7 +117,7 @@ public class StatisticsBean implements Serializable{
 		
 		int[] amountInCategory = countCategory();
 		
-		double totalAmountOfIncidents=IncidentDAO.getIncidentsList().size();
+		double totalAmountOfIncidents=IncidentDAO.getNonArchivedList().size();
 
 		double regulatoryLawPercentage;
 		double cyberSecurityPercentage;
@@ -152,7 +153,7 @@ public class StatisticsBean implements Serializable{
 		
 	}
 	
-	public ArrayList<IncidentBean> getArchivedList() {
+	/**public ArrayList<IncidentBean> getArchivedList() {
 		
 		ArrayList<IncidentBean> archivedList = new ArrayList<>();
 		ArrayList<IncidentBean> allIncidentsList = IncidentDAO.getIncidentsList();
@@ -166,6 +167,6 @@ public class StatisticsBean implements Serializable{
 		
 		}
 		return archivedList;
-	}
+	}*/
 	
 }

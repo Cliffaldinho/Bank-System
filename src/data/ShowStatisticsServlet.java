@@ -20,7 +20,7 @@ public class ShowStatisticsServlet extends HttpServlet {
 		HttpSession aSession = req.getSession();
 		
 		aSession.setAttribute("stats", stats);
-		
+		aSession.setAttribute("archivedList", IncidentDAO.getArchivedList());
 		
 		req.getRequestDispatcher("Statistics.jsp").forward(req, res);
 	}
