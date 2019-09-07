@@ -58,16 +58,18 @@
 	  <a href="ListOfIncidents.jsp" class="active">Incidents</a>
 	  <a href="CreateIncidentReport.jsp">Report</a>
 	  <c:if test="${logAuth.authenticationLevel==1}">
-
-	  <a href="RolesForStaff.jsp">Roles</a>
-
+	  	<a href="RolesForStaff.jsp">Roles</a>
 	  </c:if>
-	  <a href="index.jsp">Logout</a>
-	  
-	  
+	  <form>
+	  	<a href="#" onclick="document.getElementById('statistics').submit();"> Statistics </a>
+	  </form>	
+	  <form>
+	  	<a href="#" onclick="document.getElementById('account').submit();"> Account </a>
+	  </form>	
+	  <form>
+	  	<a href="#" onclick="document.getElementById('logOut').submit();"> Logout </a>
+	  </form>	  
 	</div>
-	<br>
-	<br>
 
 <!--
 List to have
@@ -186,23 +188,17 @@ List to have
 
 <br>
 <form action="CreateIncidentReport.jsp" method="post">
-	<label for="addIncident">Add an Incident</label>
-	<input type="submit" name="addIncident" value="Add">
+	<input type="submit" name="addIncident" value="Add Incident">
 </form>
 <br>
-</div>
-<form action="personalDetails" method="post">
-<input type="submit" name = "details" value="Personal details">
-</form>
-<br>
-<form action="showStatistics" method="post">
-<input type="submit" name = "stats" value="Statistics">
-</form>
-<br>
-<form action="userLogout" method="post">
-	<input type="submit" value="Log Out">
-</form>
 
+<!-- 
+	Naneth: replaced buttons from bottom of the page to horizontal navigation at the top of the page
+			but still need the forms for onclick event
+-->
+<form id="logOut" action="userLogout" method="post"></form>
+<form id="account" action="personalDetails" method="post"></form>
+<form id="statistics" action="showStatistics" method="post"></form>
 
 
 <script>
