@@ -22,26 +22,6 @@
 <meta charset="ISO-8859-1">
 <link rel="stylesheet" type="text/css" href="style.css" />
 <title>Insert title here</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script type="text/javascript">
-	function checkNotifications(){
-		setInterval(checkForNotifications, 10000);
-	}
-	
-	function checkForNotifications(){
-		$.ajax({
-			url: "notifications",
-			type: "post",
-			data: "<c:out value="${logAuth.username}"/>",
-			success: function(results) {
-				
-				if(results!="") {
-				alert(results); 
-				}
-			}
-	});
-	}
-</script>
 <style>
 #staffPosition {
 text-align-last:center;
@@ -50,7 +30,7 @@ text-align-last:center;
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
 </head>
-<body onload="checkNotifications();">
+<body>
 	<div class="top-banner">
 	  <div class="row">
 	    <div class="col-75">
@@ -63,14 +43,23 @@ text-align-last:center;
 	</div>
 	
 	<!-- if user is branch manager, show this  -->
+	
 	<div class="horizonta_nav">
 	  <a href="ListOfIncidents.jsp">Incidents</a>
 	  <a href="CreateIncidentReport.jsp">Report</a>
-	  <a href="RolesForStaff.jsp">Roles</a>
-	  <a href="index.jsp">Logout</a>
+	  <c:if test="${logAuth.authenticationLevel==1}">
+	  	<a href="RolesForStaff.jsp">Roles</a>
+	  </c:if>
+	  <form>
+	  	<a href="#" onclick="document.getElementById('statistics').submit();"> Statistics </a>
+	  </form>	
+	  <form>
+	  	<a href="#" onclick="document.getElementById('account').submit();"> Account </a>
+	  </form>	
+	  <form>
+	  	<a href="#" onclick="document.getElementById('logOut').submit();"> Logout </a>
+	  </form>	  
 	</div>
-	<br>
-	<br>
 
 	<div class="container">	
 		<h2>Set Staff Role</h2>
@@ -105,14 +94,13 @@ text-align-last:center;
 					</td>
 					<td>
 					<!-- id used to align dropdown menu contents to center in css in head -->
-						<select name="position" id="staffPosition" >
-						<!-- userPosition is a list declared at the top -->
-						<c:forEach  var="element" items="${userPosition}">
-						<option value="${element}"  ${element==userSelected.position? 'selected="selected"' : "" }>
-						${element.toString()}
-						</option>
-						</c:forEach>
-							
+						<select class="selectInsideTable" name="position" id="staffPosition" >
+							<!-- userPosition is a list declared at the top -->
+							<c:forEach  var="element" items="${userPosition}">
+							<option value="${element}"  ${element==userSelected.position? 'selected="selected"' : "" }>
+								${element.toString()}
+							</option>
+							</c:forEach>
 						</select>
 					</td>
 				</tr>
@@ -166,19 +154,12 @@ text-align-last:center;
 					
 			</table>	
 			<input type="submit" name="setTheRole" value="Modify User/Role"><br>
-				
 		</form>	
-		
-		<br>
-		<c:if test="${userSelected.locked}">
-		<form action="unlockAccount" method="post">
-		Account is locked
-		<br>
-		<input type="submit" value="Unlock Account">
-		</form>
-		</c:if>
-	
 	</div>
+	
+<form id="logOut" action="userLogout" method="post"></form>
+<form id="account" action="personalDetails" method="post"></form>
+<form id="statistics" action="showStatistics" method="post"></form>
 	<script>
 	</script>
 </body>
