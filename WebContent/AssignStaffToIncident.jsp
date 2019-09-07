@@ -56,7 +56,7 @@
 		<!-- if user is branch manager, show this  -->
 		
 	<div class="horizonta_nav">
-	  <a href="ListOfIncidents.jsp" class="active">Incidents</a>
+	  <a href="ListOfIncidents.jsp">Incidents</a>
 	  <a href="CreateIncidentReport.jsp">Report</a>
 	  <c:if test="${logAuth.authenticationLevel==1}">
 	  	<a href="RolesForStaff.jsp">Roles</a>
