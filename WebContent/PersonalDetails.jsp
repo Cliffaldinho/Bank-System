@@ -13,24 +13,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="ISO-8859-1">
-	<link rel="stylesheet" type="text/css" href="style.css" />
-	<title>Personal Details</title>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-	<script src="ModifyPersonalDetails.js"></script>
-	<style>
-		/*id is one element, class can identify more than one */	
-		.hidden {
-		visibility:hidden;
-		}		
-		.visible {
-		visibility:visible;
-		}
-		
-	</style>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="style.css" />
+<title>Account</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script type="text/javascript">
+	function checkNotifications(){
+		setInterval(checkForNotifications, 10000);
+	}
+	
+	function checkForNotifications(){
+		$.ajax({
+			url: "notifications",
+			type: "post",
+			data: "<c:out value="${logAuth.username}"/>",
+			success: function(results) {
+				
+				if(results!="") {
+				alert(results); 
+				}
+			}
+	});
+	}
+</script>
+<script src="ModifyPersonalDetails.js"></script>
+<style>
+/*id is one element, class can identify more than one */
+.hidden {
+visibility:hidden;
+}
+.visible {
+visibility:visible;
+}
+</style>
 </head>
-<body>
-
+<body onload="checkNotifications();">
 	<div class="top-banner">
 	  <div class="row">
 	    <div class="col-75">
@@ -42,9 +59,8 @@
 	  </div>
 	</div>
 	
-	
 	<div class="horizonta_nav">
-	  <a href="ListOfIncidents.jsp">Incidents</a>
+	  <a href="prepareList">Incidents</a>
 	  <a href="CreateIncidentReport.jsp">Report</a>
 	  <c:if test="${logAuth.authenticationLevel==1}">
 	  	<a href="RolesForStaff.jsp">Roles</a>
@@ -53,12 +69,13 @@
 	  	<a href="#" onclick="document.getElementById('statistics').submit();"> Statistics </a>
 	  </form>	
 	  <form>
-	  	<a href="#" class="active" onclick="document.getElementById('account').submit();"> Account </a>
+	  	<a href="#" onclick="document.getElementById('account').submit();" class="active"> Account </a>
 	  </form>	
 	  <form>
 	  	<a href="#" onclick="document.getElementById('logOut').submit();"> Logout </a>
 	  </form>	  
 	</div>
+
 
 <div class="container">
 	<h2>ID:${userid}</h2>
@@ -158,11 +175,7 @@
 	</table>
 </div>
 
-<div class="container">
-	<form action="prepareList" method="post">
-		<input type="submit" value="List">
-	</form>
-</div>
+
 
 <form id="logOut" action="userLogout" method="post"></form>
 <form id="account" action="personalDetails" method="post"></form>
