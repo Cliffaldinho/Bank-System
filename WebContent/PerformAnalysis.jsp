@@ -54,7 +54,7 @@
 	<!-- if user is branch manager, show this  -->
 	
 	<div class="horizonta_nav">
-	  <a href="ListOfIncidents.jsp">Incidents</a>
+	  <a href="prepareList">Incidents</a>
 	  <a href="CreateIncidentReport.jsp">Report</a>
 	  <c:if test="${logAuth.authenticationLevel==1}">
 	  	<a href="RolesForStaff.jsp">Roles</a>
@@ -100,6 +100,10 @@ Incident analyzing
 		</tr>
 	
 	</table>
+	
+	<br/>
+	<br/>
+	
 	<div class="container">
 	<h3>Simulations done for this incident</h3>
 	<c:choose>
@@ -109,12 +113,14 @@ Incident analyzing
 	<c:otherwise>
 	<c:forEach var="temp" items="${incidentSelected.postIncident.simulations}">
 	${temp}
-
+	<br>
+	<br>
 	</c:forEach>
 	</c:otherwise>
 	</c:choose>
 	</div>
-
+	<br>
+	<br>
 	<div class="container">
 		<h3>Root Cause Analysis</h3>
 		<form action="postAnalysis" method="post">
@@ -127,11 +133,14 @@ Incident analyzing
 	    			<textarea name="causes" placeholder="Please write the root cause.." style="height:200px"></textarea>
 			    </div>
 			</div>
-
+		
+		<br>
 		<input type="submit" name="finishAnalysis" value="Submit">
 		</form>
 	</div>
-
+	<br>
+	<br>
+	
 	<div class="container">
 	
 		<h3>Simulate incident with Root Cause changed</h3>		
@@ -168,28 +177,28 @@ Incident analyzing
 		<input type="submit" name="lessonsLearnt" value="submit">
 		</form>
 	</div>
-	 
-	<div class="container">
-		<div class="row">
-			<div class="col-25">
-				<form action="DisplayIncidentReport.jsp" method="post">
-					<input type="submit" value="View Report">
-				</form>
-			</div>
-
-			<div class="col-25">
+	<form action="DisplayIncidentReport.jsp" method="post">
+	<input type="submit" value="View Report">
+	</form>
+	<br>
+		<!-- Test if person logged in is general staff during period when strategy is implemented, or if person is branch manager -->
+		<c:if test="${(logAuth.authenticationLevel!=1&&incidentSelected.postIncident.strategyImplementedAlready==true)||
+		logAuth.authenticationLevel==1}">
+			<!-- Test if incident is in Analysis phase or Strategy phase or Archived phase -->
+			<c:if test="${incidentSelected.incidentStatus.toString()=='Undergoing analysis'||
+			incidentSelected.incidentStatus.toString()=='Strategy implemented'||
+			incidentSelected.incidentStatus.toString()=='Archived'}">
 				<form action="ImplementStrategy.jsp" method="post">
 					<input type="submit" value="Strategy"> 
 					<!--  <input type="button" value="Strategy" onclick="window.open('ImplementStrategy.jsp')">-->
 				</form>
-			</div>
-		</div>
-	</div>
-
-	<form id="logOut" action="userLogout" method="post"></form>
-	<form id="account" action="personalDetails" method="post"></form>
-	<form id="statistics" action="showStatistics" method="post"></form>
-	 
+			</c:if>
+		</c:if>
 </div>
+
+<form id="logOut" action="userLogout" method="post"></form>
+<form id="account" action="personalDetails" method="post"></form>
+<form id="statistics" action="showStatistics" method="post"></form>
+
 </body>
 </html>

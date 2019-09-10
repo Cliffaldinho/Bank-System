@@ -46,9 +46,8 @@
 	  </div>
 	</div>
 	
-	
 	<div class="horizonta_nav">
-	  <a href="ListOfIncidents.jsp">Incidents</a>
+	  <a href="prepareList">Incidents</a>
 	  <a href="CreateIncidentReport.jsp">Report</a>
 	  <c:if test="${logAuth.authenticationLevel==1}">
 	  	<a href="RolesForStaff.jsp">Roles</a>
@@ -63,7 +62,6 @@
 	  	<a href="#" onclick="document.getElementById('logOut').submit();"> Logout </a>
 	  </form>	  
 	</div>
-
 	
 	<div class="container">
 		<h2>Strategy</h2>
@@ -85,6 +83,8 @@
 
 	<div class="container">
 		<h2>People ratings of Strategy</h2>
+		<br>
+		Amount of People who have rated:${incidentSelected.postIncident.amountOfRatingsReceived}
 		<table style="table-layout:fixed">
 			<tr>
 				<td class="td2">Overall:</td>
@@ -341,11 +341,11 @@
 		</div>
 	</div>
 </div>
-	
+
 <form id="logOut" action="userLogout" method="post"></form>
 <form id="account" action="personalDetails" method="post"></form>
 <form id="statistics" action="showStatistics" method="post"></form>
-	
+
 <script>
 function validateStrategyForm() {
 	
@@ -374,7 +374,7 @@ function validateStrategyForm() {
     
    
 }
-  	
+ 
 function validateRatingForm() {
 	
 	//if one of the ratings is not checked
@@ -392,12 +392,10 @@ function validateRatingForm() {
 	return false;
 	
 	}
-
 	//otherwise send form
 	return true;
 	
 	}
-
 </script>
 </body>
 </html>

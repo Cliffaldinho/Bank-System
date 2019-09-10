@@ -53,9 +53,9 @@
 	  </div>
 	</div>
 	
-	<!-- if user is branch manager, show this  -->
-		<div class="horizonta_nav">
-	  <a href="ListOfIncidents.jsp">Incidents</a>
+	<!-- if user is branch manager, show this  -->	
+	<div class="horizonta_nav">
+	  <a href="prepareList">Incidents</a>
 	  <a href="CreateIncidentReport.jsp" class="active">Report</a>
 	  <c:if test="${logAuth.authenticationLevel==1}">
 	  	<a href="RolesForStaff.jsp">Roles</a>
@@ -109,7 +109,6 @@
 				    </div>
 				</div>	
 			</div>	
-
 			
 		<!-- Compulsory -->		
 		<div class="container">
@@ -123,7 +122,6 @@
 			</div>
 		</div>
 		
-
 		
 		<!-- Compulsory (to facilitate Sort By Keywords) -->
 		<div class="container">
@@ -159,7 +157,6 @@
 			    </div>
 			</div>
 		</div>
-
 		<!-- Optional -->
 		<div class="container">
 			<div class="row">
@@ -191,29 +188,31 @@
 		<input type="submit">
 		</form>
 	</div>
-	<script>
+	
+	<form id="logOut" action="userLogout" method="post"></form>
+	<form id="account" action="personalDetails" method="post"></form>
+	<form id="statistics" action="showStatistics" method="post"></form>
 
-function validateForm() {
-	
-	if(document.getElementById("theIncidentTitle").value=="") {
-		window.alert("Please enter a title."); 
-		return false;
+<script>
+	function validateForm() {
+		
+		if(document.getElementById("theIncidentTitle").value=="") {
+			window.alert("Please enter a title."); 
+			return false;
+		}
+		
+		if(document.getElementById("theIncidentDescription").value=="") {
+			window.alert("Please enter a description."); 
+			return false;
+		}
+		
+		if(document.getElementById("theIncidentKeywords").value=="") {
+			window.alert("Please enter keywords for the incident.");
+			return false;
+		}
+		
+		return true;
 	}
-	
-	if(document.getElementById("theIncidentDescription").value=="") {
-		window.alert("Please enter a description."); 
-		return false;
-	}
-	
-	if(document.getElementById("theIncidentKeywords").value=="") {
-		window.alert("Please enter keywords for the incident.");
-		return false;
-	}
-	
-	return true;
-}
-
-
 </script>
 </body>
 </html>
