@@ -13,6 +13,7 @@
         <configuration>
           <release>11</release>
           <failOnMissingWebXml>false</failOnMissingWebXml>
+          <appName>bank-system-2019</appName>
         </configuration>
       </plugin>
       <plugin>
