@@ -7,27 +7,27 @@ To navigate the main page: "Incidents" displays a list of incidents, "Report" al
 From these pages, all of the use cases and additional features are functional.
 
 Use cases include:
-Create Staff
-Modify Staff
-Delete Staff
-Update Incident Report
-Assign Staff to Incident
-Close Incident Report
-Define Roles for Staff
-Implement Risk Management Strategy
-Test Risk Management Strategy
-Staff login
-Staff logout
-Create Incident Report
-Assign Priority Ratings
-Detect Duplicate Reports
-View List of Incident Reports
-Search Incident Reports
-Sort Incident Reports
-Count Incident Reports
-Display Incident Report
-Perform Root Cause Analysis
-Show Lessons Learnt
+1) Create Staff
+2) Modify Staff
+3) Delete Staff
+4) Update Incident Report
+5) Assign Staff to Incident
+6) Close Incident Report
+7) Define Roles for Staff
+8) Implement Risk Management Strategy
+9) Test Risk Management Strategy
+10) Staff login
+11) Staff logout
+12) Create Incident Report
+13) Assign Priority Ratings
+14) Detect Duplicate Reports
+15) View List of Incident Reports
+16) Search Incident Reports
+17) Sort Incident Reports
+18) Count Incident Reports
+19) Display Incident Report
+20) Perform Root Cause Analysis
+21) Show Lessons Learnt
 
 Additional features we have are:
 1) Auto Assign: The ability for a incident report to be automatically assigned to a staff member
